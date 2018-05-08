@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:gauge="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              tools:context="com.ktoto.bazio.chargercontrol.Connect"
+              android:background="#ffffff"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="68dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:background="@drawable/card_background"
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="Nissan LEAF"
+                android:textColor="#ffffff"
+                android:textSize="26sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="160dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:background="@drawable/second_card_background">
+
+            <com.ntt.customgaugeview.library.GaugeView
+                android:id="@+id/gauge_view"
+                android:layout_width="179dp"
+                android:layout_height="194dp"
+                android:layout_alignBottom="@+id/button2"
+                android:layout_alignEnd="@+id/textView6"
+                android:layout_marginStart="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                gauge:divisions="8"
+                gauge:rangeValues="@array/speedTestRangeValues"
+                gauge:scaleEndValue="5000"
+                gauge:showInnerRim="false"
+                gauge:showNeedle="true"
+                gauge:showOuterBorder="false"
+                gauge:showOuterRim="true"
+                gauge:showOuterShadow="false"
+                gauge:showRangeText="true"
+                gauge:showRanges="true"
+                gauge:showScale="true"
+                gauge:subdivisions="1"
+                gauge:textUnit="A"
+                gauge:textUnitSize="0.08"
+                gauge:textValueSize="0.15" />
+
+            <com.ntt.customgaugeview.library.GaugeView
+                android:id="@+id/gauge_view2"
+                android:layout_width="179dp"
+                android:layout_height="194dp"
+                android:layout_alignStart="@+id/button2"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.619"
+                app:layout_constraintStart_toEndOf="@+id/gauge_view"
+                app:layout_constraintTop_toTopOf="parent"
+                gauge:divisions="10"
+                gauge:rangeValues="@array/speedTestRangeValues2"
+                gauge:scaleEndValue="5000"
+                gauge:showInnerRim="false"
+                gauge:showNeedle="true"
+                gauge:showOuterBorder="false"
+                gauge:showOuterRim="true"
+                gauge:showOuterShadow="false"
+                gauge:showRangeText="true"
+                gauge:showRanges="true"
+                gauge:showScale="true"
+                gauge:subdivisions="1"
+                gauge:textUnit="V"
+                gauge:textUnitSize="0.08"
+                gauge:textValueSize="0.15" />
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+
+    <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="8">
+
+        <Button
+            android:id="@+id/btnPostTest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="10dp"
+            android:text="Button"
+            app:layout_constraintStart_toEndOf="@+id/button2"
+            app:layout_constraintTop_toBottomOf="@+id/cardView" />
+
+        <TextView
+                android:id="@+id/textView6"
+                android:layout_width="387dp"
+                android:layout_height="78dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginBottom="32dp"
+                android:layout_marginEnd="10dp"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:textColor="#000000"/>
+
+
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView6"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="Button"
+            app:layout_constraintTop_toBottomOf="@+id/cardView"
+            tools:layout_editor_absoluteX="49dp" />
+
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardView2"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginBottom="260dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="10dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:columnCount="3"
+                android:rowCount="4">
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_columnSpan="2"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="center"
+                    android:layout_row="0"
+                    android:fontFamily="monospace"
+                    android:text="Czas do końca ładowania:" />
+
+                <TextView
+                    android:id="@+id/txtRemainingTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="2"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="center"
+                    android:layout_row="0"
+                    android:fontFamily="monospace"
+                    android:text="Test2"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="20sp" />
+
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_columnSpan="2"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="center"
+                    android:layout_row="1"
+                    android:fontFamily="monospace"
+                    android:text="Aktualna poj. akumulatora" />
+
+                <TextView
+                    android:id="@+id/txtActualBatteryCapacity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="2"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="center"
+                    android:layout_row="1"
+                    android:fontFamily="monospace"
+                    android:text="Test2"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="20sp" />
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_columnSpan="2"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="center"
+                    android:layout_row="2"
+                    android:fontFamily="monospace"
+                    android:text="Moc" />
+
+                <TextView
+                    android:id="@+id/txtPower"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="2"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="center"
+                    android:layout_row="2"
+                    android:fontFamily="monospace"
+                    android:text="Test2"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_columnSpan="2"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="center"
+                    android:layout_row="3"
+                    android:fontFamily="monospace"
+                    android:text="Koszt ładowania: " />
+
+                <TextView
+                    android:id="@+id/txtCost"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="2"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="center"
+                    android:layout_row="3"
+                    android:fontFamily="monospace"
+                    android:text="Test2"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="20sp" />
+            </GridLayout>
+
+        </android.support.v7.widget.CardView>
+
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginBottom="170dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView2">
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:columnCount="3"
+                android:rowCount="4">
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_columnSpan="2"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="center"
+                    android:layout_row="0"
+                    android:fontFamily="monospace"
+                    android:text="Początkowa poj. aku.:" />
+
+
+                <TextView
+                    android:id="@+id/txtMaxChargingVoltage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="2"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="center"
+                    android:layout_row="0"
+                    android:fontFamily="monospace"
+                    android:text="Test2"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="20sp" />
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_columnSpan="2"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="center"
+                    android:layout_row="1"
+                    android:fontFamily="monospace"
+                    android:text="Całkowita poj. aku.:" />
+
+                <TextView
+                    android:id="@+id/txtTotalBatteryCapacity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="2"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="center"
+                    android:layout_row="1"
+                    android:fontFamily="monospace"
+                    android:text="Test2"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="20sp" />
+
+
+            </GridLayout>
+
+        </android.support.v7.widget.CardView>
+    </android.support.constraint.ConstraintLayout>
+
+
+</LinearLayout>

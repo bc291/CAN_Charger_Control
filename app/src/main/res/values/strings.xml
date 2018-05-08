@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">chargerControl</string>
+    <string name="action_settings">Ustawienia</string>
+    <string name="title_activity_connect">Połącz</string>
+    <string name="title_activity_all_charging_operations">Lista ładowań</string>
+
+    <string name="title_activity_main_navigation">MainNavigation</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="title_activity_main_bottom">MainBottom</string>
+    <string name="title_home">Ekran gł.</string>
+    <string name="title_dashboard">Historia ład.</string>
+    <string name="title_notifications">Lacznosc BT</string>
+    <string name="title_activity_main2213123">Main2Activity213123</string>
+</resources>

@@ -29,6 +29,10 @@ public class ChargingOperationGet {
     @Expose
     private Double initialCapacity;
 
+    @SerializedName("dateAndTime")
+    @Expose
+    private String dateAndTime;
+
     public Double getInitialCapacity() {
         return initialCapacity;
     }
@@ -85,6 +89,13 @@ public class ChargingOperationGet {
         this.elapsedTime = elapsedTime;
     }
 
+    public String getDateAndTime() {
+        return dateAndTime;
+    }
+
+    public void setDateAndTime(String dateAndTime) {
+        this.dateAndTime = dateAndTime;
+    }
 
     public ChargingOperationGet(Integer id, String carModel, Double capacityCharged, Double averagePower, Double cost, Double elapsedTime) {
         this.id = id;

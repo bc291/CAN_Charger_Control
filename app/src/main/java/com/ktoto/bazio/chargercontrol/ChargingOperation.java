@@ -25,7 +25,9 @@ public class ChargingOperation {
     @Expose
     private Double initialCapacity;
 
-
+    @SerializedName("dateAndTime")
+    @Expose
+    private String dateAndTime;
 
     public Double getInitialCapacity() {
         return initialCapacity;
@@ -75,4 +77,12 @@ public class ChargingOperation {
         this.elapsedTime = elapsedTime;
     }
 
+
+    public String getDateAndTime() {
+        return dateAndTime;
+    }
+
+    public void setDateAndTime(String dateAndTime) {
+        this.dateAndTime = dateAndTime;
+    }
 }

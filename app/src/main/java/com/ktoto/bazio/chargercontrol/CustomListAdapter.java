@@ -33,24 +33,23 @@ public class CustomListAdapter extends ArrayAdapter<ChargingOperationGet> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         LayoutInflater layoutInflater = LayoutInflater.from(mCtx);
-
+        String positionFixed=null;
         View view= layoutInflater.inflate(resource, null);
 
+        if(position<10) positionFixed="0"+(position+1);
+        else if(position>9 && position<100) positionFixed = String.valueOf(position+1);
+
+
         TextView textView_carModel = (TextView) view.findViewById(R.id.textView_carModel);
-        TextView textView_capacityCharged = (TextView) view.findViewById(R.id.textView_capacityCharged);
-        TextView textView_averagePower = (TextView) view.findViewById(R.id.textView_averagePower);
         TextView textView_cost = (TextView) view.findViewById(R.id.textView_cost);
-        TextView textView_elapsedTime = (TextView) view.findViewById(R.id.textView_elapsedTime);
         TextView textView_transactionId = (TextView) view.findViewById(R.id.textView_transactionId);
+        TextView textView_dateAndTime = (TextView) view.findViewById(R.id.textView_dateAndTime);
 
         ChargingOperationGet chargingOperationGet = list.get(position);
         textView_carModel.setText(chargingOperationGet.getCarModel());
-        textView_capacityCharged.setText(chargingOperationGet.getCapacityCharged().toString());
-        textView_averagePower.setText(chargingOperationGet.getAveragePower().toString());
         textView_cost.setText(chargingOperationGet.getCost().toString()+" zł");
-        textView_elapsedTime.setText(chargingOperationGet.getElapsedTime().toString());
-        textView_transactionId.setText(String.valueOf(position+1));
-
+        textView_transactionId.setText(positionFixed);
+        textView_dateAndTime.setText(chargingOperationGet.getDateAndTime());
         return view;
     }
 }

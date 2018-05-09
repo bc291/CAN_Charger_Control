@@ -12,6 +12,11 @@ import com.google.gson.Gson;
 import com.ktoto.bazio.chargercontrol.asynce.asyncHelper;
 import com.ktoto.bazio.chargercontrol.asynce.asyncPost;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class SecondFragment extends Fragment {
     Button button;
     ChargingOperation chargingOperation;
@@ -33,6 +38,13 @@ public class SecondFragment extends Fragment {
                 chargingOperation.setCarModel("nissan leaf555");
                 chargingOperation.setCost(232.56);
                 chargingOperation.setElapsedTime(23.7);
+
+
+                DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+                Date now = Calendar.getInstance().getTime();
+
+                chargingOperation.setDateAndTime(dateFormat.format(now));
+
 
                 Gson gsonTest = new Gson();
                 asyncHelper asynchelp = new asyncHelper(getContext(), chargingOperation);

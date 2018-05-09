@@ -29,54 +29,35 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/textView_transactionId"
-        android:layout_marginStart="29dp"
+        android:layout_marginStart="28dp"
         android:layout_toEndOf="@+id/textView_transactionId"
         android:text="CarModel"
         android:textAlignment="viewStart"
-        android:textSize="20sp" />
-
-    <TextView
-        android:id="@+id/textView_capacityCharged"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/textView_carModel"
-        android:layout_below="@+id/textView_carModel"
-        android:layout_marginTop="14dp"
-        android:text="CapCharg"
-        android:textAlignment="viewStart"
-        android:textSize="20sp" />
-
-    <TextView
-        android:id="@+id/textView_averagePower"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/textView_carModel"
-        android:layout_marginStart="21dp"
-        android:layout_toEndOf="@+id/textView_carModel"
-        android:text="AvgPow"
-        android:textAlignment="viewStart"
-        android:textSize="20sp" />
+        android:textSize="25sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/textView_cost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textView_capacityCharged"
-        android:layout_alignBottom="@+id/textView_capacityCharged"
-        android:layout_alignStart="@+id/textView_averagePower"
-        android:text="Cost@@"
+        android:layout_alignBaseline="@+id/textView_dateAndTime"
+        android:layout_alignBottom="@+id/textView_dateAndTime"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="44dp"
+        android:text="Cost"
         android:textAlignment="viewStart"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:textStyle="italic" />
 
     <TextView
-        android:id="@+id/textView_elapsedTime"
+        android:id="@+id/textView_dateAndTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/textView_averagePower"
-        android:layout_marginStart="21dp"
-        android:layout_toEndOf="@+id/textView_cost"
-        android:text="ElapTime"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/textView_carModel"
+        android:layout_marginBottom="16dp"
+        android:text="Date"
         android:textAlignment="viewStart"
-        android:textSize="20sp" />
+        android:textSize="15sp" />
 </RelativeLayout>
 </LinearLayout>

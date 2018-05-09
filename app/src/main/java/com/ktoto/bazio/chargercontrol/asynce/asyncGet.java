@@ -31,7 +31,7 @@ public class asyncGet extends AsyncTask<Void, Void, List<ChargingOperationGet>> 
         URL url = null;
         InputStreamReader reader2 = null;
         try {
-            url = new URL("http://192.168.213.1:25655/api/chargings");
+            url = new URL("http://192.168.0.248:2618/api/chargings");
             reader2 = new InputStreamReader(url.openStream());
         } catch (IOException e) {
             e.printStackTrace();

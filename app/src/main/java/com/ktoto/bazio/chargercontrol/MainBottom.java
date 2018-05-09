@@ -17,6 +17,8 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ktoto.bazio.chargercontrol.Fragments.StatisticsFragment;
+
 import java.lang.reflect.Field;
 
 public class MainBottom extends AppCompatActivity {
@@ -47,6 +49,9 @@ public class MainBottom extends AppCompatActivity {
                         fragment = new Connect();
 
                     }
+                    break;
+                case R.id.navigation_details:
+                    fragment = new StatisticsFragment();
                     break;
             }
             return loadFragment(fragment);

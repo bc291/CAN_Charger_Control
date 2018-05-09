@@ -38,7 +38,7 @@ public class asyncGetStatistics extends AsyncTask<asyncHelper, Void, List<Statis
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
 
         String portNumber = sharedPreferences.getString("port_number", "23234");
-        String ipAddres = sharedPreferences.getString("ip_number", "192.168.0.254");
+        String ipAddres = sharedPreferences.getString("ip_number", "192.168.0.248");
 
 
 

@@ -13,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import com.ktoto.bazio.chargercontrol.asynce.asyncGet;
+import com.ktoto.bazio.chargercontrol.asynce.asyncHelper;
+
 import java.util.List;
 
 public class chargerOperationsList extends Fragment {
@@ -30,7 +32,8 @@ public class chargerOperationsList extends Fragment {
         progressBar.setVisibility(View.VISIBLE);
 
         asyncGet asyncget = new asyncGet(this);
-        asyncget.execute();
+        asyncHelper asyncHelp = new asyncHelper(getContext(), new ChargingOperation());
+        asyncget.execute(asyncHelp);
 
 
         return myView;

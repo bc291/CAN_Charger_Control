@@ -25,6 +25,8 @@ public class ChargingOperation {
     @Expose
     private Double initialCapacity;
 
+
+
     public Double getInitialCapacity() {
         return initialCapacity;
     }

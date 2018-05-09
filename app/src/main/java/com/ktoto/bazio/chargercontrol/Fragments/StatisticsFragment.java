@@ -59,12 +59,12 @@ public class StatisticsFragment extends Fragment {
     {
         this.statisticsList=statisticsList;
 
-        txtTotalCost.setText(String.valueOf(statisticsList.get(0).getTotalCost()));
-        txtTotalChargingTime.setText(String.valueOf(statisticsList.get(0).getTotalChargingTime()));
+        txtTotalCost.setText(String.valueOf(statisticsList.get(0).getTotalCost()) + " zł");
+        txtTotalChargingTime.setText(String.valueOf(statisticsList.get(0).getTotalChargingTime()) + " m");
         txtTotalOperations.setText(String.valueOf(statisticsList.get(0).getTotalOperations()));
-        txtAveragePowerOfAll.setText(String.valueOf(statisticsList.get(0).getAveragePowerOfAll()));
-        txtAverageCost.setText(String.valueOf(statisticsList.get(0).getAverageCost()));
-        txtAverageInitialCapacity.setText(String.valueOf(statisticsList.get(0).getAverageInitialCapacity()));
+        txtAveragePowerOfAll.setText(String.valueOf(statisticsList.get(0).getAveragePowerOfAll()) + " kWh");
+        txtAverageCost.setText(String.valueOf(statisticsList.get(0).getAverageCost()) + " zł");
+        txtAverageInitialCapacity.setText(String.valueOf(statisticsList.get(0).getAverageInitialCapacity()) + " kWh");
       //  Log.d("testListy", String.valueOf(statisticsList.get(0).getTotalCost()));
 
     }

@@ -12,6 +12,11 @@
         android:title="@string/title_dashboard" />
 
     <item
+        android:id="@+id/navigation_details"
+        android:icon="@drawable/ic_view_module_black_24dp"
+        android:title="@string/title_details" />
+
+    <item
         android:id="@+id/navigation_notifications"
         android:icon="@drawable/ic_bluetooth_black_24dp"
         android:title="@string/title_notifications" />

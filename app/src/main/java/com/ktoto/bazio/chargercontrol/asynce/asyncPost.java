@@ -1,6 +1,9 @@
 package com.ktoto.bazio.chargercontrol.asynce;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -24,18 +27,26 @@ import java.net.URISyntaxException;
  * Created by bazio on 07.05.2018.
  */
 
-public class asyncPost extends AsyncTask<ChargingOperation, Void, Void>{
+public class asyncPost extends AsyncTask<asyncHelper, Void, Void>{
 
     @Override
-    protected Void doInBackground(ChargingOperation... chargingOperations) {
+    protected Void doInBackground(asyncHelper... asyncHelpers) {
 
-        ChargingOperation chargingOperation = chargingOperations[0];
+        Context context;
+        context = asyncHelpers[0].getContext();
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+
+        String portNumber = sharedPreferences.getString("port_number", "23234");
+        String ipAddres = sharedPreferences.getString("ip_number", "192.168.0.254");
+
+        ChargingOperation chargingOperation = asyncHelpers[0].getChargingOperation();
 
        // Log.d("Test5555", new Gson().toJson(chargingOperation, ChargingOperation.class));
 
         HttpPost post = new HttpPost();
         try {
-            post.setURI(new URI("http://192.168.0.248:12515/api/chargings"));
+            post.setURI(new URI("http://"+ipAddres+":"+portNumber+"/api/chargings"));
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }

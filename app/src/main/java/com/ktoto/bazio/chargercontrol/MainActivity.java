@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
                 Gson gsonTest = new Gson();
 
             asyncPost asyncpostt = new asyncPost();
-            asyncpostt.execute(chargingOperation);
+          //  asyncpostt.execute(chargingOperation);
             }
         });
 

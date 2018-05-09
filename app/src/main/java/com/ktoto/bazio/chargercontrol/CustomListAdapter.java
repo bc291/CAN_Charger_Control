@@ -41,6 +41,7 @@ public class CustomListAdapter extends ArrayAdapter<ChargingOperationGet> {
         TextView textView_averagePower = (TextView) view.findViewById(R.id.textView_averagePower);
         TextView textView_cost = (TextView) view.findViewById(R.id.textView_cost);
         TextView textView_elapsedTime = (TextView) view.findViewById(R.id.textView_elapsedTime);
+        TextView textView_transactionId = (TextView) view.findViewById(R.id.textView_transactionId);
 
         ChargingOperationGet chargingOperationGet = list.get(position);
         textView_carModel.setText(chargingOperationGet.getCarModel());
@@ -48,6 +49,7 @@ public class CustomListAdapter extends ArrayAdapter<ChargingOperationGet> {
         textView_averagePower.setText(chargingOperationGet.getAveragePower().toString());
         textView_cost.setText(chargingOperationGet.getCost().toString()+" zł");
         textView_elapsedTime.setText(chargingOperationGet.getElapsedTime().toString());
+        textView_transactionId.setText(String.valueOf(position+1));
 
         return view;
     }

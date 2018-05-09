@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 
 import com.google.gson.Gson;
+import com.ktoto.bazio.chargercontrol.asynce.asyncHelper;
 import com.ktoto.bazio.chargercontrol.asynce.asyncPost;
 import com.ntt.customgaugeview.library.GaugeView;
 
@@ -317,7 +318,8 @@ public class Connect extends Fragment {
         Gson gsonTest = new Gson();
 
         asyncPost asyncpostt = new asyncPost();
-        asyncpostt.execute(chargingOperation);
+        asyncHelper asyncHelp = new asyncHelper(getActivity(), chargingOperation);
+        asyncpostt.execute(asyncHelp);
 
     }
 }

@@ -3,6 +3,7 @@ package com.ktoto.bazio.chargercontrol;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceActivity;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -94,7 +95,10 @@ public class MainBottom extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            Intent i = new Intent(MainBottom.this, SettingsActivity.class);
+            i.putExtra( PreferenceActivity.EXTRA_SHOW_FRAGMENT, SettingsActivity.GeneralPreferenceFragment.class.getName() );
+            i.putExtra( PreferenceActivity.EXTRA_NO_HEADERS, true );
+            startActivity(i);
         }
 
         return super.onOptionsItemSelected(item);

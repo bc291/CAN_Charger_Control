@@ -12,4 +12,14 @@
         android:layout_marginTop="176dp"
         android:text="Second fragment"
         android:textSize="30sp" />
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textView2"
+        android:layout_below="@+id/textView2"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="103dp"
+        android:text="Button" />
 </RelativeLayout>

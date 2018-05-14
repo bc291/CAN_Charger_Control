@@ -4,4 +4,40 @@
     <color name="colorPrimaryDark">#191414</color>
     <color name="colorAccent">#FF4081</color>
     <color name="gaugeBackground">#3e4e68</color>
+    <color name="popupBackgroud">#2f333f</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="bluePopup">#2196F3</color>
+    <color name="amberPopup">#FFC107</color>
+    <color name="greenPopup">#4CAF50</color>
+    <color name="redPopup">#F44336</color>
+    <color name="purplePoput">#9C27B0</color>
+
+
+    <color name="tile_1_1_2">#1F4268</color>
+    <color name="tile_1_2_1">#1BA87E</color>
+
+
+    <color name="tile_2_1_2">#11998e</color>
+    <color name="tile_2_2_1">#38ef7d</color>
+
+    <color name="tile_3_1_2">#3494E6</color>
+    <color name="tile_3_2_1">#EC6EAD</color>
+
+    <color name="tile_4_1_2">#0B486B</color>
+    <color name="tile_4_2_1">#F56217</color>
+
+
+    <color name="tile_5_1_2">#1D4350</color>
+    <color name="tile_5_2_1">#A43931</color>
+
+    <color name="tile_6_1_2">#2BC0E4</color>
+    <color name="tile_6_2_1">#EAECC6</color>
+
+    <color name="tile_7_1_2">#c0392b</color>
+    <color name="tile_7_2_1">#8e44ad</color>
+
+    <color name="tile_8_1_2">#34f344</color>
+    <color name="tile_8_2_1">#000428</color>
+
 </resources>

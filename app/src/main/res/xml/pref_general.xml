@@ -30,13 +30,13 @@
 
 
     <ListPreference
-        android:defaultValue="-1"
-        android:entries="@array/pref_example_list_titles"
-        android:entryValues="@array/pref_example_list_values"
-        android:key="example_list"
+        android:defaultValue="1000"
+        android:entries="@array/timeout_options_values"
+        android:entryValues="@array/timeout_options_values"
+        android:key="server_timeout_list"
         android:negativeButtonText="@null"
         android:positiveButtonText="@null"
-        android:title="@string/pref_title_add_friends_to_messages" />
+        android:title="Timeout serwera" />
 
 
 

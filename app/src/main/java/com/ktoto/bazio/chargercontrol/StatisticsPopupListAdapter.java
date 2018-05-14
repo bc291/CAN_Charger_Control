@@ -6,12 +6,8 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -19,11 +15,11 @@ import java.util.List;
  * Created by bazio on 08.05.2018.
  */
 
-public class CustomListAdapter extends ArrayAdapter<ChargingOperationGet>  {
+public class StatisticsPopupListAdapter extends ArrayAdapter<String>  {
     Context mCtx;
     int resource;
-    List<ChargingOperationGet> list;
-    public CustomListAdapter(Context  mCtx, int resource, List<ChargingOperationGet> list)
+    List<String> list;
+    public StatisticsPopupListAdapter(Context  mCtx, int resource, List<String> list)
     {
         super(mCtx, resource, list);
         this.mCtx=mCtx;
@@ -43,15 +39,13 @@ public class CustomListAdapter extends ArrayAdapter<ChargingOperationGet>  {
 
 
         TextView textView_carModel = (TextView) view.findViewById(R.id.textView_carModel);
-        TextView textView_cost = (TextView) view.findViewById(R.id.textView_cost);
         TextView textView_transactionId = (TextView) view.findViewById(R.id.textView_transactionId);
-        TextView textView_dateAndTime = (TextView) view.findViewById(R.id.textView_dateAndTime);
 
-        ChargingOperationGet chargingOperationGet = list.get(position);
-        textView_carModel.setText(chargingOperationGet.getCarModel());
-        textView_cost.setText(chargingOperationGet.getCost().toString()+" zł");
+
+
+
+        textView_carModel.setText(list.get(position));
         textView_transactionId.setText(positionFixed);
-        textView_dateAndTime.setText(chargingOperationGet.getDateAndTime());
         return view;
     }
 

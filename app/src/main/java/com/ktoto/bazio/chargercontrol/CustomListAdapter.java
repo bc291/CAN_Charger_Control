@@ -6,12 +6,8 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -38,11 +34,11 @@ public class CustomListAdapter extends ArrayAdapter<ChargingOperationGet>  {
         String positionFixed=null;
         View view= layoutInflater.inflate(resource, null);
 
-        if(position<10) positionFixed="0"+(position+1);
-        else if(position>9 && position<100) positionFixed = String.valueOf(position+1);
+        if(position<9) positionFixed="0"+(position+1);
+        else if(position>8 && position<99) positionFixed = String.valueOf(position+1);
 
 
-        TextView textView_carModel = (TextView) view.findViewById(R.id.textView_carModel);
+        TextView textView_carModel = (TextView) view.findViewById(R.id.textView_parameter);
         TextView textView_cost = (TextView) view.findViewById(R.id.textView_cost);
         TextView textView_transactionId = (TextView) view.findViewById(R.id.textView_transactionId);
         TextView textView_dateAndTime = (TextView) view.findViewById(R.id.textView_dateAndTime);

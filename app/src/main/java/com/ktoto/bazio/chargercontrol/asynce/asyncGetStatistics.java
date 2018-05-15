@@ -33,6 +33,7 @@ public class asyncGetStatistics extends AsyncTask<asyncHelper, Void, List<Statis
     private chargerOperationsList chargerOperations;
     ChargingOperationGet[] chargingOperation = null;
     List<ChargingOperationGet> testowaLista2=null;
+    boolean connectionEstablished = false;
 
     @Override
     protected List<Statistics> doInBackground(asyncHelper... asyncHelpers) {
@@ -118,11 +119,13 @@ public class asyncGetStatistics extends AsyncTask<asyncHelper, Void, List<Statis
        // statisticsFragment.setListOnMainClass(chargingOperationGets);
         statisticsFragment.setProgressBarVisibility();
 
-        if(statistics!=null) {
+        if(statistics!=null && chargingOperation!=null) {
             statisticsFragment.setListOnMainClass(statistics);
             statisticsFragment.setLayoutVisibility();
             statisticsFragment.setMainList(testowaLista2);
         }
+
+
 
         else {
             statisticsFragment.setToast("Server timeout");

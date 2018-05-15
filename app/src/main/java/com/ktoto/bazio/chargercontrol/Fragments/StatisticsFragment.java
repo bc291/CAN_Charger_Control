@@ -48,6 +48,7 @@ import com.ktoto.bazio.chargercontrol.asynce.asyncPost;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,7 +83,14 @@ public class StatisticsFragment extends Fragment {
         dialog = new Dialog(getContext());
         dialog.setContentView(R.layout.popup_statistic);
         listview = (ListView) dialog.findViewById(R.id.listViewStatisticsPopup);
+        Button buttonPopupClose = (Button) dialog.findViewById(R.id.button55);
 
+        buttonPopupClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.cancel();
+            }
+        });
 
         asyncHelper asyncHelp = new asyncHelper(getContext(), new ChargingOperation());
 
@@ -98,6 +106,7 @@ public class StatisticsFragment extends Fragment {
         linearLayout = (LinearLayout) myView.findViewById(R.id.scrollView);
         linearLayout.setVisibility(View.INVISIBLE);
         progressBar.setVisibility(View.VISIBLE);
+
 
 
         CardView card_view = (CardView) myView.findViewById(R.id.cardView11);
@@ -145,50 +154,70 @@ setOnClickListenerToCardViews(arrayOfCardViews);
                     Log.d("cardView", String.valueOf(index));
                     StatisticsPopupListAdapter customListAdapter = null;
                     parameterToView = new ArrayList<String>();
-                    switch (index)
-                    {
-                        case 0: //totalCost
 
-                            for(ChargingOperationGet temp : testowaLista2)  parameterToView.add(temp.getCost()+ " zł");
+                  if(testowaLista2!=null) {
+                      switch (index) {
+                          case 0: //totalCost
 
-                            showPopup("Całkowity koszt");
-                            break;
+                              for (ChargingOperationGet temp : testowaLista2)
+                                  parameterToView.add(String.valueOf(temp.getCost() + " zł") + ";" + temp.getId());
 
-                        case 1: //totalTime
-                            for(ChargingOperationGet temp : testowaLista2)  parameterToView.add(String.valueOf(temp.getElapsedTime())+" min");
+                              showPopup("Całkowity koszt");
+                              break;
 
-                            showPopup("Całkowity czas ład.");
-                            break;
+                          case 1: //totalTime
+                              for (ChargingOperationGet temp : testowaLista2)
+                                  parameterToView.add(String.valueOf(round(temp.getElapsedTime(), 2) + " min") + ";" + temp.getId());
 
-                        case 2: //operationsCount
-                            for(ChargingOperationGet temp : testowaLista2)  parameterToView.add(String.valueOf(temp.getElapsedTime())+" min");
+                              showPopup("Całkowity czas ład.");
+                              break;
 
-                            showPopup("Liczba operacji");
-                            break;
+                          case 2: //operationsCount
+                              for (ChargingOperationGet temp : testowaLista2)
+                                  parameterToView.add(String.valueOf(round(temp.getElapsedTime(), 2) + " min") + ";" + temp.getId());
 
-                        case 3: //averagePower
-                            for(ChargingOperationGet temp : testowaLista2)  parameterToView.add(String.valueOf(temp.getAveragePower())+" kWh");
+                              showPopup("Liczba operacji");
+                              break;
 
-                            showPopup("Średnia moc ładowań");
-                            break;
+                          case 3: //averagePower
+                              for (ChargingOperationGet temp : testowaLista2)
+                                  parameterToView.add(String.valueOf(round(temp.getAveragePower(), 2) + " kWh") + ";" + temp.getId());
 
-                        case 4: //averageCost
-                            for(ChargingOperationGet temp : testowaLista2)  parameterToView.add(String.valueOf(temp.getCost())+" zł");
+                              showPopup("Średnia moc ładowań");
+                              break;
 
-                            showPopup("Średni koszt ład.");
-                            break;
+                          case 4: //averageCost
+                              for (ChargingOperationGet temp : testowaLista2)
+                                  parameterToView.add(String.valueOf(round(temp.getCost(), 2) + " zł") + ";" + temp.getId());
 
-                        case 5: //averageInitialCapacity
-                            for(ChargingOperationGet temp : testowaLista2)  parameterToView.add(String.valueOf(temp.getInitialCapacity())+" kWh");
+                              showPopup("Średni koszt ład.");
+                              break;
 
-                            showPopup("Śr. nał. początkowe");
-                            break;
-                    }
-                    customListAdapter = new StatisticsPopupListAdapter(getActivity(), R.layout.details_list_layout, parameterToView);
-                    listview.setAdapter(customListAdapter);
+                          case 5: //averageInitialCapacity
+                              for (ChargingOperationGet temp : testowaLista2)
+                                  parameterToView.add(String.valueOf(round(temp.getInitialCapacity(), 2) + " kWh") + ";" + temp.getId());
+
+                              showPopup("Śr. nał. początkowe");
+                              break;
+                      }
+                  }
+
+                  if(parameterToView!=null) {
+
+                      customListAdapter = new StatisticsPopupListAdapter(getActivity(), R.layout.details_list_layout, parameterToView);
+                      listview.setAdapter(customListAdapter);
+
+                  }
                 }
             });
         }
+    }
+
+
+    public BigDecimal round(double d, int decimalPlace) {
+        BigDecimal bd = new BigDecimal(Double.toString(d));
+        bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
+        return bd;
     }
 
 

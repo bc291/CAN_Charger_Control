@@ -25,7 +25,7 @@
 
 
     <TextView
-        android:id="@+id/textView_carModel"
+        android:id="@+id/textView_parameter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/textView_transactionId"
@@ -54,7 +54,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/textView_carModel"
+        android:layout_alignStart="@+id/textView_parameter"
         android:layout_marginBottom="16dp"
         android:text="Date"
         android:textAlignment="viewStart"

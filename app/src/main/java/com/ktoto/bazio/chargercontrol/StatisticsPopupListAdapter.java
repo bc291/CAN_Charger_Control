@@ -34,17 +34,19 @@ public class StatisticsPopupListAdapter extends ArrayAdapter<String>  {
         String positionFixed=null;
         View view= layoutInflater.inflate(resource, null);
 
-        if(position<10) positionFixed="0"+(position+1);
-        else if(position>9 && position<100) positionFixed = String.valueOf(position+1);
+        if(position<9) positionFixed="0"+(position+1);
+        else if(position>8 && position<99) positionFixed = String.valueOf(position+1);
 
 
-        TextView textView_carModel = (TextView) view.findViewById(R.id.textView_carModel);
+        TextView textView_parameter = (TextView) view.findViewById(R.id.textView_parameter);
         TextView textView_transactionId = (TextView) view.findViewById(R.id.textView_transactionId);
+        TextView textView_ID = (TextView) view.findViewById(R.id.textView_ID);
+
+        String[] stringArray = list.get(position).split(";");
 
 
-
-
-        textView_carModel.setText(list.get(position));
+        textView_parameter.setText(stringArray[0]);
+        textView_ID.setText("#" + stringArray[1]);
         textView_transactionId.setText(positionFixed);
         return view;
     }

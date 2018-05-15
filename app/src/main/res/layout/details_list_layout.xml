@@ -6,8 +6,19 @@
 
 <RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="50dp"
+    android:layout_height="40dp"
    >
+
+    <TextView
+        android:id="@+id/textView_ID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="ID"
+        android:textAlignment="viewStart"
+        android:textColor="@color/white"
+        android:textSize="22sp" />
 
     <TextView
         android:id="@+id/textView_transactionId"
@@ -15,25 +26,25 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
+        android:layout_marginStart="31dp"
         android:gravity="center"
-        android:padding="15dp"
         android:text="TrId"
-        android:textColor="#ffffff"
-        android:textSize="20sp" />
+        android:textColor="@color/white"
+        android:textSize="22sp" />
 
 
     <TextView
-        android:id="@+id/textView_carModel"
+        android:id="@+id/textView_parameter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="18dp"
-        android:layout_toEndOf="@+id/textView_transactionId"
+        android:layout_alignBaseline="@+id/textView_ID"
+        android:layout_alignBottom="@+id/textView_ID"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="15dp"
         android:text="CarModel"
         android:textAlignment="viewStart"
         android:textColor="@color/white"
-        android:textSize="25sp"
-        android:textStyle="bold" />
+        android:textSize="22sp" />
 
 </RelativeLayout>
 </LinearLayout>

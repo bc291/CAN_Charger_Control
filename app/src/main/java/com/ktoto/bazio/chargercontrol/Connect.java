@@ -27,6 +27,7 @@ import com.ntt.customgaugeview.library.GaugeView;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.NumberFormat;
@@ -59,11 +60,14 @@ public class Connect extends Fragment {
     static final UUID myUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     Button button2, btnPostTest;
     TextView textView6, txtActualBatteryCapacity, txtRemainingTime, txtPower, txtCost, txtInitialBatteryCapacity, txtMaxChargingVoltage, txtTotalBatteryCapacity;
+    TextView txtIsChargingActive;
+
     GaugeView gaugeView, gaugeView2;
     List<String> testowaLista;
     ChargerData chargerData = new ChargerData();
     CarData carData = new CarData();
     ChargingOperation chargingOperation = new ChargingOperation();
+    double energyCost=0.51;
 
     @Nullable
     @Override
@@ -84,6 +88,7 @@ public class Connect extends Fragment {
         txtMaxChargingVoltage = (TextView)myView.findViewById(R.id.txtMaxChargingVoltage);
         txtTotalBatteryCapacity = (TextView)myView.findViewById(R.id.txtTotalBatteryCapacity);
 
+        txtIsChargingActive = (TextView) myView.findViewById(R.id.txtIsChargingActive);
 
         gaugeView  = (GaugeView) myView.findViewById(R.id.gauge_view);
         gaugeView2  = (GaugeView) myView.findViewById(R.id.gauge_view2);
@@ -104,7 +109,7 @@ public class Connect extends Fragment {
             @Override
             public void onClick(View v) {
 
-                sendPostMessage();
+                sendUARTStopMessage();
             }
         });
 
@@ -158,7 +163,7 @@ public class Connect extends Fragment {
                                                     Log.d("logowanie", data);
                                                     textView6.setText(data);
 
-                                                    if(data !=null && data.charAt(0)=='#') {
+                                                    if(data !=null && data.length()!=0 && data.charAt(0)=='#') { //data.length()!=0
                                                         afterSuffixRemoved = data.replace("#", "");
                                                         testowaLista = Arrays.asList(afterSuffixRemoved.split(";"));
                                                         chargerData.setAmps(Integer.parseInt(testowaLista.get(0)));
@@ -176,11 +181,8 @@ public class Connect extends Fragment {
                                                         txtRemainingTime.setText(String.valueOf((int)(chargerData.getRemainingTime())+" m ")+temp+" s");
                                                         txtPower.setText(String.valueOf(chargerData.getPower()/1000)+" kWh");
 
-                                                        double money = 0.51 * chargerData.getKwh();
-                                                        Locale locale = new Locale("pl", "PL");
-                                                        NumberFormat formatter = NumberFormat.getCurrencyInstance(locale);
-                                                        String moneyString = formatter.format(money);
-                                                        txtCost.setText(moneyString);
+                                                        double money = getMoneyFromKwh(chargerData.getKwh());
+                                                        txtCost.setText(getCurrencyFromNumber(money));
 
                                                         carData.setMaxChargingVoltage(Integer.parseInt(testowaLista.get(8)));
                                                         carData.setTotalBatteryCapacity(Float.parseFloat(testowaLista.get(9))*0.11);
@@ -190,12 +192,12 @@ public class Connect extends Fragment {
                                                         chargerData.setChargingTime(Integer.parseInt(testowaLista.get(10))/1000);
                                                         isChargingActive = Integer.parseInt(testowaLista.get(11)) > 0 ? true : false;
                                                         //textView6.setText(String.valueOf(isChargingActive));
-
+                                                        txtIsChargingActive.setText(String.valueOf(isChargingActive));
                                                         initialCapacity = round((chargerData.getActualBatteryCapacity()-chargerData.getKwh()),2).doubleValue();
 
                                                         if(!wasChargingActive && isChargingActive) wasChargingActive=true;
 
-                                                        if(!isChargingActive && wasChargingActive)
+                                                        if(!isChargingActive && wasChargingActive && money>0.01)
                                                         {
                                                             wasChargingActive=false;
                                                             sendPostMessage();
@@ -229,10 +231,35 @@ public class Connect extends Fragment {
         return myView;
     }
 
+//TODO ten bottom navigartion size w historii ładowania na 50dp to tak średnio
+
+
+
+
+
+    public double getMoneyFromKwh(double kwH)
+    {
+        return energyCost*kwH;
+    }
+
+
+    public String getCurrencyFromNumber(double money)
+    {
+        Locale locale = new Locale("pl", "PL");
+        NumberFormat formatter = NumberFormat.getCurrencyInstance(locale);
+        String moneyString = formatter.format(money);
+        return moneyString;
+    }
 
 
     public BigDecimal round(float d, int decimalPlace) {
         BigDecimal bd = new BigDecimal(Float.toString(d));
+        bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
+        return bd;
+    }
+
+    public BigDecimal round(double d, int decimalPlace) {
+        BigDecimal bd = new BigDecimal(Double.toString(d));
         bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
         return bd;
     }
@@ -316,7 +343,7 @@ public class Connect extends Fragment {
         chargingOperation.setAveragePower((double)chargerData.getPower());
         chargingOperation.setCapacityCharged(round(chargerData.getActualBatteryCapacity(),2).doubleValue());
         chargingOperation.setCarModel("nissan leaf");
-        chargingOperation.setCost(round(chargerData.getKwh(),2).doubleValue());
+        chargingOperation.setCost(round(getMoneyFromKwh(chargerData.getKwh()),2).doubleValue());
         chargingOperation.setElapsedTime(2323.4343);
 
 
@@ -330,6 +357,23 @@ public class Connect extends Fragment {
         asyncPost asyncpostt = new asyncPost();
         asyncHelper asyncHelp = new asyncHelper(getActivity(), chargingOperation);
         asyncpostt.execute(asyncHelp);
+
+    }
+
+
+    public void sendUARTStopMessage()
+    {
+        OutputStream outputStream=null;
+        if (obslugaBluetooth != null) {
+            try {
+                outputStream = obslugaBluetooth.getOutputStream();
+                msg("Wyslano UART");
+                outputStream.write("1".toString().getBytes());
+                msg("Wyslano UART");
+            } catch (IOException e) {
+                msg("Błąd");
+            }
+        }
 
     }
 }

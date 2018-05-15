@@ -32,6 +32,7 @@ import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -68,6 +69,7 @@ public class Connect extends Fragment {
     CarData carData = new CarData();
     ChargingOperation chargingOperation = new ChargingOperation();
     double energyCost=0.51;
+    List<Float> averagePowerList;
 
     @Nullable
     @Override
@@ -93,6 +95,7 @@ public class Connect extends Fragment {
         gaugeView  = (GaugeView) myView.findViewById(R.id.gauge_view);
         gaugeView2  = (GaugeView) myView.findViewById(R.id.gauge_view2);
 
+        averagePowerList = new ArrayList<Float>();
 
         gaugeView.setShowRangeValues(true);
         gaugeView.setTargetValue(0);
@@ -202,6 +205,8 @@ public class Connect extends Fragment {
                                                             wasChargingActive=false;
                                                             sendPostMessage();
                                                         }
+
+                                                        if(chargerData.getPower()>0) averagePowerList.add(chargerData.getPower());
                                                     }
 
                                                 }
@@ -339,12 +344,24 @@ public class Connect extends Fragment {
 
     public void sendPostMessage()
     {
+        float averagePowerTakenFromList=0f;
+        double averagePowerTakenFromListAsDouble=0.0;
+        for(float temp : averagePowerList) averagePowerTakenFromList+=temp;
+
+
+        averagePowerTakenFromList/=averagePowerList.size();
+        averagePowerTakenFromListAsDouble = round(averagePowerTakenFromList/1000, 2).doubleValue();
+
+        double elapsTime = (Math.floor(chargerData.getChargingTime()/60));
+
+
+
         chargingOperation.setInitialCapacity(initialCapacity);
-        chargingOperation.setAveragePower((double)chargerData.getPower());
+        chargingOperation.setAveragePower(averagePowerTakenFromListAsDouble);
         chargingOperation.setCapacityCharged(round(chargerData.getActualBatteryCapacity(),2).doubleValue());
         chargingOperation.setCarModel("nissan leaf");
         chargingOperation.setCost(round(getMoneyFromKwh(chargerData.getKwh()),2).doubleValue());
-        chargingOperation.setElapsedTime(2323.4343);
+        chargingOperation.setElapsedTime(elapsTime);
 
 
         DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");

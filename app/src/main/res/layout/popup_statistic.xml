@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="15dp"
-            android:text="Nazwa parametru"
+            android:text="@string/nazwa_parametruStr"
             android:textColor="@color/white"
             android:textSize="30sp"
             android:textStyle="bold|italic" />
@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="5dp"
-            android:text="Wartości składowe wybranego parametru"
+            android:text="@string/Wartosci_Skladowe_Str"
             android:textColor="@color/white"
             android:textStyle="bold|italic" />
 
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="5dp"
-            android:text="Liczba operacji"
+            android:text="@string/OperationsNumberStr"
             android:textColor="@color/white"
             android:textStyle="bold" />
     </LinearLayout>
@@ -61,7 +61,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginStart="11dp"
-            android:text="Nr. operacji"
+            android:text="@string/OperationNumberPopupStr"
             android:textColor="@color/white"
             android:textStyle="bold" />
 
@@ -73,7 +73,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
             android:layout_marginEnd="12dp"
-            android:text="Wartość"
+            android:text="@string/Value_popupStr"
             android:textColor="@color/white"
             android:textStyle="bold" />
 
@@ -83,7 +83,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:text="ID"
+            android:text="@string/ID_operation_popupStr"
             android:textColor="@color/white"
             android:textStyle="bold" />
     </RelativeLayout>
@@ -110,7 +110,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="15dp"
         android:background="@drawable/button_style"
-        android:text="Zamknij okno"
+        android:text="@string/Close_Popup_Str"
         android:textColor="@color/white"/>
     <Space
         android:layout_width="match_parent"

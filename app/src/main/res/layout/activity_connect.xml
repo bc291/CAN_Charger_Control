@@ -27,7 +27,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="Nissan LEAF"
+                android:text="@string/carModelDefault"
                 android:textColor="#ffffff"
                 android:textSize="26sp"
                 android:textStyle="bold" />
@@ -80,8 +80,6 @@
                 android:id="@+id/gauge_view"
                 android:layout_width="179dp"
                 android:layout_height="194dp"
-                android:layout_alignBottom="@+id/button2"
-                android:layout_alignEnd="@+id/textView6"
                 android:layout_marginStart="16dp"
 
                 gauge:divisions="8"
@@ -104,7 +102,6 @@
                 android:id="@+id/gauge_view2"
                 android:layout_width="179dp"
                 android:layout_height="194dp"
-                android:layout_alignStart="@+id/button2"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 gauge:divisions="10"
@@ -128,11 +125,11 @@
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="160dp">
+        android:layout_height="170dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="160dp">
+            android:layout_height="170dp">
 
             <android.support.v7.widget.CardView
                 android:id="@+id/cardView2"
@@ -148,7 +145,7 @@
                 <GridLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:columnCount="3"
+                    android:columnCount="2"
                     android:rowCount="4">
 
                     <TextView
@@ -156,24 +153,24 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_column="0"
-                        android:layout_columnSpan="2"
+                        android:layout_columnSpan="1"
                         android:layout_columnWeight="1"
                         android:layout_gravity="center"
                         android:layout_row="0"
                         android:fontFamily="monospace"
-                        android:text="Czas do końca ładowania:" />
+                        android:text="@string/RemainingTimeStr" />
 
                     <TextView
                         android:id="@+id/txtRemainingTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_column="2"
+                        android:layout_column="1"
                         android:layout_columnWeight="1"
                         android:layout_gravity="center"
                         android:layout_row="0"
                         android:fontFamily="monospace"
-                        android:text="Test2"
-                        android:textColor="@color/colorPrimary"
+                        android:text="@string/TestStr"
+                        android:textColor="@color/bluePopup"
                         android:textSize="20sp" />
 
 
@@ -182,24 +179,24 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_column="0"
-                        android:layout_columnSpan="2"
+                        android:layout_columnSpan="1"
                         android:layout_columnWeight="1"
                         android:layout_gravity="center"
                         android:layout_row="1"
                         android:fontFamily="monospace"
-                        android:text="Aktualna poj. akumulatora:" />
+                        android:text="@string/ActualAccuCapacityStr" />
 
                     <TextView
                         android:id="@+id/txtActualBatteryCapacity"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_column="2"
+                        android:layout_column="1"
                         android:layout_columnWeight="1"
                         android:layout_gravity="center"
                         android:layout_row="1"
                         android:fontFamily="monospace"
-                        android:text="Test2"
-                        android:textColor="@color/colorPrimary"
+                        android:text="@string/TestStr"
+                        android:textColor="@color/bluePopup"
                         android:textSize="20sp" />
 
                     <TextView
@@ -207,48 +204,48 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_column="0"
-                        android:layout_columnSpan="2"
+                        android:layout_columnSpan="1"
                         android:layout_columnWeight="1"
                         android:layout_gravity="center"
                         android:layout_row="2"
                         android:fontFamily="monospace"
-                        android:text="Moc" />
+                        android:text="@string/PowerStr" />
 
                     <TextView
                         android:id="@+id/txtPower"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_column="2"
+                        android:layout_column="1"
                         android:layout_columnWeight="1"
                         android:layout_gravity="center"
                         android:layout_row="2"
                         android:fontFamily="monospace"
-                        android:text="Test2"
-                        android:textColor="@color/colorPrimary"
+                        android:text="@string/TestStr"
+                        android:textColor="@color/bluePopup"
                         android:textSize="20sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_column="0"
-                        android:layout_columnSpan="2"
+                        android:layout_columnSpan="1"
                         android:layout_columnWeight="1"
                         android:layout_gravity="center"
                         android:layout_row="3"
                         android:fontFamily="monospace"
-                        android:text="Koszt ładowania: " />
+                        android:text="@string/ChargingCostStr" />
 
                     <TextView
                         android:id="@+id/txtCost"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_column="2"
+                        android:layout_column="1"
                         android:layout_columnWeight="1"
                         android:layout_gravity="center"
                         android:layout_row="3"
                         android:fontFamily="monospace"
-                        android:text="Test2"
-                        android:textColor="@color/colorPrimary"
+                        android:text="@string/TestStr"
+                        android:textColor="@color/bluePopup"
                         android:textSize="20sp" />
                 </GridLayout>
 
@@ -279,7 +276,7 @@
                 <GridLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:columnCount="3"
+                    android:columnCount="2"
                     android:rowCount="4">
 
                     <TextView
@@ -287,25 +284,25 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_column="0"
-                        android:layout_columnSpan="2"
+                        android:layout_columnSpan="1"
                         android:layout_columnWeight="1"
                         android:layout_gravity="center"
                         android:layout_row="0"
                         android:fontFamily="monospace"
-                        android:text="Maks. wartość nap. ład." />
+                        android:text="@string/MaxChargingVoltageStr" />
 
 
                     <TextView
                         android:id="@+id/txtMaxChargingVoltage"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_column="2"
+                        android:layout_column="1"
                         android:layout_columnWeight="1"
                         android:layout_gravity="center"
                         android:layout_row="0"
                         android:fontFamily="monospace"
-                        android:text="Test2"
-                        android:textColor="@color/colorPrimary"
+                        android:text="@string/TestStr"
+                        android:textColor="@color/bluePopup"
                         android:textSize="20sp" />
 
                     <TextView
@@ -313,24 +310,24 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_column="0"
-                        android:layout_columnSpan="2"
+                        android:layout_columnSpan="1"
                         android:layout_columnWeight="1"
                         android:layout_gravity="center"
                         android:layout_row="1"
                         android:fontFamily="monospace"
-                        android:text="Całkowita poj. aku.:" />
+                        android:text="@string/TotalAccuCapacityStr" />
 
                     <TextView
                         android:id="@+id/txtTotalBatteryCapacity"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_column="2"
+                        android:layout_column="1"
                         android:layout_columnWeight="1"
                         android:layout_gravity="center"
                         android:layout_row="1"
                         android:fontFamily="monospace"
-                        android:text="Test2"
-                        android:textColor="@color/colorPrimary"
+                        android:text="@string/TestStr"
+                        android:textColor="@color/bluePopup"
                         android:textSize="20sp" />
 
 
@@ -355,8 +352,6 @@
                 android:id="@+id/button2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/textView6"
-                android:layout_centerHorizontal="true"
                 android:layout_marginStart="32dp"
                 android:text="POŁĄCZ" />
 
@@ -364,6 +359,7 @@
                 android:id="@+id/btnPostTest"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="monospace"
                 android:text="ZAKOŃCZ ŁAD." />
 
             <TextView

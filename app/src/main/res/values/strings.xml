@@ -88,4 +88,29 @@
     <string name="pref_title_vibrate">Vibrate</string>
 
     <string name="title_details">Szczegóły</string>
+    <string name="carModelDefault">Nissan LEAF</string>
+    <string name="RemainingTimeStr">Czas do końca ładowania:</string>
+    <string name="TestStr">Test2</string>
+    <string name="ChargingCostStr">Koszt ładowania:</string>
+    <string name="ActualAccuCapacityStr">Aktualna poj. akumulatora:</string>
+    <string name="TotalAccuCapacityStr">Całkowita poj. aku.:</string>
+    <string name="MaxChargingVoltageStr">Maks. wartość nap. ład.</string>
+    <string name="PowerStr">Moc</string>
+    <string name="nazwa_parametruStr">Nazwa parametru</string>
+    <string name="Wartosci_Skladowe_Str">Wartości składowe wybranego parametru</string>
+    <string name="OperationsNumberStr">Liczba operacji</string>
+    <string name="Close_Popup_Str">Zamknij okno</string>
+    <string name="ID_operation_popupStr">ID</string>
+    <string name="Value_popupStr">Wartość</string>
+    <string name="OperationNumberPopupStr">Nr. operacji</string>
+    <string name="kwh_popupStr">kWh</string>
+    <string name="NullStr">null</string>
+    <string name="PolishCurrencyStr">zł</string>
+    <string name="AfterChargCapacityStr">Poj. po ład.</string>
+    <string name="kwStr">kW</string>
+    <string name="AveragePowerStr">Średnia moc</string>
+    <string name="CostStr">Koszt</string>
+    <string name="minutesStr">min</string>
+    <string name="ChargingTimeStr">Czas ład.</string>
+    <string name="InitialCapaciryStr">Poj. począt.</string>
 </resources>

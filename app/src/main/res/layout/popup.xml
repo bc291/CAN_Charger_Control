@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="15dp"
-            android:text="Test"
+            android:text="@string/TestStr"
             android:textColor="@color/white"
             android:textSize="30sp"
             android:textStyle="bold|italic" />
@@ -34,9 +34,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="5dp"
-            android:text="Test"
-            android:textStyle="bold|italic"
-            android:textColor="@color/white"/>
+            android:text="@string/TestStr"
+            android:textColor="@color/white"
+            android:textStyle="bold|italic" />
 
         <TextView
             android:id="@+id/txtDateAndTime"
@@ -44,9 +44,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="5dp"
-            android:text="Test2"
-            android:textStyle="bold"
-            android:textColor="@color/white"/>
+            android:text="@string/TestStr"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
     </LinearLayout>
     
     <LinearLayout
@@ -69,7 +69,7 @@
                 android:layout_height="30dp"
                 android:layout_gravity="end"
                 android:gravity="center"
-                android:text="kWh"
+                android:text="@string/kwh_popupStr"
                 android:textColor="@color/white"
                 android:background="@drawable/popup_circle"
                 android:layout_marginRight="5dp"/>
@@ -82,7 +82,7 @@
                 android:id="@+id/txtCapacityCharged"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="null"
+                android:text="@string/NullStr"
                 android:textColor="@color/white"
                 android:textSize="18sp"
 
@@ -95,7 +95,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Poj. po ład."
+                android:text="@string/AfterChargCapacityStr"
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 android:textStyle="italic"/>
@@ -117,7 +117,7 @@
                 android:layout_height="30dp"
                 android:layout_gravity="end"
                 android:gravity="center"
-                android:text="kW"
+                android:text="@string/kwStr"
                 android:textColor="@color/white"
                 android:background="@drawable/popup_circle"
                 android:layout_marginRight="5dp"/>
@@ -130,7 +130,7 @@
                 android:id="@+id/txtAveragePower"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="null"
+                android:text="@string/NullStr"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
 
@@ -141,7 +141,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Średnia moc"
+                android:text="@string/AveragePowerStr"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
         </LinearLayout>
@@ -161,7 +161,7 @@
                 android:layout_height="30dp"
                 android:layout_gravity="end"
                 android:gravity="center"
-                android:text="zł"
+                android:text="@string/PolishCurrencyStr"
                 android:textColor="@color/white"
                 android:background="@drawable/popup_circle"
                 android:layout_marginRight="5dp"/>
@@ -174,7 +174,7 @@
                 android:id="@+id/txtCost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="null"
+                android:text="@string/NullStr"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
 
@@ -185,7 +185,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Koszt"
+                android:text="@string/CostStr"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
         </LinearLayout>
@@ -212,7 +212,7 @@
                 android:layout_height="30dp"
                 android:layout_gravity="end"
                 android:gravity="center"
-                android:text="min"
+                android:text="@string/minutesStr"
                 android:textColor="@color/white"
                 android:background="@drawable/popup_circle"
                 android:layout_marginRight="5dp"/>
@@ -226,7 +226,7 @@
                 android:id="@+id/txtElapsedTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="null"
+                android:text="@string/NullStr"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
 
@@ -238,7 +238,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Czas ład."
+                android:text="@string/ChargingTimeStr"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
         </LinearLayout>
@@ -257,11 +257,11 @@
                 android:layout_width="40dp"
                 android:layout_height="30dp"
                 android:layout_gravity="end"
-                android:gravity="center"
-                android:text="kWh"
-                android:textColor="@color/white"
+                android:layout_marginRight="5dp"
                 android:background="@drawable/popup_circle"
-                android:layout_marginRight="5dp"/>
+                android:gravity="center"
+                android:text="@string/kwh_popupStr"
+                android:textColor="@color/white" />
 
             <Space
                 android:layout_width="wrap_content"
@@ -271,7 +271,7 @@
                 android:id="@+id/txtInitialCapacity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="null"
+                android:text="@string/NullStr"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
 
@@ -282,7 +282,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Poj. począt."
+                android:text="@string/InitialCapaciryStr"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
         </LinearLayout>
@@ -299,11 +299,11 @@
                 android:layout_width="40dp"
                 android:layout_height="30dp"
                 android:layout_gravity="end"
-                android:gravity="center"
-                android:text="test"
-                android:textColor="@color/white"
+                android:layout_marginRight="5dp"
                 android:background="@drawable/popup_circle"
-                android:layout_marginRight="5dp"/>
+                android:gravity="center"
+                android:text="@string/TestStr"
+                android:textColor="@color/white" />
 
             <Space
                 android:layout_width="wrap_content"
@@ -312,7 +312,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="null"
+                android:text="@string/NullStr"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
 
@@ -324,7 +324,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Test"
+                android:text="@string/TestStr"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
         </LinearLayout>
@@ -337,6 +337,6 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="15dp"
         android:background="@drawable/button_style"
-        android:text="Zamknij okno"
+        android:text="@string/Close_Popup_Str"
         android:textColor="@color/white" />
 </LinearLayout>

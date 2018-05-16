@@ -1,5 +1,7 @@
 package com.ktoto.bazio.chargercontrol;
 
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
@@ -68,7 +70,7 @@ public class Connect extends Fragment {
     ChargerData chargerData = new ChargerData();
     CarData carData = new CarData();
     ChargingOperation chargingOperation = new ChargingOperation();
-    double energyCost=0.51;
+    double energyCost;
     List<Float> averagePowerList;
 
     @Nullable
@@ -80,6 +82,11 @@ public class Connect extends Fragment {
 
         btnPostTest = (Button) myView.findViewById(R.id.btnPostTest);
 
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+
+        energyCost = Double.parseDouble(sharedPreferences.getString("power_cost", "0.51"));
+
+        //TODO zeby stringow nie wspisywac zabezpieczenie w settings
 
         textView6 = (TextView)myView.findViewById(R.id.textView6);
         txtActualBatteryCapacity = (TextView)myView.findViewById(R.id.txtActualBatteryCapacity);

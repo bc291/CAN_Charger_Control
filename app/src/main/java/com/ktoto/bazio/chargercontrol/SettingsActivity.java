@@ -168,6 +168,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // guidelines.
             bindPreferenceSummaryToValue(findPreference("port_number"));
             bindPreferenceSummaryToValue(findPreference("ip_number"));
+            bindPreferenceSummaryToValue(findPreference("power_cost"));
             bindPreferenceSummaryToValue(findPreference("server_timeout_list"));
         }
 

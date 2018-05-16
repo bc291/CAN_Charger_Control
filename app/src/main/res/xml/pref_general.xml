@@ -21,6 +21,16 @@
         android:singleLine="false"
         android:title="Adres ip hosta" />
 
+    <EditTextPreference
+        android:capitalize="words"
+        android:defaultValue="0.51"
+        android:inputType="text"
+        android:key="power_cost"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="false"
+        android:title="Koszt energii el. (1kWh)" />
+
     <SwitchPreference
         android:defaultValue="true"
         android:key="example_switch"

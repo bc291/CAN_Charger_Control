@@ -310,7 +310,7 @@ public class Connect extends Fragment {
 
         @Override
         protected void onPreExecute() {
-            progress = ProgressDialog.show(getActivity(), "Łaczenie", "Proszę upewnić się, że moduł BT został włączony");
+            progress = ProgressDialog.show(getActivity(), "Łaczenie", "Proszę czekać");
         }
 
         @Override
@@ -399,12 +399,12 @@ public class Connect extends Fragment {
     public void sendUARTStopMessage()
     {
         OutputStream outputStream=null;
-        if (obslugaBluetooth != null) {
+        if (obslugaBluetooth != null && isChargingActive) //isChargingActive
+        {
             try {
                 outputStream = obslugaBluetooth.getOutputStream();
-                msg("Wyslano UART");
+                msg("Wyslano Wiadomość UART");
                 outputStream.write("1".toString().getBytes());
-                msg("Wyslano UART");
             } catch (IOException e) {
                 msg("Błąd");
             }

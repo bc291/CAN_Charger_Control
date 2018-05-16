@@ -36,32 +36,35 @@
 
     </RelativeLayout>
 
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="68dp"
-        android:layout_gravity="center"
-        android:gravity="center">
+        android:layout_height="38dp">
 
 
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="70dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
             android:background="@drawable/conn_status_off"
             >
 
             <TextView
                 android:id="@+id/txtIsChargingActive"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="chActive"
-                android:textSize="18sp" />
+                android:text="status"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="italic" />
         </LinearLayout>
 
 
     </RelativeLayout>
+
+
 
 
     <RelativeLayout
@@ -80,8 +83,7 @@
                 android:layout_alignBottom="@+id/button2"
                 android:layout_alignEnd="@+id/textView6"
                 android:layout_marginStart="16dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+
                 gauge:divisions="8"
                 gauge:rangeValues="@array/speedTestRangeValues"
                 gauge:scaleEndValue="5000"
@@ -105,10 +107,6 @@
                 android:layout_alignStart="@+id/button2"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.619"
-                app:layout_constraintStart_toEndOf="@+id/gauge_view"
-                app:layout_constraintTop_toTopOf="parent"
                 gauge:divisions="10"
                 gauge:rangeValues="@array/speedTestRangeValues2"
                 gauge:scaleEndValue="5000"
@@ -128,252 +126,254 @@
 
 
     </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="160dp">
 
-
-    <android.support.constraint.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="8">
+            android:layout_height="160dp">
 
-        <Button
-            android:id="@+id/btnPostTest"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="10dp"
-            android:text="ZAKOŃCZ"
-            app:layout_constraintStart_toEndOf="@+id/button2"
-            app:layout_constraintTop_toBottomOf="@+id/cardView" />
-
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="387dp"
-            android:layout_height="81dp"
-            android:layout_alignParentTop="true"
-            android:layout_marginBottom="32dp"
-            android:layout_marginEnd="10dp"
-            android:textColor="#000000"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/textView6"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:text="POŁĄCZ"
-            app:layout_constraintTop_toBottomOf="@+id/cardView"
-            tools:layout_editor_absoluteX="49dp" />
-
-
-        <android.support.v7.widget.CardView
-            android:id="@+id/cardView2"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_marginBottom="260dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="10dp"
-            app:cardCornerRadius="8dp"
-            app:cardElevation="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <GridLayout
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardView2"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:columnCount="3"
-                android:rowCount="4">
+                android:layout_height="150dp"
+                android:layout_marginBottom="260dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="8dp">
 
-                <TextView
+                <GridLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:columnCount="3"
+                    android:rowCount="4">
 
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_column="0"
-                    android:layout_columnSpan="2"
-                    android:layout_columnWeight="1"
-                    android:layout_gravity="center"
-                    android:layout_row="0"
-                    android:fontFamily="monospace"
-                    android:text="Czas do końca ładowania:" />
+                    <TextView
 
-                <TextView
-                    android:id="@+id/txtRemainingTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_column="2"
-                    android:layout_columnWeight="1"
-                    android:layout_gravity="center"
-                    android:layout_row="0"
-                    android:fontFamily="monospace"
-                    android:text="Test2"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="20sp" />
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="0"
+                        android:layout_columnSpan="2"
+                        android:layout_columnWeight="1"
+                        android:layout_gravity="center"
+                        android:layout_row="0"
+                        android:fontFamily="monospace"
+                        android:text="Czas do końca ładowania:" />
 
-
-                <TextView
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_column="0"
-                    android:layout_columnSpan="2"
-                    android:layout_columnWeight="1"
-                    android:layout_gravity="center"
-                    android:layout_row="1"
-                    android:fontFamily="monospace"
-                    android:text="Aktualna poj. akumulatora" />
-
-                <TextView
-                    android:id="@+id/txtActualBatteryCapacity"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_column="2"
-                    android:layout_columnWeight="1"
-                    android:layout_gravity="center"
-                    android:layout_row="1"
-                    android:fontFamily="monospace"
-                    android:text="Test2"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="20sp" />
-
-                <TextView
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_column="0"
-                    android:layout_columnSpan="2"
-                    android:layout_columnWeight="1"
-                    android:layout_gravity="center"
-                    android:layout_row="2"
-                    android:fontFamily="monospace"
-                    android:text="Moc" />
-
-                <TextView
-                    android:id="@+id/txtPower"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_column="2"
-                    android:layout_columnWeight="1"
-                    android:layout_gravity="center"
-                    android:layout_row="2"
-                    android:fontFamily="monospace"
-                    android:text="Test2"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_column="0"
-                    android:layout_columnSpan="2"
-                    android:layout_columnWeight="1"
-                    android:layout_gravity="center"
-                    android:layout_row="3"
-                    android:fontFamily="monospace"
-                    android:text="Koszt ładowania: " />
-
-                <TextView
-                    android:id="@+id/txtCost"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_column="2"
-                    android:layout_columnWeight="1"
-                    android:layout_gravity="center"
-                    android:layout_row="3"
-                    android:fontFamily="monospace"
-                    android:text="Test2"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="20sp" />
-            </GridLayout>
-
-        </android.support.v7.widget.CardView>
+                    <TextView
+                        android:id="@+id/txtRemainingTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="2"
+                        android:layout_columnWeight="1"
+                        android:layout_gravity="center"
+                        android:layout_row="0"
+                        android:fontFamily="monospace"
+                        android:text="Test2"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="20sp" />
 
 
-        <android.support.v7.widget.CardView
-            android:id="@+id/cardView"
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="0"
+                        android:layout_columnSpan="2"
+                        android:layout_columnWeight="1"
+                        android:layout_gravity="center"
+                        android:layout_row="1"
+                        android:fontFamily="monospace"
+                        android:text="Aktualna poj. akumulatora:" />
+
+                    <TextView
+                        android:id="@+id/txtActualBatteryCapacity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="2"
+                        android:layout_columnWeight="1"
+                        android:layout_gravity="center"
+                        android:layout_row="1"
+                        android:fontFamily="monospace"
+                        android:text="Test2"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="20sp" />
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="0"
+                        android:layout_columnSpan="2"
+                        android:layout_columnWeight="1"
+                        android:layout_gravity="center"
+                        android:layout_row="2"
+                        android:fontFamily="monospace"
+                        android:text="Moc" />
+
+                    <TextView
+                        android:id="@+id/txtPower"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="2"
+                        android:layout_columnWeight="1"
+                        android:layout_gravity="center"
+                        android:layout_row="2"
+                        android:fontFamily="monospace"
+                        android:text="Test2"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="0"
+                        android:layout_columnSpan="2"
+                        android:layout_columnWeight="1"
+                        android:layout_gravity="center"
+                        android:layout_row="3"
+                        android:fontFamily="monospace"
+                        android:text="Koszt ładowania: " />
+
+                    <TextView
+                        android:id="@+id/txtCost"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="2"
+                        android:layout_columnWeight="1"
+                        android:layout_gravity="center"
+                        android:layout_row="3"
+                        android:fontFamily="monospace"
+                        android:text="Test2"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="20sp" />
+                </GridLayout>
+
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:layout_marginBottom="170dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="20dp"
-            app:cardCornerRadius="8dp"
-            app:cardElevation="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardView2">
+            android:layout_height="100dp">
 
-            <GridLayout
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:columnCount="3"
-                android:rowCount="4">
+                android:layout_height="80dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="8dp">
 
-                <TextView
+                <GridLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:columnCount="3"
+                    android:rowCount="4">
 
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_column="0"
-                    android:layout_columnSpan="2"
-                    android:layout_columnWeight="1"
-                    android:layout_gravity="center"
-                    android:layout_row="0"
-                    android:fontFamily="monospace"
-                    android:text="Maks. wartość nap. ład." />
+                    <TextView
 
-
-                <TextView
-                    android:id="@+id/txtMaxChargingVoltage"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_column="2"
-                    android:layout_columnWeight="1"
-                    android:layout_gravity="center"
-                    android:layout_row="0"
-                    android:fontFamily="monospace"
-                    android:text="Test2"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="20sp" />
-
-                <TextView
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_column="0"
-                    android:layout_columnSpan="2"
-                    android:layout_columnWeight="1"
-                    android:layout_gravity="center"
-                    android:layout_row="1"
-                    android:fontFamily="monospace"
-                    android:text="Całkowita poj. aku.:" />
-
-                <TextView
-                    android:id="@+id/txtTotalBatteryCapacity"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_column="2"
-                    android:layout_columnWeight="1"
-                    android:layout_gravity="center"
-                    android:layout_row="1"
-                    android:fontFamily="monospace"
-                    android:text="Test2"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="20sp" />
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="0"
+                        android:layout_columnSpan="2"
+                        android:layout_columnWeight="1"
+                        android:layout_gravity="center"
+                        android:layout_row="0"
+                        android:fontFamily="monospace"
+                        android:text="Maks. wartość nap. ład." />
 
 
-            </GridLayout>
+                    <TextView
+                        android:id="@+id/txtMaxChargingVoltage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="2"
+                        android:layout_columnWeight="1"
+                        android:layout_gravity="center"
+                        android:layout_row="0"
+                        android:fontFamily="monospace"
+                        android:text="Test2"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="20sp" />
 
-        </android.support.v7.widget.CardView>
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="0"
+                        android:layout_columnSpan="2"
+                        android:layout_columnWeight="1"
+                        android:layout_gravity="center"
+                        android:layout_row="1"
+                        android:fontFamily="monospace"
+                        android:text="Całkowita poj. aku.:" />
+
+                    <TextView
+                        android:id="@+id/txtTotalBatteryCapacity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="2"
+                        android:layout_columnWeight="1"
+                        android:layout_gravity="center"
+                        android:layout_row="1"
+                        android:fontFamily="monospace"
+                        android:text="Test2"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="20sp" />
 
 
-    </android.support.constraint.ConstraintLayout>
+                </GridLayout>
+
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
 
 
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp">
+
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView6"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="32dp"
+                android:text="POŁĄCZ" />
+
+            <Button
+                android:id="@+id/btnPostTest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ZAKOŃCZ ŁAD." />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="200dp"
+                android:layout_height="51dp"
+                android:textColor="#000000"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+
+    </RelativeLayout>
 </LinearLayout>

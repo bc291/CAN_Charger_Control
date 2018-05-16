@@ -207,6 +207,17 @@ public class Connect extends Fragment {
                                                         }
 
                                                         if(chargerData.getPower()>0) averagePowerList.add(chargerData.getPower());
+
+                                                        if(isChargingActive)
+                                                        {
+                                                            txtIsChargingActive.setBackground(getResources().getDrawable(R.drawable.conn_status));
+                                                        }
+
+                                                        else
+                                                        {
+                                                            txtIsChargingActive.setBackground(getResources().getDrawable(R.drawable.conn_status_off));
+                                                        }
+
                                                     }
 
                                                 }

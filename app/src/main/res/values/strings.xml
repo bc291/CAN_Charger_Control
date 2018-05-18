@@ -8,7 +8,7 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="title_activity_main_bottom">MainBottom</string>
+    <string name="title_activity_main_bottom">Car Charger</string>
     <string name="title_home">Ekran gł.</string>
     <string name="title_dashboard">Historia ład.</string>
     <string name="title_notifications">Łacznosc BT</string>

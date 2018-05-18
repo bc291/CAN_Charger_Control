@@ -25,6 +25,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -65,6 +67,7 @@ public class StatisticsFragment extends Fragment {
     ListView listview;
     TextView carModeltxt;
     List<String> parameterToView;
+    Animation animation;
 
     @Nullable
     @Override
@@ -79,6 +82,8 @@ public class StatisticsFragment extends Fragment {
         txtAverageCost = (TextView) myView.findViewById(R.id.txtAverageCost);
         txtAverageInitialCapacity = (TextView) myView.findViewById(R.id.txtAverageInitialCapacity);
 
+        animation = AnimationUtils.loadAnimation(getContext(),
+                R.anim.animation_detailes_top_to_bottom);
 
         dialog = new Dialog(getContext());
         dialog.setContentView(R.layout.popup_statistic);
@@ -118,6 +123,16 @@ public class StatisticsFragment extends Fragment {
 
 CardView[] arrayOfCardViews = {card_view, card_view2, card_view3, card_view4, card_view5, card_view6};
 setOnClickListenerToCardViews(arrayOfCardViews);
+
+        for (CardView item:arrayOfCardViews) {
+            item.setVisibility(View.INVISIBLE);
+        }
+
+
+        for (CardView item:arrayOfCardViews) {
+            item.startAnimation(animation);
+            item.setVisibility(View.VISIBLE);
+        }
 
         return myView;
     }

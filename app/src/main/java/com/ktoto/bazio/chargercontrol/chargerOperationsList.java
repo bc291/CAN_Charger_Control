@@ -30,7 +30,7 @@ import java.util.List;
 public class chargerOperationsList extends Fragment implements AdapterView.OnItemClickListener {
     ListView listview;
     List<ChargingOperationGet> list2;
-   // ProgressBar progressBar;
+    ProgressBar progressBar;
     Dialog dialog;
     asyncGet asyncget;
 
@@ -40,8 +40,8 @@ public class chargerOperationsList extends Fragment implements AdapterView.OnIte
         View myView = inflater.inflate(R.layout.activity_charger_operations_list, null);
 
         listview = (ListView) myView.findViewById(R.id.listView);
-     //   progressBar = (ProgressBar) myView.findViewById(R.id.progressBar2);
-      //  progressBar.setVisibility(View.VISIBLE);
+        progressBar = (ProgressBar) myView.findViewById(R.id.progressBar2);
+        progressBar.setVisibility(View.VISIBLE);
 
         dialog = new Dialog(getContext());
 
@@ -64,7 +64,7 @@ public class chargerOperationsList extends Fragment implements AdapterView.OnIte
 
     public void setProgressBarInvisible()
     {
-        //progressBar.setVisibility(View.INVISIBLE);
+        progressBar.setVisibility(View.INVISIBLE);
     }
 
     @Override

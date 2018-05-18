@@ -6,9 +6,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.google.gson.Gson;
+import com.ktoto.bazio.chargercontrol.Fragments.StatisticsFragment;
 import com.ktoto.bazio.chargercontrol.asynce.asyncHelper;
 import com.ktoto.bazio.chargercontrol.asynce.asyncPost;
 
@@ -18,48 +22,69 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class SecondFragment extends Fragment {
-    Button button;
     ChargingOperation chargingOperation;
+    Animation animationFromLeft, animationFromLeftDelayBy200, animationFromLeftDelayBy400;
+    LinearLayout linearFirstTile, linearSecondTile, linearThirdTile;
+    Fragment fragment;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View myView = inflater.inflate(R.layout.secondfragment,  null);
-        button = (Button) myView.findViewById(R.id.button4);
+        animationFromLeft = AnimationUtils.loadAnimation(getContext(),
+                R.anim.animation_left_to_right);
+        animationFromLeftDelayBy200 = AnimationUtils.loadAnimation(getContext(),
+                R.anim.animation_left_to_right_delayed_by_200);
+        animationFromLeftDelayBy400 = AnimationUtils.loadAnimation(getContext(),
+                R.anim.animation_left_to_right_delayed_by_400);
+        linearFirstTile = (LinearLayout) myView.findViewById(R.id.linearFirstTile);
+        linearFirstTile.setVisibility(View.INVISIBLE);
+        linearSecondTile = (LinearLayout) myView.findViewById(R.id.linearSecondTile);
+        linearSecondTile.setVisibility(View.INVISIBLE);
+        linearThirdTile = (LinearLayout) myView.findViewById(R.id.linearThirdTile);
+        linearThirdTile.setVisibility(View.INVISIBLE);
 
+        linearFirstTile.startAnimation(animationFromLeft);
+        linearFirstTile.setVisibility(View.VISIBLE);
+        linearSecondTile.startAnimation(animationFromLeftDelayBy200);
+        linearSecondTile.setVisibility(View.VISIBLE);
+        linearThirdTile.startAnimation(animationFromLeftDelayBy400);
+        linearThirdTile.setVisibility(View.VISIBLE);
 
-        button.setOnClickListener(new View.OnClickListener() {
+        linearFirstTile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                chargingOperation = new ChargingOperation();
-                chargingOperation.setInitialCapacity(5.0);
-                chargingOperation.setAveragePower(2.0);
-                chargingOperation.setCapacityCharged(24.0);
-                chargingOperation.setCarModel("nissan leaf555");
-                chargingOperation.setCost(232.56);
-                chargingOperation.setElapsedTime(23.7);
-
-
-                DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-                Date now = Calendar.getInstance().getTime();
-
-                chargingOperation.setDateAndTime(dateFormat.format(now));
-
-
-                Gson gsonTest = new Gson();
-                asyncHelper asynchelp = new asyncHelper(getContext(), chargingOperation);
-
-
-                asyncPost asyncpostt = new asyncPost();
-                asyncpostt.execute(asynchelp);
+                fragment = new chargerOperationsList();
+                loadFragment(fragment);
             }
         });
 
+        linearSecondTile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fragment = new StatisticsFragment();
+                loadFragment(fragment);
+            }
+        });
 
-
+        linearThirdTile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fragment = new chargerOperationsList();
+                loadFragment(fragment);
+            }
+        });
 
         return myView;
     }
 
-
+    private boolean loadFragment(Fragment fragment)
+    {
+        if(fragment!=null)
+        {
+            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container5, fragment).commit();
+            return true;
+        }
+        return false;
+    }
 }

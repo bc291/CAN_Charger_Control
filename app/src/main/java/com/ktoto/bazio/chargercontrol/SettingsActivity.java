@@ -170,6 +170,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             bindPreferenceSummaryToValue(findPreference("ip_number"));
             bindPreferenceSummaryToValue(findPreference("power_cost"));
             bindPreferenceSummaryToValue(findPreference("server_timeout_list"));
+            bindPreferenceSummaryToValue(findPreference("mac_address_hc_05"));
         }
 
         @Override

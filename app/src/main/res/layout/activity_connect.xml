@@ -6,7 +6,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               tools:context="com.ktoto.bazio.chargercontrol.Connect"
-              android:background="#ffffff"
+              android:background="#e6e9ef"
               android:orientation="vertical">
 
     <RelativeLayout
@@ -28,7 +28,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="@string/carModelDefault"
+                android:text="Nissan Leaf"
                 android:textColor="#ffffff"
                 android:textSize="26sp"
                 android:textStyle="bold" />
@@ -41,13 +41,11 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="38dp">
-
-
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="@drawable/conn_status_off"
+            android:id="@+id/linearIsChargingActive"
             >
 
             <TextView
@@ -61,10 +59,29 @@
                 android:textSize="18sp"
                 android:textStyle="italic" />
         </LinearLayout>
-
-
     </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="38dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/popupBackgroud"
+            android:id="@+id/linearEvState"
+            >
 
+            <TextView
+                android:id="@+id/txtEvState"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="Odświeżanie..."
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="italic" />
+        </LinearLayout>
+    </RelativeLayout>
 
 
 
@@ -75,14 +92,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="160dp"
-            android:background="@drawable/second_card_background">
+            android:background="@drawable/second_card_background"
+            android:id="@+id/gaugesView"
+            >
 
             <com.ntt.customgaugeview.library.GaugeView
                 android:id="@+id/gauge_view"
                 android:layout_width="179dp"
                 android:layout_height="194dp"
                 android:layout_marginStart="16dp"
-
                 gauge:divisions="8"
                 gauge:rangeValues="@array/speedTestRangeValues"
                 gauge:scaleEndValue="5000"
@@ -347,46 +365,36 @@
     android:layout_width="match_parent"
     android:layout_height="80dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="100dp">
+        <LinearLayout
+            android:id="@+id/linearButtonsBottom"
+            android:layout_width="match_parent"
+            android:layout_height="100dp">
 
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:text="POŁĄCZ" />
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:fontFamily="monospace"
+                android:text="POŁĄCZ" />
 
-        <Button
-            android:id="@+id/btnPostTest"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="monospace"
-            android:text="ZAKOŃCZ ŁAD." />
+            <Button
+                android:id="@+id/btnPostTest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="ZAKOŃCZ ŁAD." />
+            <Button
+                android:id="@+id/btnBTOff"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="ZAKOŃCZ POŁ. BT" />
 
 
-    </LinearLayout>
+        </LinearLayout>
 
 
 </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="80dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="100dp">
-
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="400dp"
-                android:layout_height="51dp"
-                android:textColor="#000000"
-                android:textSize="18sp" />
-        </LinearLayout>
-
-
-    </RelativeLayout>
 </LinearLayout>

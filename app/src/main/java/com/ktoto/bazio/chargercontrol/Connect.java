@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +27,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.ktoto.bazio.chargercontrol.ChangeListeners.ConnectionChangeListener;
 import com.ktoto.bazio.chargercontrol.ChangeListeners.ConnectionStatus;
+import com.ktoto.bazio.chargercontrol.Model.evStateEnum;
 import com.ktoto.bazio.chargercontrol.asynce.asyncHelper;
 import com.ktoto.bazio.chargercontrol.asynce.asyncPost;
 import com.ntt.customgaugeview.library.GaugeView;
@@ -66,9 +68,9 @@ public class Connect extends Fragment {
     BluetoothSocket obslugaBluetooth = null;
     static boolean stanPolaczenia = false;
     static final UUID myUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
-    Button button2, btnPostTest;
-    TextView textView6, txtActualBatteryCapacity, txtRemainingTime, txtPower, txtCost, txtInitialBatteryCapacity, txtMaxChargingVoltage, txtTotalBatteryCapacity;
-    TextView txtIsChargingActive, carModelTop;
+    Button button2, btnPostTest, btnBTOff;
+    TextView txtActualBatteryCapacity, txtRemainingTime, txtPower, txtCost, txtInitialBatteryCapacity, txtMaxChargingVoltage, txtTotalBatteryCapacity;
+    TextView txtIsChargingActive, carModelTop, txtEvState;
 
     GaugeView gaugeView, gaugeView2;
     List<String> testowaLista;
@@ -78,27 +80,38 @@ public class Connect extends Fragment {
     double energyCost;
     List<Float> averagePowerList;
     double averagePowerFromUART;
-    CardView cardView2;
-    Animation animFadein;
+    CardView cardView, cardView2;
+    Animation animFadein,animFadeinFromRight;
+    LinearLayout linearIsChargingActive, gaugesView, linearButtonsBottom, linearEvState;
+    evStateEnum evState;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View myView = inflater.inflate(R.layout.activity_connect, null);
-
         button2 = (Button)myView.findViewById(R.id.button2);
+        txtEvState = (TextView) myView.findViewById(R.id.txtEvState);
+        btnBTOff = (Button)myView.findViewById(R.id.btnBTOff);
         carModelTop = (TextView) myView.findViewById(R.id.txtCarModelTop);
         btnPostTest = (Button) myView.findViewById(R.id.btnPostTest);
+        cardView = (CardView) myView.findViewById(R.id.cardView);
+        cardView.setVisibility(View.INVISIBLE);
         cardView2 = (CardView) myView.findViewById(R.id.cardView2);
         cardView2.setVisibility(View.INVISIBLE);
+        linearIsChargingActive = (LinearLayout) myView.findViewById(R.id.linearIsChargingActive);
+        gaugesView = (LinearLayout) myView.findViewById(R.id.gaugesView);
+        linearButtonsBottom = (LinearLayout) myView.findViewById(R.id.linearButtonsBottom);
+        linearEvState = (LinearLayout) myView.findViewById(R.id.linearEvState);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
 
         energyCost = Double.parseDouble(sharedPreferences.getString("power_cost", "0.51"));
         animFadein = AnimationUtils.loadAnimation(getContext(),
                 R.anim.animation_left_to_right);
+        animFadeinFromRight = AnimationUtils.loadAnimation(getContext(),
+                R.anim.animation_right_to_left);
         //TODO zeby stringow nie wspisywac zabezpieczenie w settings
 
-        textView6 = (TextView)myView.findViewById(R.id.textView6);
+
         txtActualBatteryCapacity = (TextView)myView.findViewById(R.id.txtActualBatteryCapacity);
         txtRemainingTime = (TextView)myView.findViewById(R.id.txtRemainingTime);
         txtPower = (TextView)myView.findViewById(R.id.txtPower);
@@ -108,7 +121,10 @@ public class Connect extends Fragment {
         txtTotalBatteryCapacity = (TextView)myView.findViewById(R.id.txtTotalBatteryCapacity);
 
         txtIsChargingActive = (TextView) myView.findViewById(R.id.txtIsChargingActive);
-
+        linearIsChargingActive.setVisibility(View.INVISIBLE);
+        linearEvState.setVisibility(View.INVISIBLE);
+        gaugesView.setVisibility(View.INVISIBLE);
+        linearButtonsBottom.setVisibility(View.INVISIBLE);
         gaugeView  = (GaugeView) myView.findViewById(R.id.gauge_view);
         gaugeView2  = (GaugeView) myView.findViewById(R.id.gauge_view2);
 
@@ -119,19 +135,26 @@ public class Connect extends Fragment {
         gaugeView2.setShowRangeValues(true);
         gaugeView2.setTargetValue(0);
 
-        address = "98:D3:31:FC:03:EF";
+       // address = "98:D3:31:FC:03:EF";
+        address = sharedPreferences.getString("mac_address_hc_05", "98:D3:31:FC:03:EF");
         new ConnectBT().execute();
 
-        textView6.setText("DZIALA?");
+
 
         ConnectionStatus.addMyBooleanListener(new ConnectionChangeListener() {
             @Override
             public void onConnectionChanged(boolean... isBTConnectionLive) {
-                if(ConnectionStatus.getBooleanValue()) carModelTop.setText("Nissan LEAF (Connected)");
-                else carModelTop.setText("Nissan LEAF (Disconnected)");
+                if(ConnectionStatus.getBooleanValue()) carModelTop.setText("Nissan Leaf (Połączono)");
+                else carModelTop.setText("Nissan Leaf (Brak połączenia)");
             }
         });
 
+        btnBTOff.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Wyloguj();
+            }
+        });
 
         btnPostTest.setOnClickListener(new View.OnClickListener()
         {
@@ -190,7 +213,7 @@ public class Connect extends Fragment {
                                                 {
                                                     String afterSuffixRemoved=null;
                                                     Log.d("logowanie", data);
-                                                    textView6.setText(data);
+
 
                                                     if(data !=null && data.length()!=0 && data.charAt(0)=='#') { //data.length()!=0
                                                         afterSuffixRemoved = data.replace("#", "");
@@ -219,10 +242,10 @@ public class Connect extends Fragment {
                                                         txtTotalBatteryCapacity.setText(String.valueOf(carData.getTotalBatteryCapacity()+" kWh"));
 
                                                         chargerData.setChargingTime(Integer.parseInt(testowaLista.get(10))/1000);
-                                                        isChargingActive = Integer.parseInt(testowaLista.get(12)) > 0 ? true : false;
+                                                        isChargingActive = Integer.parseInt(testowaLista.get(13)) > 0 ? true : false;
                                                         //textView6.setText(String.valueOf(isChargingActive));
                                                         averagePowerFromUART = Double.parseDouble(testowaLista.get(11));
-textView6.setText(String.valueOf(averagePowerFromUART));
+
                                                         if(isChargingActive) { txtIsChargingActive.setText("Ładowanie w toku"); }
                                                         else { txtIsChargingActive.setText("Ładowanie nieaktywne");}
 
@@ -247,7 +270,51 @@ textView6.setText(String.valueOf(averagePowerFromUART));
                                                         {
                                                             txtIsChargingActive.setBackground(getResources().getDrawable(R.drawable.conn_status_off));
                                                         }
+                                                        //Log.d("status", testowaLista.get(12));
+                                                        switch(Integer.parseInt(testowaLista.get(12)))
+                                                        {
+                                                            case 0:
+                                                                evState = evStateEnum.STARTUP;
+                                                                break;
+                                                            case 1:
+                                                                evState = evStateEnum.COMPATIBILITY_CHECK;
+                                                                break;
+                                                            case 2:
+                                                                evState = evStateEnum.TRASMIT_CHARGER_PARAMETERS;
+                                                                break;
+                                                            case 3:
+                                                                evState = evStateEnum.RECOGNIZE_START_PERMISSION;
+                                                                break;
+                                                            case 4:
+                                                                evState = evStateEnum.SEND_CHARGING_READY;
+                                                                break;
+                                                            case 5:
+                                                                evState = evStateEnum.WAIT_FOR_ZERO_CURRENT_STATE;
+                                                                break;
+                                                            case 6:
+                                                                evState = evStateEnum.ZERO_CURRENT_STATE;
+                                                                break;
+                                                            case 7:
+                                                                evState = evStateEnum.RECOGNIZE_STOP_CHARGING;
+                                                                break;
+                                                            case 8:
+                                                                evState = evStateEnum.TERMINATE_CHARGING;
+                                                                break;
+                                                            case 9:
+                                                                evState = evStateEnum.RUNNING;
+                                                                break;
+                                                            case 10:
+                                                                evState = evStateEnum.IDDLING;
+                                                                break;
+                                                            case 11:
+                                                                evState = evStateEnum.FAULT;
+                                                                break;
+                                                            case 12:
+                                                                evState = evStateEnum.DELAY_AFTER_EXTERNAL_STOP;
+                                                                break;
 
+                                                        }
+                                                        txtEvState.setText(evState.toString());
                                                     }
 
                                                 }
@@ -323,7 +390,8 @@ updateThread.start();
         if (obslugaBluetooth != null) {
             try {
                 obslugaBluetooth.close();
-                //msg("Wylogowano. W celu połączenia proszę wciśnąć RECONNECT -->");
+               // msg("Wylogowano. W celu połączenia proszę wciśnąć RECONNECT -->");
+                ConnectionStatus.setBooleanValue(false);
 
             } catch (IOException e) {
                // msg("Error");
@@ -381,8 +449,19 @@ updateThread.start();
             } else {
                 msg("Połączono");
                 ConnectionStatus.setBooleanValue(true);
+
                 cardView2.startAnimation(animFadein);
                 cardView2.setVisibility(View.VISIBLE);
+                linearIsChargingActive.startAnimation(animFadein);
+                linearIsChargingActive.setVisibility(View.VISIBLE);
+                cardView.startAnimation(animFadeinFromRight);
+                cardView.setVisibility(View.VISIBLE);
+                gaugesView.startAnimation(animFadeinFromRight);
+                gaugesView.setVisibility(View.VISIBLE);
+                linearButtonsBottom.startAnimation(animFadein);
+                linearButtonsBottom.setVisibility(View.VISIBLE);
+                linearEvState.startAnimation(animFadein);
+                linearEvState.setVisibility(View.VISIBLE);
             }
             progress.dismiss();
         }

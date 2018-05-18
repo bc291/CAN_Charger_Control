@@ -7,25 +7,30 @@ import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
 import com.google.gson.Gson;
+import com.ktoto.bazio.chargercontrol.ChangeListeners.ConnectionChangeListener;
+import com.ktoto.bazio.chargercontrol.ChangeListeners.ConnectionStatus;
 import com.ktoto.bazio.chargercontrol.asynce.asyncHelper;
 import com.ktoto.bazio.chargercontrol.asynce.asyncPost;
 import com.ntt.customgaugeview.library.GaugeView;
+
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -63,7 +68,7 @@ public class Connect extends Fragment {
     static final UUID myUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     Button button2, btnPostTest;
     TextView textView6, txtActualBatteryCapacity, txtRemainingTime, txtPower, txtCost, txtInitialBatteryCapacity, txtMaxChargingVoltage, txtTotalBatteryCapacity;
-    TextView txtIsChargingActive;
+    TextView txtIsChargingActive, carModelTop;
 
     GaugeView gaugeView, gaugeView2;
     List<String> testowaLista;
@@ -72,6 +77,9 @@ public class Connect extends Fragment {
     ChargingOperation chargingOperation = new ChargingOperation();
     double energyCost;
     List<Float> averagePowerList;
+    double averagePowerFromUART;
+    CardView cardView2;
+    Animation animFadein;
 
     @Nullable
     @Override
@@ -79,13 +87,15 @@ public class Connect extends Fragment {
         View myView = inflater.inflate(R.layout.activity_connect, null);
 
         button2 = (Button)myView.findViewById(R.id.button2);
-
+        carModelTop = (TextView) myView.findViewById(R.id.txtCarModelTop);
         btnPostTest = (Button) myView.findViewById(R.id.btnPostTest);
-
+        cardView2 = (CardView) myView.findViewById(R.id.cardView2);
+        cardView2.setVisibility(View.INVISIBLE);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
 
         energyCost = Double.parseDouble(sharedPreferences.getString("power_cost", "0.51"));
-
+        animFadein = AnimationUtils.loadAnimation(getContext(),
+                R.anim.animation_left_to_right);
         //TODO zeby stringow nie wspisywac zabezpieczenie w settings
 
         textView6 = (TextView)myView.findViewById(R.id.textView6);
@@ -113,6 +123,15 @@ public class Connect extends Fragment {
         new ConnectBT().execute();
 
         textView6.setText("DZIALA?");
+
+        ConnectionStatus.addMyBooleanListener(new ConnectionChangeListener() {
+            @Override
+            public void onConnectionChanged(boolean... isBTConnectionLive) {
+                if(ConnectionStatus.getBooleanValue()) carModelTop.setText("Nissan LEAF (Connected)");
+                else carModelTop.setText("Nissan LEAF (Disconnected)");
+            }
+        });
+
 
         btnPostTest.setOnClickListener(new View.OnClickListener()
         {
@@ -200,9 +219,13 @@ public class Connect extends Fragment {
                                                         txtTotalBatteryCapacity.setText(String.valueOf(carData.getTotalBatteryCapacity()+" kWh"));
 
                                                         chargerData.setChargingTime(Integer.parseInt(testowaLista.get(10))/1000);
-                                                        isChargingActive = Integer.parseInt(testowaLista.get(11)) > 0 ? true : false;
+                                                        isChargingActive = Integer.parseInt(testowaLista.get(12)) > 0 ? true : false;
                                                         //textView6.setText(String.valueOf(isChargingActive));
-                                                        txtIsChargingActive.setText(String.valueOf(isChargingActive));
+                                                        averagePowerFromUART = Double.parseDouble(testowaLista.get(11));
+textView6.setText(String.valueOf(averagePowerFromUART));
+                                                        if(isChargingActive) { txtIsChargingActive.setText("Ładowanie w toku"); }
+                                                        else { txtIsChargingActive.setText("Ładowanie nieaktywne");}
+
                                                         initialCapacity = round((chargerData.getActualBatteryCapacity()-chargerData.getKwh()),2).doubleValue();
 
                                                         if(!wasChargingActive && isChargingActive) wasChargingActive=true;
@@ -251,6 +274,15 @@ public class Connect extends Fragment {
             }
         });
 
+Thread updateThread = new Thread(new Runnable() {
+    @Override
+    public void run() {
+        if(!stanPolaczenia)     carModelTop.setText("Nissan LEAF (disconnected)");
+        else  carModelTop.setText("Nissan LEAF (disconnected)");
+    }
+});
+
+updateThread.start();
         return myView;
     }
 
@@ -317,7 +349,7 @@ public class Connect extends Fragment {
 
         protected Void doInBackground(Void... devices) {
             try {
-                if (obslugaBluetooth == null || !stanPolaczenia) {
+                if (obslugaBluetooth == null || !ConnectionStatus.getBooleanValue()) {
                     urzadzenieBluetooth = BluetoothAdapter.getDefaultAdapter();
                     //nowy kod
 
@@ -348,7 +380,9 @@ public class Connect extends Fragment {
 
             } else {
                 msg("Połączono");
-                stanPolaczenia = true;
+                ConnectionStatus.setBooleanValue(true);
+                cardView2.startAnimation(animFadein);
+                cardView2.setVisibility(View.VISIBLE);
             }
             progress.dismiss();
         }
@@ -375,7 +409,7 @@ public class Connect extends Fragment {
 
 
         chargingOperation.setInitialCapacity(initialCapacity);
-        chargingOperation.setAveragePower(averagePowerTakenFromListAsDouble);
+        chargingOperation.setAveragePower(round(averagePowerFromUART,2).doubleValue());
         chargingOperation.setCapacityCharged(round(chargerData.getActualBatteryCapacity(),2).doubleValue());
         chargingOperation.setCarModel("nissan leaf");
         chargingOperation.setCost(round(getMoneyFromKwh(chargerData.getKwh()),2).doubleValue());

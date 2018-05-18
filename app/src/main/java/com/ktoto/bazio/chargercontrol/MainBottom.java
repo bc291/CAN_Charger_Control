@@ -93,7 +93,7 @@ public class MainBottom extends AppCompatActivity {
             loadFragment(new Connect());
         }
         if (resultCode == RESULT_CANCELED) {
-            Toast.makeText(getApplicationContext(), "Nie da rady", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Bluetooth jest konieczny do poprawnego działania aplikacji", Toast.LENGTH_SHORT).show();
         }
     }
 

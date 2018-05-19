@@ -501,7 +501,7 @@ public class Connect extends Fragment {
     }
 
 
-    public BigDecimal round(float d, int decimalPlace) {
+    public BigDecimal round(float d, int decimalPlace) {//TODO zabezpieczenie przed null
         BigDecimal bd = new BigDecimal(Float.toString(d));
         bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
         return bd;
@@ -577,18 +577,19 @@ public class Connect extends Fragment {
                 msg("Połączono");
                 ConnectionStatus.setBooleanValue(true);
 
-                cardView2.startAnimation(animFadein);
+                cardView2.startAnimation(animFadeinFromRight);
                 cardView2.setVisibility(View.VISIBLE);
                 linearIsChargingActive.startAnimation(animFadein);
                 linearIsChargingActive.setVisibility(View.VISIBLE);
-                cardView.startAnimation(animFadeinFromRight);
-                cardView.setVisibility(View.VISIBLE);
-                gaugesView.startAnimation(animFadeinFromRight);
-                gaugesView.setVisibility(View.VISIBLE);
-                linearButtonsBottom.startAnimation(animFadein);
-                linearButtonsBottom.setVisibility(View.VISIBLE);
-                linearEvState.startAnimation(animFadein);
+                linearEvState.startAnimation(animFadeinFromRight);
                 linearEvState.setVisibility(View.VISIBLE);
+                cardView.startAnimation(animFadein);
+                cardView.setVisibility(View.VISIBLE);
+                gaugesView.startAnimation(animFadein);
+                gaugesView.setVisibility(View.VISIBLE);
+                linearButtonsBottom.startAnimation(animFadeinFromRight);
+                linearButtonsBottom.setVisibility(View.VISIBLE);
+
             }
             progress.dismiss();
         }

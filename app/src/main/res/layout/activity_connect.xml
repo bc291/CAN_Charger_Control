@@ -317,7 +317,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp">
+            android:layout_height="180dp">
 
             <android.support.v7.widget.CardView
                 android:id="@+id/cardView"
@@ -494,48 +494,42 @@
 
     </RelativeLayout>
 
-        <Space
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="10dp" />
+            android:layout_height="wrap_content">
 
-    <RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="80dp">
+            <LinearLayout
+                android:id="@+id/linearButtonsBottom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:id="@+id/linearButtonsBottom"
-            android:layout_width="match_parent"
-            android:layout_height="100dp">
+                <Button
+                    android:id="@+id/button2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:fontFamily="monospace"
+                    android:text="POŁĄCZ" />
 
-            <Button
-                android:id="@+id/button2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:fontFamily="monospace"
-                android:text="POŁĄCZ" />
+                <Button
+                    android:id="@+id/btnPostTest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
+                    android:text="ZAKOŃCZ ŁAD." />
 
-            <Button
-                android:id="@+id/btnPostTest"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="monospace"
-                android:text="ZAKOŃCZ ŁAD." />
-            <Button
-                android:id="@+id/btnBTOff"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="monospace"
-                android:text="ZAKOŃCZ POŁ. BT" />
+                <Button
+                    android:id="@+id/btnBTOff"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
+                    android:text="ZAKOŃCZ POŁ. BT" />
 
 
-        </LinearLayout>
+            </LinearLayout>
 
 
-</RelativeLayout>
+        </RelativeLayout>
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="100dp" />
-</LinearLayout>
+    </LinearLayout>
 </ScrollView>

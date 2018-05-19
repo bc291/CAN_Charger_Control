@@ -1,32 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="350dp"
-    android:layout_height="425dp"
-    android:orientation="vertical"
-    android:padding="5dp"
-
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="350dp"
+    android:layout_height="320dp"
     android:background="@color/popupBackgroud"
-    >
+    android:orientation="vertical"
+    android:padding="5dp">
 
-
-
-
-    
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="15dp">
+        android:orientation="vertical">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:text="Status samochodu"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            android:textStyle="bold|italic" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5dp"
+            android:text="Truebit | Falsebit"
+            android:textColor="@color/white"
+            android:textStyle="bold|italic" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal">
 
         <LinearLayout
             android:id="@+id/linear_tile_1"
             android:layout_width="0dp"
             android:layout_height="100dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
             android:background="@drawable/conn_status_off"
-            android:layout_marginRight="10dp">
+            android:gravity="center"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="40dp"
@@ -57,7 +80,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Charging enabled"
+                android:text="Charg. en."
                 android:textColor="@color/white"
                 android:textSize="14sp" />
         </LinearLayout>
@@ -67,9 +90,10 @@
             android:layout_width="0dp"
             android:layout_height="100dp"
             android:layout_weight="1"
-            android:orientation="vertical"
+            android:background="@drawable/conn_status_off"
+            android:layout_marginRight="10dp"
             android:gravity="center"
-            android:background="@drawable/conn_status_off">
+            android:orientation="vertical">
 
 
             <TextView
@@ -105,22 +129,16 @@
                 android:textColor="@color/white"
                 android:textSize="14sp" />
         </LinearLayout>
-    </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="10dp">
         <LinearLayout
             android:id="@+id/linear_tile_3"
             android:layout_width="0dp"
             android:layout_height="100dp"
+            android:layout_marginRight="10dp"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
             android:background="@drawable/conn_status_off"
-            android:layout_marginRight="10dp">
+            android:gravity="center"
+            android:orientation="vertical">
 
 
             <TextView
@@ -158,16 +176,25 @@
                 android:textColor="@color/white"
                 android:textSize="14sp" />
         </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
 
         <LinearLayout
             android:id="@+id/linear_tile_4"
             android:layout_width="0dp"
             android:layout_height="100dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
             android:background="@drawable/conn_status_off"
-            android:layout_marginRight="10dp">
+            android:gravity="center"
+            android:orientation="vertical">
 
 
             <TextView
@@ -208,6 +235,7 @@
             android:id="@+id/linear_tile_5"
             android:layout_width="0dp"
             android:layout_height="100dp"
+            android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:background="@drawable/conn_status_off"
             android:gravity="center"

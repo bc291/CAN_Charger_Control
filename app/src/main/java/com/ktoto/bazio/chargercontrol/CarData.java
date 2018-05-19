@@ -6,11 +6,19 @@ package com.ktoto.bazio.chargercontrol;
 
 public class CarData {
     private int maxChargingVoltage;
+    private int maxChargingCurrent;
     private double totalBatteryCapacity;
     private int carStatus;
     private int faults;
 
 
+    public int getMaxChargingCurrent() {
+        return maxChargingCurrent;
+    }
+
+    public void setMaxChargingCurrent(int maxChargingCurrent) {
+        this.maxChargingCurrent = maxChargingCurrent;
+    }
 
     public int getMaxChargingVoltage() {
         return maxChargingVoltage;

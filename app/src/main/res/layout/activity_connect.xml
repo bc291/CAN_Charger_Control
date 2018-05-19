@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
               xmlns:gauge="http://schemas.android.com/apk/res-auto"
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               tools:context="com.ktoto.bazio.chargercontrol.Connect"
-              android:background="#e6e9ef"
-              android:orientation="vertical">
+    android:fillViewport="true"
+              >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#e6e9ef"
+        android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -142,139 +148,168 @@
 
 
     </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="170dp">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="170dp">
+            android:layout_height="160dp"
+            android:layout_marginTop="10dp">
 
-            <android.support.v7.widget.CardView
-                android:id="@+id/cardView2"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_marginBottom="260dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="10dp"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="8dp"
-                android:stateListAnimator="@anim/animation_left_to_right"
-                android:clickable="true">
+                android:layout_height="160dp">
 
-                <GridLayout
+                <android.support.v7.widget.CardView
+                    android:id="@+id/cardView2"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:columnCount="2"
-                    android:rowCount="4">
+                    android:layout_height="140dp"
+                    android:layout_marginBottom="260dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="10dp"
+                    android:clickable="true"
+                    android:stateListAnimator="@anim/animation_left_to_right"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="8dp">
 
-                    <TextView
-
-                        android:layout_width="wrap_content"
+                    <GridLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_column="0"
-                        android:layout_columnSpan="1"
-                        android:layout_columnWeight="1"
-                        android:layout_gravity="center"
-                        android:layout_row="0"
-                        android:fontFamily="monospace"
-                        android:text="@string/RemainingTimeStr" />
+                        android:columnCount="2"
+                        android:rowCount="5">
 
-                    <TextView
-                        android:id="@+id/txtRemainingTime"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="1"
-                        android:layout_columnWeight="1"
-                        android:layout_gravity="center"
-                        android:layout_row="0"
-                        android:fontFamily="monospace"
-                        android:text="@string/TestStr"
-                        android:textColor="@color/bluePopup"
-                        android:textSize="20sp" />
+                        <TextView
 
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="0"
+                            android:layout_columnSpan="1"
+                            android:layout_columnWeight="1"
+                            android:layout_gravity="center"
+                            android:layout_row="0"
+                            android:fontFamily="monospace"
+                            android:text="@string/RemainingTimeStr" />
 
-                    <TextView
-
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="0"
-                        android:layout_columnSpan="1"
-                        android:layout_columnWeight="1"
-                        android:layout_gravity="center"
-                        android:layout_row="1"
-                        android:fontFamily="monospace"
-                        android:text="@string/ActualAccuCapacityStr" />
-
-                    <TextView
-                        android:id="@+id/txtActualBatteryCapacity"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="1"
-                        android:layout_columnWeight="1"
-                        android:layout_gravity="center"
-                        android:layout_row="1"
-                        android:fontFamily="monospace"
-                        android:text="@string/TestStr"
-                        android:textColor="@color/bluePopup"
-                        android:textSize="20sp" />
-
-                    <TextView
-
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="0"
-                        android:layout_columnSpan="1"
-                        android:layout_columnWeight="1"
-                        android:layout_gravity="center"
-                        android:layout_row="2"
-                        android:fontFamily="monospace"
-                        android:text="@string/PowerStr" />
-
-                    <TextView
-                        android:id="@+id/txtPower"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="1"
-                        android:layout_columnWeight="1"
-                        android:layout_gravity="center"
-                        android:layout_row="2"
-                        android:fontFamily="monospace"
-                        android:text="@string/TestStr"
-                        android:textColor="@color/bluePopup"
-                        android:textSize="20sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="0"
-                        android:layout_columnSpan="1"
-                        android:layout_columnWeight="1"
-                        android:layout_gravity="center"
-                        android:layout_row="3"
-                        android:fontFamily="monospace"
-                        android:text="@string/ChargingCostStr" />
-
-                    <TextView
-                        android:id="@+id/txtCost"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="1"
-                        android:layout_columnWeight="1"
-                        android:layout_gravity="center"
-                        android:layout_row="3"
-                        android:fontFamily="monospace"
-                        android:text="@string/TestStr"
-                        android:textColor="@color/bluePopup"
-                        android:textSize="20sp" />
-                </GridLayout>
-
-            </android.support.v7.widget.CardView>
-        </LinearLayout>
+                        <TextView
+                            android:id="@+id/txtRemainingTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="1"
+                            android:layout_columnWeight="1"
+                            android:layout_gravity="center"
+                            android:layout_row="0"
+                            android:fontFamily="monospace"
+                            android:text="@string/TestStr"
+                            android:textColor="@color/bluePopup"
+                            android:textSize="20sp" />
 
 
-    </RelativeLayout>
+                        <TextView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="0"
+                            android:layout_columnSpan="1"
+                            android:layout_columnWeight="1"
+                            android:layout_gravity="center"
+                            android:layout_row="1"
+                            android:fontFamily="monospace"
+                            android:text="@string/ActualAccuCapacityStr" />
+
+                        <TextView
+                            android:id="@+id/txtActualBatteryCapacity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="1"
+                            android:layout_columnWeight="1"
+                            android:layout_gravity="center"
+                            android:layout_row="1"
+                            android:fontFamily="monospace"
+                            android:text="@string/TestStr"
+                            android:textColor="@color/bluePopup"
+                            android:textSize="20sp" />
+
+                        <TextView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="0"
+                            android:layout_columnSpan="1"
+                            android:layout_columnWeight="1"
+                            android:layout_gravity="center"
+                            android:layout_row="2"
+                            android:fontFamily="monospace"
+                            android:text="Moc ładowania" />
+
+                        <TextView
+                            android:id="@+id/txtPower"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="1"
+                            android:layout_columnWeight="1"
+                            android:layout_gravity="center"
+                            android:layout_row="2"
+                            android:fontFamily="monospace"
+                            android:text="@string/TestStr"
+                            android:textColor="@color/bluePopup"
+                            android:textSize="20sp" />
+
+                        <TextView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="0"
+                            android:layout_columnSpan="1"
+                            android:layout_columnWeight="1"
+                            android:layout_gravity="center"
+                            android:layout_row="3"
+                            android:fontFamily="monospace"
+                            android:text="Dostarczono:" />
+
+                        <TextView
+                            android:id="@+id/txtKwhours"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="1"
+                            android:layout_columnWeight="1"
+                            android:layout_gravity="center"
+                            android:layout_row="3"
+                            android:fontFamily="monospace"
+                            android:text="@string/TestStr"
+                            android:textColor="@color/bluePopup"
+                            android:textSize="20sp" />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="0"
+                            android:layout_columnSpan="1"
+                            android:layout_columnWeight="1"
+                            android:layout_gravity="center"
+                            android:layout_row="4"
+                            android:fontFamily="monospace"
+                            android:text="@string/ChargingCostStr" />
+
+                        <TextView
+                            android:id="@+id/txtCost"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="1"
+                            android:layout_columnWeight="1"
+                            android:layout_gravity="center"
+                            android:layout_row="4"
+                            android:fontFamily="monospace"
+                            android:text="@string/TestStr"
+                            android:textColor="@color/bluePopup"
+                            android:textSize="20sp" />
+
+                    </GridLayout>
+
+                </android.support.v7.widget.CardView>
+            </LinearLayout>
+
+
+        </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -282,12 +317,12 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp">
+            android:layout_height="200dp">
 
             <android.support.v7.widget.CardView
                 android:id="@+id/cardView"
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="10dp"
@@ -296,9 +331,9 @@
 
                 <GridLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:columnCount="2"
-                    android:rowCount="4">
+                    android:rowCount="6">
 
                     <TextView
 
@@ -336,10 +371,11 @@
                         android:layout_gravity="center"
                         android:layout_row="1"
                         android:fontFamily="monospace"
-                        android:text="@string/TotalAccuCapacityStr" />
+                        android:text="Maks. wartość prądu ład." />
+
 
                     <TextView
-                        android:id="@+id/txtTotalBatteryCapacity"
+                        android:id="@+id/txtMaxChargingCurrent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_column="1"
@@ -351,7 +387,105 @@
                         android:textColor="@color/bluePopup"
                         android:textSize="20sp" />
 
+                    <TextView
 
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="0"
+                        android:layout_columnSpan="1"
+                        android:layout_columnWeight="1"
+                        android:layout_gravity="center"
+                        android:layout_row="2"
+                        android:fontFamily="monospace"
+                        android:text="@string/TotalAccuCapacityStr" />
+
+                    <TextView
+                        android:id="@+id/txtTotalBatteryCapacity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="1"
+                        android:layout_columnWeight="1"
+                        android:layout_gravity="center"
+                        android:layout_row="2"
+                        android:fontFamily="monospace"
+                        android:text="@string/TestStr"
+                        android:textColor="@color/bluePopup"
+                        android:textSize="20sp" />
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="0"
+                        android:layout_columnSpan="1"
+                        android:layout_columnWeight="1"
+                        android:layout_gravity="center"
+                        android:layout_row="3"
+                        android:fontFamily="monospace"
+                        android:text="Poj. początkowa" />
+
+                    <TextView
+                        android:id="@+id/txtInitialBatteryCapacity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="1"
+                        android:layout_columnWeight="1"
+                        android:layout_gravity="center"
+                        android:layout_row="3"
+                        android:fontFamily="monospace"
+                        android:text="@string/TestStr"
+                        android:textColor="@color/bluePopup"
+                        android:textSize="20sp" />
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="0"
+                        android:layout_columnSpan="1"
+                        android:layout_columnWeight="1"
+                        android:layout_gravity="center"
+                        android:layout_row="4"
+                        android:fontFamily="monospace"
+                        android:text="Status pojazdu" />
+
+                    <TextView
+                        android:id="@+id/txtCarStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="1"
+                        android:layout_columnWeight="1"
+                        android:layout_gravity="center"
+                        android:layout_row="4"
+                        android:fontFamily="monospace"
+                        android:text="POKAŻ"
+                        android:textColor="@color/bluePopup"
+                        android:textSize="20sp" />
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="0"
+                        android:layout_columnSpan="1"
+                        android:layout_columnWeight="1"
+                        android:layout_gravity="center"
+                        android:layout_row="5"
+                        android:fontFamily="monospace"
+                        android:text="Błędy pojazdu" />
+
+                    <TextView
+                        android:id="@+id/txtCarFaults"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="1"
+                        android:layout_columnWeight="1"
+                        android:layout_gravity="center"
+                        android:layout_row="5"
+                        android:fontFamily="monospace"
+                        android:text="POKAŻ"
+                        android:textColor="@color/bluePopup"
+                        android:textSize="20sp" />
                 </GridLayout>
 
             </android.support.v7.widget.CardView>
@@ -360,6 +494,9 @@
 
     </RelativeLayout>
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
 
     <RelativeLayout
     android:layout_width="match_parent"
@@ -397,4 +534,8 @@
 
 </RelativeLayout>
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="100dp" />
 </LinearLayout>
+</ScrollView>

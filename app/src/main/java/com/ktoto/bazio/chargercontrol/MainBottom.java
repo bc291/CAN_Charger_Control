@@ -36,9 +36,19 @@ public class MainBottom extends AppCompatActivity {
                 case R.id.navigation_home:
                     fragment = new SecondFragment();
                     ((SecondFragment)fragment).setNavigationBar(navigation);
+                   Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.container5);
+                    if(currentFragment instanceof Connect)
+                    {
+                        ((Connect) currentFragment).disconnectBT();
+                    }
                     break;
                 case R.id.navigation_dashboard:
                     fragment = new chargerOperationsList();
+                    currentFragment = getSupportFragmentManager().findFragmentById(R.id.container5);
+                    if(currentFragment instanceof Connect)
+                    {
+                        ((Connect) currentFragment).disconnectBT();
+                    }
                     break;
                 case R.id.navigation_notifications:
                     if(!BluetoothAdapter.getDefaultAdapter().isEnabled()) {
@@ -49,12 +59,18 @@ public class MainBottom extends AppCompatActivity {
 
                     if(BluetoothAdapter.getDefaultAdapter().isEnabled()) {
                         fragment = new Connect();
-                        ((Connect)(fragment)).setNavigationBar(navigation);
+                        Connect connect = ((Connect)(fragment));
+                        connect.setNavigationBar(navigation);
 
                     }
                     break;
                 case R.id.navigation_details:
                     fragment = new StatisticsFragment();
+                    currentFragment = getSupportFragmentManager().findFragmentById(R.id.container5);
+                    if(currentFragment instanceof Connect)
+                    {
+                        ((Connect) currentFragment).disconnectBT();
+                    }
                     break;
             }
             return loadFragment(fragment);

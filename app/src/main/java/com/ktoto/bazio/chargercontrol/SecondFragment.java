@@ -85,7 +85,8 @@ public class SecondFragment extends Fragment {
 
                 if(BluetoothAdapter.getDefaultAdapter().isEnabled()) {
                     fragment = new Connect();
-                    ((Connect)fragment).setNavigationBar(navigation);
+                    Connect connect = ((Connect)fragment);
+                    connect.setNavigationBar(navigation);
                 }
 
                 loadFragment(fragment, 3);

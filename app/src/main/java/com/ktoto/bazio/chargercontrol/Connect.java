@@ -602,7 +602,7 @@ public class Connect extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-        Wyloguj();
+        if(workerThread!=null && workerThread.isAlive()) workerThread.interrupt(); // sprawdz czy thread dziala - problem z niewylaczeniem go miedzy fragmentami
     }
 
     public void sendPostMessage()
@@ -675,6 +675,10 @@ private void changeTileBackground(LinearLayout linearLayout, boolean changed)
         this.navigation=navigation;
     }
 
+    public void disconnectBT()
+    {
+        Wyloguj();
+    }
 }
 
 

@@ -24,6 +24,7 @@ import java.lang.reflect.Field;
 public class MainBottom extends AppCompatActivity {
 
     private TextView mTextMessage;
+    private BottomNavigationView navigation;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -34,6 +35,7 @@ public class MainBottom extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
                     fragment = new SecondFragment();
+                    ((SecondFragment)fragment).setNavigationBar(navigation);
                     break;
                 case R.id.navigation_dashboard:
                     fragment = new chargerOperationsList();
@@ -47,6 +49,7 @@ public class MainBottom extends AppCompatActivity {
 
                     if(BluetoothAdapter.getDefaultAdapter().isEnabled()) {
                         fragment = new Connect();
+                        ((Connect)(fragment)).setNavigationBar(navigation);
 
                     }
                     break;
@@ -67,11 +70,15 @@ public class MainBottom extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
 
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation = (BottomNavigationView) findViewById(R.id.navigation);
         new BottomNavigationViewHelper().disableShiftMode(navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        loadFragment(new SecondFragment());
+        SecondFragment secondFragment = new SecondFragment();
+        secondFragment.setNavigationBar(navigation);
+        loadFragment(secondFragment);
+      //  loadFragment(new SecondFragment());
+
     }
 
 
@@ -90,7 +97,11 @@ public class MainBottom extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            loadFragment(new Connect());
+            Connect connect = new Connect();
+            connect.setNavigationBar(navigation);
+            loadFragment(connect);
+//loadFragment(new Connect());
+            navigation.getMenu().getItem(3).setChecked(true);
         }
         if (resultCode == RESULT_CANCELED) {
             Toast.makeText(getApplicationContext(), "Bluetooth jest konieczny do poprawnego działania aplikacji", Toast.LENGTH_SHORT).show();
@@ -149,6 +160,8 @@ public class MainBottom extends AppCompatActivity {
             }
         }
     }
+
+
 }
 
 

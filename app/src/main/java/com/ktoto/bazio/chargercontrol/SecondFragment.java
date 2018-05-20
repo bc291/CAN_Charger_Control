@@ -1,7 +1,10 @@
 package com.ktoto.bazio.chargercontrol;
 
+import android.bluetooth.BluetoothAdapter;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +13,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.ktoto.bazio.chargercontrol.Fragments.StatisticsFragment;
@@ -26,6 +30,7 @@ public class SecondFragment extends Fragment {
     Animation animationFromLeft, animationFromLeftDelayBy200, animationFromLeftDelayBy400;
     LinearLayout linearFirstTile, linearSecondTile, linearThirdTile;
     Fragment fragment;
+    private BottomNavigationView navigation;
 
     @Nullable
     @Override
@@ -55,7 +60,8 @@ public class SecondFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 fragment = new chargerOperationsList();
-                loadFragment(fragment);
+                loadFragment(fragment, 1);
+
             }
         });
 
@@ -63,28 +69,49 @@ public class SecondFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 fragment = new StatisticsFragment();
-                loadFragment(fragment);
+                loadFragment(fragment, 2);
+
             }
         });
 
         linearThirdTile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fragment = new chargerOperationsList();
-                loadFragment(fragment);
+                if(!BluetoothAdapter.getDefaultAdapter().isEnabled()) {
+                    Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                    startActivityForResult(enableBtIntent , 0);
+
+                }
+
+                if(BluetoothAdapter.getDefaultAdapter().isEnabled()) {
+                    fragment = new Connect();
+                    ((Connect)fragment).setNavigationBar(navigation);
+                }
+
+                loadFragment(fragment, 3);
             }
         });
+
+
+        navigation.getMenu().getItem(0).setChecked(true);
 
         return myView;
     }
 
-    private boolean loadFragment(Fragment fragment)
+    private boolean loadFragment(Fragment fragment, int index)
     {
         if(fragment!=null)
         {
             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container5, fragment).commit();
+            navigation.getMenu().getItem(index).setChecked(true);
             return true;
         }
         return false;
     }
+
+public void setNavigationBar(BottomNavigationView navigation)
+{
+    this.navigation=navigation;
+}
+
 }

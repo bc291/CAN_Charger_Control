@@ -459,7 +459,7 @@
                         android:layout_row="4"
                         android:fontFamily="monospace"
                         android:text="POKAŻ"
-                        android:textColor="@color/bluePopup"
+                        android:textColor="@color/black"
                         android:textSize="20sp" />
 
                     <TextView
@@ -484,7 +484,7 @@
                         android:layout_row="5"
                         android:fontFamily="monospace"
                         android:text="POKAŻ"
-                        android:textColor="@color/bluePopup"
+                        android:textColor="@color/black"
                         android:textSize="20sp" />
                 </GridLayout>
 

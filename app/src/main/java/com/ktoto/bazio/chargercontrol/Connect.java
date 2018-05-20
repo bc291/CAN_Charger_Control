@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.preference.PreferenceManager;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
@@ -106,6 +107,7 @@ public class Connect extends Fragment {
     Button popup_button2;
     LinearLayout linear_tile_2_1, linear_tile_2_2, linear_tile_2_3, linear_tile_2_4, linear_tile_2_5;
     TextView txtCarFaults;
+    BottomNavigationView navigation;
 
     @Nullable
     @Override
@@ -567,12 +569,14 @@ public class Connect extends Fragment {
 
             if (bladPolaczenia) {
                 msg("Połączenie nie udane. Powrót do okna głównego.");
-
-
+                SecondFragment secondFragment = new SecondFragment();
+                secondFragment.setNavigationBar(navigation);
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container5, secondFragment).commit();
+                //getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container5, new SecondFragment()).commit();
                 //android.support.v4.app.FragmentManager fm = getFragmentManager();
               //  fm.beginTransaction().replace(R.id.mainNavigation, new SecondFragment()).commit();
 
-
+                navigation.getMenu().getItem(0).setChecked(true);
             } else {
                 msg("Połączono");
                 ConnectionStatus.setBooleanValue(true);
@@ -665,6 +669,12 @@ private void changeTileBackground(LinearLayout linearLayout, boolean changed)
         linearLayout.setBackground(getResources().getDrawable(R.drawable.conn_status_off));
     }
 }
+
+    public void setNavigationBar(BottomNavigationView navigation)
+    {
+        this.navigation=navigation;
+    }
+
 }
 
 

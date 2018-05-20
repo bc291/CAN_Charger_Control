@@ -264,217 +264,7 @@ public class Connect extends Fragment {
             public void onClick(View v)
             {
 
-                final Handler handler = new Handler();
-                final byte delimiter = 10; //This is the ASCII code for a newline character
-
-                stopWorker = false;
-                readBufferPosition = 0;
-                readBuffer = new byte[1024];
-                try {
-                    socketInputStream = obslugaBluetooth.getInputStream();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                workerThread = new Thread(new Runnable()
-                {
-                    public void run()
-                    {
-                        while(!Thread.currentThread().isInterrupted() && !stopWorker)
-                        {
-                            try
-                            {
-
-                                int bytesAvailable = socketInputStream.available();
-                                if(bytesAvailable > 0)
-                                {
-                                    byte[] packetBytes = new byte[bytesAvailable];
-                                    socketInputStream.read(packetBytes);
-                                    for(int i=0;i<bytesAvailable;i++)
-                                    {
-                                        byte b = packetBytes[i];
-                                        if(b == delimiter)
-                                        {
-                                            byte[] encodedBytes = new byte[readBufferPosition];
-                                            System.arraycopy(readBuffer, 0, encodedBytes, 0, encodedBytes.length);
-                                            final String data = new String(encodedBytes, "US-ASCII").replaceAll("\0", "").replaceAll("inf", "1000");
-                                            final int testowo =1;
-                                            readBufferPosition = 0;
-
-                                            handler.post(new Runnable()
-                                            {
-                                                public void run()
-                                                {
-                                                    String afterSuffixRemoved=null;
-                                                    Log.d("logowanie", data);
-
-
-                                                    if(data !=null && data.length()!=0 && data.charAt(0)=='#') { //data.length()!=0
-                                                        afterSuffixRemoved = data.replace("#", "");
-                                                        testowaLista = Arrays.asList(afterSuffixRemoved.split(";"));
-                                                        chargerData.setAmps(Integer.parseInt(testowaLista.get(0)));
-                                                        chargerData.setVoltage(Integer.parseInt(testowaLista.get(1)));
-                                                        chargerData.setKwh(round(Float.parseFloat(testowaLista.get(2)),4).floatValue());
-                                                        chargerData.setRemainingTime(Float.parseFloat(testowaLista.get(3)));
-                                                        chargerData.setActualBatteryCapacity(round(Float.parseFloat(testowaLista.get(4)),2).floatValue());
-                                                        chargerData.setPower(chargerData.getAmps()* chargerData.getVoltage());
-                                                        chargerData.setAvailableCurrent(Integer.parseInt(testowaLista.get(6)));
-                                                        chargerData.setAvailableVoltage(Integer.parseInt(testowaLista.get(7)));
-                                                        gaugeView.setTargetValue(chargerData.getAmps());
-                                                        gaugeView2.setTargetValue(chargerData.getVoltage());
-                                                        txtActualBatteryCapacity.setText(String.valueOf(chargerData.getActualBatteryCapacity())+ " kWh");
-                                                        int temp = (int)((chargerData.getRemainingTime()-(int)(chargerData.getRemainingTime()))*60);
-                                                        txtRemainingTime.setText(String.valueOf((int)(chargerData.getRemainingTime())+" m ")+temp+" s");
-                                                        txtPower.setText(String.valueOf(chargerData.getPower()/1000)+" kW");
-                                                        carData.setMaxChargingCurrent(Integer.parseInt(testowaLista.get(6)));
-                                                        double money = getMoneyFromKwh(chargerData.getKwh());
-                                                        txtCost.setText(getCurrencyFromNumber(money));
-
-                                                        carData.setMaxChargingVoltage(Integer.parseInt(testowaLista.get(8)));
-                                                        carData.setTotalBatteryCapacity(Float.parseFloat(testowaLista.get(9))*0.11);
-                                                        txtMaxChargingVoltage.setText(String.valueOf(carData.getMaxChargingVoltage())+" V");
-                                                        txtTotalBatteryCapacity.setText(String.valueOf(carData.getTotalBatteryCapacity()+" kWh"));
-                                                        carData.setCarStatus(Integer.parseInt(testowaLista.get(13)));
-                                                        chargerData.setChargingTime(Integer.parseInt(testowaLista.get(10))/1000);
-                                                        isChargingActive = Integer.parseInt(testowaLista.get(15)) > 0 ? true : false;
-                                                        //textView6.setText(String.valueOf(isChargingActive));
-                                                        averagePowerFromUART = Double.parseDouble(testowaLista.get(11));
-
-                                                        if(isChargingActive) { txtIsChargingActive.setText("Ładowanie w toku"); }
-                                                        else { txtIsChargingActive.setText("Ładowanie nieaktywne");}
-                                                        carData.setFaults(Integer.parseInt(testowaLista.get(14)));
-                                                        initialCapacity = round((chargerData.getActualBatteryCapacity()-chargerData.getKwh()),2).doubleValue();
-                                                        txtInitialBatteryCapacity.setText(String.valueOf(initialCapacity+ " kWh"));
-                                                        if(!wasChargingActive && isChargingActive) wasChargingActive=true;
-
-                                                        if(!isChargingActive && wasChargingActive && money>0.01)
-                                                        {
-                                                            wasChargingActive=false;
-                                                            sendPostMessage();
-                                                        }
-
-                                                        if(chargerData.getPower()>0) averagePowerList.add(chargerData.getPower());
-
-                                                        if(isChargingActive)
-                                                        {
-                                                            txtIsChargingActive.setBackground(getResources().getDrawable(R.drawable.conn_status));
-                                                        }
-
-                                                        else
-                                                        {
-                                                            txtIsChargingActive.setBackground(getResources().getDrawable(R.drawable.conn_status_off));
-                                                        }
-                                                        Log.d("carStatus", Integer.toBinaryString(carData.getCarStatus()));
-
-                                                        txtKwhours.setText(String.valueOf(round(chargerData.getKwh(),2) + " kWh"));
-                                                        txtMaxChargingCurrent.setText(String.valueOf(chargerData.getAvailableCurrent()+ " A")); //bez dodania do struktury
-
-                                                        switch(Integer.parseInt(testowaLista.get(12)))
-                                                        {
-                                                            case 0:
-                                                                evState = evStateEnum.STARTUP;
-                                                                break;
-                                                            case 1:
-                                                                evState = evStateEnum.COMPATIBILITY_CHECK;
-                                                                break;
-                                                            case 2:
-                                                                evState = evStateEnum.TRASMIT_CHARGER_PARAMETERS;
-                                                                break;
-                                                            case 3:
-                                                                evState = evStateEnum.RECOGNIZE_START_PERMISSION;
-                                                                break;
-                                                            case 4:
-                                                                evState = evStateEnum.SEND_CHARGING_READY;
-                                                                break;
-                                                            case 5:
-                                                                evState = evStateEnum.WAIT_FOR_ZERO_CURRENT_STATE;
-                                                                break;
-                                                            case 6:
-                                                                evState = evStateEnum.ZERO_CURRENT_STATE;
-                                                                break;
-                                                            case 7:
-                                                                evState = evStateEnum.RECOGNIZE_STOP_CHARGING;
-                                                                break;
-                                                            case 8:
-                                                                evState = evStateEnum.TERMINATE_CHARGING;
-                                                                break;
-                                                            case 9:
-                                                                evState = evStateEnum.RUNNING;
-                                                                break;
-                                                            case 10:
-                                                                evState = evStateEnum.IDDLING;
-                                                                break;
-                                                            case 11:
-                                                                evState = evStateEnum.FAULT;
-                                                                break;
-                                                            case 12:
-                                                                evState = evStateEnum.DELAY_AFTER_EXTERNAL_STOP;
-                                                                break;
-
-                                                        }
-                                                        txtEvState.setText(evState.toString());
-                                                    }
-
-                                                    carStatusMessage.setVehicleChargingEnabled((carData.getCarStatus() & 0x01) == 1);
-                                                    carStatusMessage.setVehicleShiftLeverPosition((carData.getCarStatus() & 0x02) / 2 == 1);
-                                                    carStatusMessage.setChargingSystemFault((carData.getCarStatus() & 0x04) / 4 == 1);
-                                                    carStatusMessage.setVehicleConnectorStatus((carData.getCarStatus() & 0x08) / 8 == 1);
-                                                    carStatusMessage.setNormalStopRequestBefCharging((carData.getCarStatus() & 0x10) / 16 == 1);
-
-
-
-                                                    popup_txtVehicleChargingEnabled.setText(String.valueOf(carStatusMessage.isVehicleChargingEnabled()));
-                                                    popup_txtVehicleShiftLeverPosition.setText(String.valueOf(carStatusMessage.isVehicleShiftLeverPosition()));
-                                                    popup_txtChargingSystemFault.setText(String.valueOf(carStatusMessage.isChargingSystemFault()));
-                                                    popup_txtVehicleConnectorStatus.setText(String.valueOf(carStatusMessage.isVehicleConnectorStatus()));
-                                                    popup_txtNormalStopRequestBefCharging.setText(String.valueOf(carStatusMessage.isNormalStopRequestBefCharging()));
-
-
-                                                    changeTileBackground(linear_tile_1, carStatusMessage.isVehicleChargingEnabled());
-                                                    changeTileBackground(linear_tile_2, carStatusMessage.isVehicleShiftLeverPosition());
-                                                    changeTileBackground(linear_tile_3, carStatusMessage.isChargingSystemFault());
-                                                    changeTileBackground(linear_tile_4, carStatusMessage.isVehicleConnectorStatus());
-                                                    changeTileBackground(linear_tile_5, carStatusMessage.isNormalStopRequestBefCharging());
-
-                                                    carFaultsMessage.setBatteryOvervoltage((carData.getFaults() & 0x01) == 1);
-                                                    carFaultsMessage.setBatteryUnderVoltage((carData.getFaults() & 0x02) / 2 == 1);
-                                                    carFaultsMessage.setBatteryCurrentDeviation((carData.getFaults() & 0x04) / 4 == 1);
-                                                    carFaultsMessage.setHighBatteryTemperatury((carData.getFaults() & 0x08) / 8 == 1);
-                                                    carFaultsMessage.setBatteryVoltageDeviation((carData.getFaults() & 0x10) / 16 == 1);
-
-                                                    Log.d("faults", carFaultsMessage.toString());
-
-                                                    popup_txtBatteryOvervoltage.setText(String.valueOf(carFaultsMessage.isBatteryOvervoltage()));
-                                                    popup_txtBatteryUnderVoltage.setText(String.valueOf(carFaultsMessage.isBatteryUnderVoltage()));
-                                                    popup_txtBatteryCurrentDeviation.setText(String.valueOf(carFaultsMessage.isBatteryCurrentDeviation()));
-                                                    popup_txtHighBatteryTemperatury.setText(String.valueOf(carFaultsMessage.isHighBatteryTemperatury()));
-                                                    popup_txtBatteryVoltageDeviation.setText(String.valueOf(carFaultsMessage.isBatteryVoltageDeviation()));
-
-
-                                                    changeTileBackground(linear_tile_2_1, carFaultsMessage.isBatteryOvervoltage());
-                                                    changeTileBackground(linear_tile_2_2, carFaultsMessage.isBatteryUnderVoltage());
-                                                    changeTileBackground(linear_tile_2_3, carFaultsMessage.isBatteryCurrentDeviation());
-                                                    changeTileBackground(linear_tile_2_4, carFaultsMessage.isHighBatteryTemperatury());
-                                                    changeTileBackground(linear_tile_2_5, carFaultsMessage.isBatteryVoltageDeviation());
-                                                }
-                                            });
-                                        }
-                                        else
-                                        {
-                                            readBuffer[readBufferPosition++] = b;
-                                        }
-                                    }
-                                }
-                            }
-                            catch (IOException ex)
-                            {
-                                stopWorker = true;
-//                                msg("Exception");
-                            }
-                        }
-                    }
-                });
-
-                workerThread.start();
+                launchUARTConnection();
 
             }
         });
@@ -482,7 +272,8 @@ public class Connect extends Fragment {
         return myView;
     }
 
-//TODO ten bottom navigartion size w historii ładowania na 50dp to tak średnio
+
+    //TODO ten bottom navigartion size w historii ładowania na 50dp to tak średnio
 
 
 
@@ -593,7 +384,7 @@ public class Connect extends Fragment {
                 gaugesView.setVisibility(View.VISIBLE);
                 linearButtonsBottom.startAnimation(animFadeinFromRight);
                 linearButtonsBottom.setVisibility(View.VISIBLE);
-
+                launchUARTConnection();
             }
             progress.dismiss();
         }
@@ -678,6 +469,221 @@ private void changeTileBackground(LinearLayout linearLayout, boolean changed)
     public void disconnectBT()
     {
         Wyloguj();
+    }
+
+    private void launchUARTConnection()
+    {
+        final Handler handler = new Handler();
+        final byte delimiter = 10; //This is the ASCII code for a newline character
+
+        stopWorker = false;
+        readBufferPosition = 0;
+        readBuffer = new byte[1024];
+        try {
+            socketInputStream = obslugaBluetooth.getInputStream();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        workerThread = new Thread(new Runnable()
+        {
+            public void run()
+            {
+                while(!Thread.currentThread().isInterrupted() && !stopWorker)
+                {
+                    try
+                    {
+
+                        int bytesAvailable = socketInputStream.available();
+                        if(bytesAvailable > 0)
+                        {
+                            byte[] packetBytes = new byte[bytesAvailable];
+                            socketInputStream.read(packetBytes);
+                            for(int i=0;i<bytesAvailable;i++)
+                            {
+                                byte b = packetBytes[i];
+                                if(b == delimiter)
+                                {
+                                    byte[] encodedBytes = new byte[readBufferPosition];
+                                    System.arraycopy(readBuffer, 0, encodedBytes, 0, encodedBytes.length);
+                                    final String data = new String(encodedBytes, "US-ASCII").replaceAll("\0", "").replaceAll("inf", "1000");
+                                    final int testowo =1;
+                                    readBufferPosition = 0;
+
+                                    handler.post(new Runnable()
+                                    {
+                                        public void run()
+                                        {
+                                            String afterSuffixRemoved=null;
+                                            Log.d("logowanie", data);
+
+
+                                            if(data !=null && data.length()!=0 && data.charAt(0)=='#') { //data.length()!=0
+                                                afterSuffixRemoved = data.replace("#", "");
+                                                testowaLista = Arrays.asList(afterSuffixRemoved.split(";"));
+                                                chargerData.setAmps(Integer.parseInt(testowaLista.get(0)));
+                                                chargerData.setVoltage(Integer.parseInt(testowaLista.get(1)));
+                                                chargerData.setKwh(round(Float.parseFloat(testowaLista.get(2)),4).floatValue());
+                                                chargerData.setRemainingTime(Float.parseFloat(testowaLista.get(3)));
+                                                chargerData.setActualBatteryCapacity(round(Float.parseFloat(testowaLista.get(4)),2).floatValue());
+                                                chargerData.setPower(chargerData.getAmps()* chargerData.getVoltage());
+                                                chargerData.setAvailableCurrent(Integer.parseInt(testowaLista.get(6)));
+                                                chargerData.setAvailableVoltage(Integer.parseInt(testowaLista.get(7)));
+                                                gaugeView.setTargetValue(chargerData.getAmps());
+                                                gaugeView2.setTargetValue(chargerData.getVoltage());
+                                                txtActualBatteryCapacity.setText(String.valueOf(chargerData.getActualBatteryCapacity())+ " kWh");
+                                                int temp = (int)((chargerData.getRemainingTime()-(int)(chargerData.getRemainingTime()))*60);
+                                                txtRemainingTime.setText(String.valueOf((int)(chargerData.getRemainingTime())+" m ")+temp+" s");
+                                                txtPower.setText(String.valueOf(chargerData.getPower()/1000)+" kW");
+                                                carData.setMaxChargingCurrent(Integer.parseInt(testowaLista.get(6)));
+                                                double money = getMoneyFromKwh(chargerData.getKwh());
+                                                txtCost.setText(getCurrencyFromNumber(money));
+
+                                                carData.setMaxChargingVoltage(Integer.parseInt(testowaLista.get(8)));
+                                                carData.setTotalBatteryCapacity(Float.parseFloat(testowaLista.get(9))*0.11);
+                                                txtMaxChargingVoltage.setText(String.valueOf(carData.getMaxChargingVoltage())+" V");
+                                                txtTotalBatteryCapacity.setText(String.valueOf(carData.getTotalBatteryCapacity()+" kWh"));
+                                                carData.setCarStatus(Integer.parseInt(testowaLista.get(13)));
+                                                chargerData.setChargingTime(Integer.parseInt(testowaLista.get(10))/1000);
+                                                isChargingActive = Integer.parseInt(testowaLista.get(15)) > 0 ? true : false;
+                                                //textView6.setText(String.valueOf(isChargingActive));
+                                                averagePowerFromUART = Double.parseDouble(testowaLista.get(11));
+
+                                                if(isChargingActive) { txtIsChargingActive.setText("Ładowanie w toku"); }
+                                                else { txtIsChargingActive.setText("Ładowanie nieaktywne");}
+                                                carData.setFaults(Integer.parseInt(testowaLista.get(14)));
+                                                initialCapacity = round((chargerData.getActualBatteryCapacity()-chargerData.getKwh()),2).doubleValue();
+                                                txtInitialBatteryCapacity.setText(String.valueOf(initialCapacity+ " kWh"));
+                                                if(!wasChargingActive && isChargingActive) wasChargingActive=true;
+
+                                                if(!isChargingActive && wasChargingActive && money>0.01)
+                                                {
+                                                    wasChargingActive=false;
+                                                    sendPostMessage();
+                                                }
+
+                                                if(chargerData.getPower()>0) averagePowerList.add(chargerData.getPower());
+
+                                                if(isChargingActive)
+                                                {
+                                                    txtIsChargingActive.setBackground(getResources().getDrawable(R.drawable.conn_status));
+                                                }
+
+                                                else
+                                                {
+                                                    txtIsChargingActive.setBackground(getResources().getDrawable(R.drawable.conn_status_off));
+                                                }
+                                                Log.d("carStatus", Integer.toBinaryString(carData.getCarStatus()));
+
+                                                txtKwhours.setText(String.valueOf(round(chargerData.getKwh(),2) + " kWh"));
+                                                txtMaxChargingCurrent.setText(String.valueOf(chargerData.getAvailableCurrent()+ " A")); //bez dodania do struktury
+
+                                                switch(Integer.parseInt(testowaLista.get(12)))
+                                                {
+                                                    case 0:
+                                                        evState = evStateEnum.STARTUP;
+                                                        break;
+                                                    case 1:
+                                                        evState = evStateEnum.COMPATIBILITY_CHECK;
+                                                        break;
+                                                    case 2:
+                                                        evState = evStateEnum.TRASMIT_CHARGER_PARAMETERS;
+                                                        break;
+                                                    case 3:
+                                                        evState = evStateEnum.RECOGNIZE_START_PERMISSION;
+                                                        break;
+                                                    case 4:
+                                                        evState = evStateEnum.SEND_CHARGING_READY;
+                                                        break;
+                                                    case 5:
+                                                        evState = evStateEnum.WAIT_FOR_ZERO_CURRENT_STATE;
+                                                        break;
+                                                    case 6:
+                                                        evState = evStateEnum.ZERO_CURRENT_STATE;
+                                                        break;
+                                                    case 7:
+                                                        evState = evStateEnum.RECOGNIZE_STOP_CHARGING;
+                                                        break;
+                                                    case 8:
+                                                        evState = evStateEnum.TERMINATE_CHARGING;
+                                                        break;
+                                                    case 9:
+                                                        evState = evStateEnum.RUNNING;
+                                                        break;
+                                                    case 10:
+                                                        evState = evStateEnum.IDDLING;
+                                                        break;
+                                                    case 11:
+                                                        evState = evStateEnum.FAULT;
+                                                        break;
+                                                    case 12:
+                                                        evState = evStateEnum.DELAY_AFTER_EXTERNAL_STOP;
+                                                        break;
+
+                                                }
+                                                txtEvState.setText(evState.toString());
+                                            }
+
+                                            carStatusMessage.setVehicleChargingEnabled((carData.getCarStatus() & 0x01) == 1);
+                                            carStatusMessage.setVehicleShiftLeverPosition((carData.getCarStatus() & 0x02) / 2 == 1);
+                                            carStatusMessage.setChargingSystemFault((carData.getCarStatus() & 0x04) / 4 == 1);
+                                            carStatusMessage.setVehicleConnectorStatus((carData.getCarStatus() & 0x08) / 8 == 1);
+                                            carStatusMessage.setNormalStopRequestBefCharging((carData.getCarStatus() & 0x10) / 16 == 1);
+
+
+
+                                            popup_txtVehicleChargingEnabled.setText(String.valueOf(carStatusMessage.isVehicleChargingEnabled()));
+                                            popup_txtVehicleShiftLeverPosition.setText(String.valueOf(carStatusMessage.isVehicleShiftLeverPosition()));
+                                            popup_txtChargingSystemFault.setText(String.valueOf(carStatusMessage.isChargingSystemFault()));
+                                            popup_txtVehicleConnectorStatus.setText(String.valueOf(carStatusMessage.isVehicleConnectorStatus()));
+                                            popup_txtNormalStopRequestBefCharging.setText(String.valueOf(carStatusMessage.isNormalStopRequestBefCharging()));
+
+
+                                            changeTileBackground(linear_tile_1, carStatusMessage.isVehicleChargingEnabled());
+                                            changeTileBackground(linear_tile_2, carStatusMessage.isVehicleShiftLeverPosition());
+                                            changeTileBackground(linear_tile_3, carStatusMessage.isChargingSystemFault());
+                                            changeTileBackground(linear_tile_4, carStatusMessage.isVehicleConnectorStatus());
+                                            changeTileBackground(linear_tile_5, carStatusMessage.isNormalStopRequestBefCharging());
+
+                                            carFaultsMessage.setBatteryOvervoltage((carData.getFaults() & 0x01) == 1);
+                                            carFaultsMessage.setBatteryUnderVoltage((carData.getFaults() & 0x02) / 2 == 1);
+                                            carFaultsMessage.setBatteryCurrentDeviation((carData.getFaults() & 0x04) / 4 == 1);
+                                            carFaultsMessage.setHighBatteryTemperatury((carData.getFaults() & 0x08) / 8 == 1);
+                                            carFaultsMessage.setBatteryVoltageDeviation((carData.getFaults() & 0x10) / 16 == 1);
+
+                                            Log.d("faults", carFaultsMessage.toString());
+
+                                            popup_txtBatteryOvervoltage.setText(String.valueOf(carFaultsMessage.isBatteryOvervoltage()));
+                                            popup_txtBatteryUnderVoltage.setText(String.valueOf(carFaultsMessage.isBatteryUnderVoltage()));
+                                            popup_txtBatteryCurrentDeviation.setText(String.valueOf(carFaultsMessage.isBatteryCurrentDeviation()));
+                                            popup_txtHighBatteryTemperatury.setText(String.valueOf(carFaultsMessage.isHighBatteryTemperatury()));
+                                            popup_txtBatteryVoltageDeviation.setText(String.valueOf(carFaultsMessage.isBatteryVoltageDeviation()));
+
+
+                                            changeTileBackground(linear_tile_2_1, carFaultsMessage.isBatteryOvervoltage());
+                                            changeTileBackground(linear_tile_2_2, carFaultsMessage.isBatteryUnderVoltage());
+                                            changeTileBackground(linear_tile_2_3, carFaultsMessage.isBatteryCurrentDeviation());
+                                            changeTileBackground(linear_tile_2_4, carFaultsMessage.isHighBatteryTemperatury());
+                                            changeTileBackground(linear_tile_2_5, carFaultsMessage.isBatteryVoltageDeviation());
+                                        }
+                                    });
+                                }
+                                else
+                                {
+                                    readBuffer[readBufferPosition++] = b;
+                                }
+                            }
+                        }
+                    }
+                    catch (IOException ex)
+                    {
+                        stopWorker = true;
+//                                msg("Exception");
+                    }
+                }
+            }
+        });
+
+        workerThread.start();
     }
 }
 

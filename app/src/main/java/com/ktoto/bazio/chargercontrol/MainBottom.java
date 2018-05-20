@@ -56,7 +56,11 @@ public class MainBottom extends AppCompatActivity {
                         startActivityForResult(enableBtIntent , 0);
 
                     }
-
+                    currentFragment = getSupportFragmentManager().findFragmentById(R.id.container5);
+                    if(currentFragment instanceof Connect)
+                    {
+                        ((Connect) currentFragment).disconnectBT();
+                    }
                     if(BluetoothAdapter.getDefaultAdapter().isEnabled()) {
                         fragment = new Connect();
                         Connect connect = ((Connect)(fragment));

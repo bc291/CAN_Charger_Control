@@ -444,7 +444,7 @@ public class Connect extends Fragment {
 
 String title = "Zakończono ładowanie pojazdu: "+chargingOperation.getCarModel();
 String text = chargingOperation.getDateAndTime()+" | "+chargingOperation.getCost()+" zł";
-        generateNotification(title, text);
+        generateNotification(chargingOperation);
     }
 
 
@@ -682,6 +682,8 @@ private void changeTileBackground(LinearLayout linearLayout, boolean changed)
                                             changeTileBackground(linear_tile_2_3, carFaultsMessage.isBatteryCurrentDeviation());
                                             changeTileBackground(linear_tile_2_4, carFaultsMessage.isHighBatteryTemperatury());
                                             changeTileBackground(linear_tile_2_5, carFaultsMessage.isBatteryVoltageDeviation());
+
+                                            if(isChargingActive) generateRealtimeNotifications(chargerData, carData);
                                         }
                                     });
                                 }
@@ -723,14 +725,36 @@ private void changeTileBackground(LinearLayout linearLayout, boolean changed)
 
     }
 
-    public void generateNotification(String title, String text)
+    public void generateNotification(ChargingOperation chargingOperation)
     {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(), NOTIFICATION_CHANNEL_ID)
                 // .setVibrate(new long[]{0, 50})
                 .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle(title)
-                .setContentText(text);
+                .setContentTitle("Zakończono ładowanie pojazdu: "+chargingOperation.getCarModel())
+                .setContentText(chargingOperation.getDateAndTime()+" | "+chargingOperation.getCost()+" zł")
+             //   .setLargeIcon(image)
+                .setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText(chargingOperation.getDateAndTime()+" | "+chargingOperation.getCost()+" zł\n\n" +
+                                "Średnia moc ład.: "+chargingOperation.getAveragePower() +"kWh \nDostarczona pojemność: "+chargingOperation.getCapacityCharged()+" kWh\n" +
+                                "Czas ładowania: "+chargingOperation.getElapsedTime() +"m \nPojemność początkowa: "+chargingOperation.getInitialCapacity()+" kWh"));
+
+        notificationManager.notify(NOTIFICATION_ID, builder.build());
+    }
+
+    public void generateRealtimeNotifications(ChargerData chargerData, CarData cardata)
+    {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(), NOTIFICATION_CHANNEL_ID)
+                // .setVibrate(new long[]{0, 50})
+             //   .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle("Podglląd parametrów w czasie rzeczywistym")
+                .setContentText("Prąd: "+chargerData.getAmps()+ "| Napięcie: "+chargerData.getVoltage()+" | "+"Czas do końca ład. "+chargerData.getRemainingTime());
+             //   .setLargeIcon(image)
+                //.setStyle(new NotificationCompat.BigTextStyle()
+                  //      .bigText("21.05.2018 16:12:56"+" | "+"5.54"+" zł\n\n" +
+                    //            "Średnia moc ład.: 34.32 kWh \nDostarczona pojemność: 22.23 kWh\n" +
+                      //          "Czas ładowania: 34.23 m \nPojemność początkowa: 34.23 kWh"));
 
         notificationManager.notify(NOTIFICATION_ID, builder.build());
     }

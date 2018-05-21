@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
+    android:id="@+id/relativetest4"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:orientation="vertical"
         android:layout_marginTop="?attr/actionBarSize"
         android:background="@drawable/main_image_2"
-        android:id="@+id/linearLayout">
+        android:orientation="vertical">
 
 
         <TextView
@@ -22,8 +23,7 @@
             android:text="MONITORING"
             android:textColor="@color/white"
             android:textSize="22sp"
-            android:textStyle="bold|italic"
-            />
+            android:textStyle="bold|italic" />
 
     </LinearLayout>
 
@@ -40,13 +40,14 @@
         android:textStyle="bold|italic" />
 
     <LinearLayout
+        android:id="@+id/linearFirstTile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginTop="320dp"
-        android:id="@+id/linearFirstTile">
+        android:orientation="horizontal">
 
         <LinearLayout
+            android:id="@+id/lineartest5"
             android:layout_width="0dp"
             android:layout_height="120dp"
             android:layout_weight="1"
@@ -96,11 +97,11 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearSecondTile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginTop="440dp"
-        android:id="@+id/linearSecondTile">
+        android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -146,11 +147,11 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearThirdTile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginTop="560dp"
-        android:id="@+id/linearThirdTile">
+        android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="0dp"

@@ -1,11 +1,19 @@
 package com.ktoto.bazio.chargercontrol;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.bluetooth.BluetoothAdapter;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.media.RingtoneManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,12 +33,17 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import static android.content.Context.NOTIFICATION_SERVICE;
+
 public class SecondFragment extends Fragment {
     ChargingOperation chargingOperation;
     Animation animationFromLeft, animationFromLeftDelayBy200, animationFromLeftDelayBy400;
     LinearLayout linearFirstTile, linearSecondTile, linearThirdTile;
     Fragment fragment;
     private BottomNavigationView navigation;
+    Button button4;
+    private static final int NOTIFICATION_ID = 1;
+    private static final String NOTIFICATION_CHANNEL_ID = "my_notification_channel";
 
     @Nullable
     @Override
@@ -96,6 +109,17 @@ public class SecondFragment extends Fragment {
 
         navigation.getMenu().getItem(0).setChecked(true);
 
+        button4 = (Button) myView.findViewById(R.id.button4);
+
+        button4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                generateNotification();
+            }
+        });
+
+
+
         return myView;
     }
 
@@ -113,6 +137,37 @@ public class SecondFragment extends Fragment {
 public void setNavigationBar(BottomNavigationView navigation)
 {
     this.navigation=navigation;
+}
+
+
+public void generateNotification()
+{
+    NotificationManager notificationManager = (NotificationManager) getContext().getSystemService(NOTIFICATION_SERVICE);
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "My Notifications", NotificationManager.IMPORTANCE_DEFAULT);
+
+        // Configure the notification channel.
+        notificationChannel.setDescription("Channel description");
+        notificationChannel.enableLights(true);
+        notificationChannel.setLightColor(Color.BLUE);
+        //  notificationChannel.setVibrationPattern(new long[]{500});
+        notificationChannel.enableVibration(true);
+        notificationManager.createNotificationChannel(notificationChannel);
+    }
+
+
+    String title = "Zakończono ładowanie pojazdu: "+"nissan leaf";
+    String text = "21.05.2018 16:12:56"+" | "+"5.54"+" zł";
+
+
+    NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(), NOTIFICATION_CHANNEL_ID)
+            // .setVibrate(new long[]{0, 50})
+            .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+            .setSmallIcon(R.mipmap.ic_launcher)
+            .setContentTitle(title)
+            .setContentText(text);
+
+    notificationManager.notify(NOTIFICATION_ID, builder.build());
 }
 
 }

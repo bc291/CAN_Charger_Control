@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Car Charger</string>
+    <string name="app_name">EVSE Hub</string>
     <string name="action_settings">Ustawienia</string>
     <string name="title_activity_connect">Połącz</string>
     <string name="title_activity_all_charging_operations">Lista ładowań</string>

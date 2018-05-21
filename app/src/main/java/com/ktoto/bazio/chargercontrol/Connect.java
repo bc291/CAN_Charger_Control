@@ -2,9 +2,14 @@ package com.ktoto.bazio.chargercontrol;
 
 import android.animation.ObjectAnimator;
 import android.app.Dialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.media.RingtoneManager;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -16,6 +21,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -58,6 +64,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
+
+import static android.content.Context.NOTIFICATION_SERVICE;
 
 public class Connect extends Fragment {
 
@@ -108,6 +116,9 @@ public class Connect extends Fragment {
     LinearLayout linear_tile_2_1, linear_tile_2_2, linear_tile_2_3, linear_tile_2_4, linear_tile_2_5;
     TextView txtCarFaults;
     BottomNavigationView navigation;
+    private static final int NOTIFICATION_ID = 1;
+    private static final String NOTIFICATION_CHANNEL_ID = "my_notification_channel";
+    private   NotificationManager notificationManager;
 
     @Nullable
     @Override
@@ -269,6 +280,8 @@ public class Connect extends Fragment {
             }
         });
 
+        generateNotificationChannel();
+
         return myView;
     }
 
@@ -429,6 +442,9 @@ public class Connect extends Fragment {
         asyncHelper asyncHelp = new asyncHelper(getActivity(), chargingOperation);
         asyncpostt.execute(asyncHelp);
 
+String title = "Zakończono ładowanie pojazdu: "+chargingOperation.getCarModel();
+String text = chargingOperation.getDateAndTime()+" | "+chargingOperation.getCost()+" zł";
+        generateNotification(title, text);
     }
 
 
@@ -445,6 +461,8 @@ public class Connect extends Fragment {
                 msg("Błąd");
             }
         }
+
+
 
     }
 
@@ -684,6 +702,37 @@ private void changeTileBackground(LinearLayout linearLayout, boolean changed)
         });
 
         workerThread.start();
+    }
+
+    public void generateNotificationChannel()
+    {
+        notificationManager = (NotificationManager) getContext().getSystemService(NOTIFICATION_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "My Notifications", NotificationManager.IMPORTANCE_DEFAULT);
+
+            // Configure the notification channel.
+            notificationChannel.setDescription("Channel description");
+            notificationChannel.enableLights(true);
+            notificationChannel.setLightColor(Color.BLUE);
+            //  notificationChannel.setVibrationPattern(new long[]{500});
+            notificationChannel.enableVibration(true);
+            notificationManager.createNotificationChannel(notificationChannel);
+
+        }
+
+
+    }
+
+    public void generateNotification(String title, String text)
+    {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(), NOTIFICATION_CHANNEL_ID)
+                // .setVibrate(new long[]{0, 50})
+                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle(title)
+                .setContentText(text);
+
+        notificationManager.notify(NOTIFICATION_ID, builder.build());
     }
 }
 

@@ -98,7 +98,10 @@ public class MainBottom extends AppCompatActivity {
         secondFragment.setNavigationBar(navigation);
         loadFragment(secondFragment);
       //  loadFragment(new SecondFragment());
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+    //    getSupportActionBar().setLogo(R.drawable.my_logo);
+      //  getSupportActionBar().setDisplayUseLogoEnabled(true);
     }
 
 

@@ -3,6 +3,7 @@ package com.ktoto.bazio.chargercontrol.Fragments;
 import android.app.Dialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -385,7 +386,7 @@ public class Connect extends Fragment {
         {
             @Override
             protected void onPostExecute(String httpResponseString) {
-                generateNotification(chargingOperation, httpResponseString);
+                generateNotification(chargingOperation, httpResponseString.replace("added", "").trim());
                 Log.d("testhttpresponse", httpResponseString);
             }
         };
@@ -631,8 +632,13 @@ public class Connect extends Fragment {
 
         Intent intent = new Intent(getContext(), MainBottom.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra("transaction_id", "test");
+        intent.putExtra("transaction_id", httpResponseString);
+        Log.d("testhttpresponse", httpResponseString);
 
+        PendingIntent contentIntent = PendingIntent.getActivity(getContext(), 0,
+                intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        builder.setContentIntent(contentIntent);
 
         notificationManager.notify(NOTIFICATION_ID, builder.build());
     }

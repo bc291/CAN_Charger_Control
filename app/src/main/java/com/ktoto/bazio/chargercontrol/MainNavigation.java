@@ -1,6 +1,5 @@
 package com.ktoto.bazio.chargercontrol;
 
-import android.app.FragmentManager;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,13 +14,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.ktoto.bazio.chargercontrol.asynce.asyncPost;
+import com.ktoto.bazio.chargercontrol.Fragments.Connect;
+import com.ktoto.bazio.chargercontrol.Fragments.SecondFragment;
+import com.ktoto.bazio.chargercontrol.Fragments.chargerOperationsList;
 
 public class MainNavigation extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {

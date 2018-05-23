@@ -1,4 +1,4 @@
-package com.ktoto.bazio.chargercontrol;
+package com.ktoto.bazio.chargercontrol.Adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -9,17 +9,19 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.ktoto.bazio.chargercontrol.R;
+
 import java.util.List;
 
 /**
  * Created by bazio on 08.05.2018.
  */
 
-public class CustomListAdapter extends ArrayAdapter<ChargingOperationGet>  {
-    Context mCtx;
-    int resource;
-    List<ChargingOperationGet> list;
-    public CustomListAdapter(Context  mCtx, int resource, List<ChargingOperationGet> list)
+public class StatisticsPopupListAdapter extends ArrayAdapter<String>  {
+    private Context mCtx;
+    private int resource;
+    private List<String> list;
+    public StatisticsPopupListAdapter(Context  mCtx, int resource, List<String> list)
     {
         super(mCtx, resource, list);
         this.mCtx=mCtx;
@@ -38,16 +40,16 @@ public class CustomListAdapter extends ArrayAdapter<ChargingOperationGet>  {
         else if(position>8 && position<99) positionFixed = String.valueOf(position+1);
 
 
-        TextView textView_carModel = (TextView) view.findViewById(R.id.textView_parameter);
-        TextView textView_cost = (TextView) view.findViewById(R.id.textView_cost);
+        TextView textView_parameter = (TextView) view.findViewById(R.id.textView_parameter);
         TextView textView_transactionId = (TextView) view.findViewById(R.id.textView_transactionId);
-        TextView textView_dateAndTime = (TextView) view.findViewById(R.id.textView_dateAndTime);
+        TextView textView_ID = (TextView) view.findViewById(R.id.textView_ID);
 
-        ChargingOperationGet chargingOperationGet = list.get(position);
-        textView_carModel.setText(chargingOperationGet.getCarModel());
-        textView_cost.setText(chargingOperationGet.getCost().toString()+" zł");
+        String[] stringArray = list.get(position).split(";");
+
+
+        textView_parameter.setText(stringArray[0]);
+        textView_ID.setText("#" + stringArray[1]);
         textView_transactionId.setText(positionFixed);
-        textView_dateAndTime.setText(chargingOperationGet.getDateAndTime());
         return view;
     }
 

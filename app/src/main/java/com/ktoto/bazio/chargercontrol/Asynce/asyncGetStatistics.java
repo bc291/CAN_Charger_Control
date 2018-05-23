@@ -1,21 +1,18 @@
-package com.ktoto.bazio.chargercontrol.asynce;
+package com.ktoto.bazio.chargercontrol.Asynce;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.ktoto.bazio.chargercontrol.ChargingOperation;
-import com.ktoto.bazio.chargercontrol.ChargingOperationGet;
+import com.ktoto.bazio.chargercontrol.Model.ChargingOperationGet;
 import com.ktoto.bazio.chargercontrol.Fragments.StatisticsFragment;
 import com.ktoto.bazio.chargercontrol.Model.Statistics;
-import com.ktoto.bazio.chargercontrol.chargerOperationsList;
+import com.ktoto.bazio.chargercontrol.Fragments.chargerOperationsList;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
@@ -28,12 +25,12 @@ import java.util.Scanner;
 
 public class asyncGetStatistics extends AsyncTask<asyncHelper, Void, List<Statistics>> {
 
-    StatisticsFragment statisticsFragment;
+    private StatisticsFragment statisticsFragment;
 
     private chargerOperationsList chargerOperations;
-    ChargingOperationGet[] chargingOperation = null;
-    List<ChargingOperationGet> testowaLista2=null;
-    boolean connectionEstablished = false;
+    private ChargingOperationGet[] chargingOperation = null;
+    private List<ChargingOperationGet> testowaLista2=null;
+    private boolean connectionEstablished = false;
 
     @Override
     protected List<Statistics> doInBackground(asyncHelper... asyncHelpers) {

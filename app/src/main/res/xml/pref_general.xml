@@ -30,7 +30,7 @@
         android:maxLines="1"
         android:selectAllOnFocus="true"
         android:singleLine="false"
-        android:title="Koszt energii el. (1kWh)" />
+        android:title="Koszt energii elektrycznej (zł/kWh)" />
 
     <SwitchPreference
         android:defaultValue="true"

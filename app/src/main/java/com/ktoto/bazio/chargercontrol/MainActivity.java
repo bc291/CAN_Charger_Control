@@ -6,28 +6,17 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.ktoto.bazio.chargercontrol.asynce.asyncGet;
-import com.ktoto.bazio.chargercontrol.asynce.asyncPost;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URI;
-import java.net.URISyntaxException;
+import com.ktoto.bazio.chargercontrol.Fragments.Connect;
+import com.ktoto.bazio.chargercontrol.Fragments.chargerOperationsList;
+import com.ktoto.bazio.chargercontrol.Model.ChargingOperation;
+import com.ktoto.bazio.chargercontrol.Asynce.asyncPost;
 
 public class MainActivity extends AppCompatActivity {
 

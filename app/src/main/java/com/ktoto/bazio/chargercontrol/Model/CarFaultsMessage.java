@@ -2,6 +2,8 @@ package com.ktoto.bazio.chargercontrol.Model;
 
 import android.util.Log;
 
+import com.ktoto.bazio.Tools.BitsByIndexRetriever;
+
 /**
  * Created by bazio on 19.05.2018.
  */

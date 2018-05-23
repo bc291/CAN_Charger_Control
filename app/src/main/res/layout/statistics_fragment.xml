@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    >
+    android:id="@+id/constraintLayoutStatistics">
 
     <ProgressBar
         android:layout_width="wrap_content"
@@ -17,20 +17,15 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:id="@+id/progressBar"/>
 
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
-
-
+        android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:id="@+id/scrollView">
-
             <RelativeLayout
                 android:id="@+id/layout_to_hide1"
                 android:layout_width="match_parent"
@@ -52,7 +47,6 @@
                         android:textSize="26sp"
                         android:textStyle="bold" />
                 </LinearLayout>
-
 
             </RelativeLayout>
 
@@ -148,11 +142,8 @@
                             android:text="Brak danych"
                             android:textColor="@color/colorAccent" />
                     </LinearLayout>
-
                 </android.support.v7.widget.CardView>
-
             </LinearLayout>
-
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -202,7 +193,6 @@
                             android:text="Brak danych"
                             android:textColor="@color/colorAccent" />
                     </LinearLayout>
-
                 </android.support.v7.widget.CardView>
 
                 <android.support.v7.widget.CardView
@@ -246,9 +236,7 @@
                             android:text="Brak danych"
                             android:textColor="@color/colorAccent" />
                     </LinearLayout>
-
                 </android.support.v7.widget.CardView>
-
             </LinearLayout>
 
             <LinearLayout
@@ -299,7 +287,6 @@
                             android:text="Brak danych"
                             android:textColor="@color/colorAccent" />
                     </LinearLayout>
-
                 </android.support.v7.widget.CardView>
 
                 <android.support.v7.widget.CardView
@@ -343,11 +330,8 @@
                             android:text="Brak danych"
                             android:textColor="@color/colorAccent" />
                     </LinearLayout>
-
                 </android.support.v7.widget.CardView>
-
             </LinearLayout>
-
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -396,7 +380,6 @@
                             android:text="txtTest"
                             android:textColor="@color/colorAccent" />
                     </LinearLayout>
-
                 </android.support.v7.widget.CardView>
 
                 <android.support.v7.widget.CardView
@@ -439,9 +422,7 @@
                             android:text="txtTest2"
                             android:textColor="@color/colorAccent" />
                     </LinearLayout>
-
                 </android.support.v7.widget.CardView>
-
             </LinearLayout>
 
             <LinearLayout
@@ -457,8 +438,31 @@
                     android:layout_weight="1" />
 
             </LinearLayout>
-
-
         </LinearLayout>
     </ScrollView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize">
+
+    <FrameLayout
+        android:id="@+id/content_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/navigation"/>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="70dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/ic_refresh_black_24dp" />
+    </RelativeLayout>
+
 </android.support.constraint.ConstraintLayout>

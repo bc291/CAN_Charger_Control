@@ -1,6 +1,7 @@
 package com.ktoto.bazio.chargercontrol.Model;
 
 
+import com.ktoto.bazio.Tools.BitsByIndexRetriever;
 
 public class CarStatusMessage implements BitsByIndexRetriever
 {

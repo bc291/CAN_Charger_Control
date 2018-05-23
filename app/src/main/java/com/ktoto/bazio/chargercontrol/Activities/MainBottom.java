@@ -1,4 +1,4 @@
-package com.ktoto.bazio.chargercontrol;
+package com.ktoto.bazio.chargercontrol.Activities;
 
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
@@ -17,7 +17,11 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ktoto.bazio.chargercontrol.Fragments.Connect;
+import com.ktoto.bazio.chargercontrol.Fragments.SecondFragment;
 import com.ktoto.bazio.chargercontrol.Fragments.StatisticsFragment;
+import com.ktoto.bazio.chargercontrol.Fragments.chargerOperationsList;
+import com.ktoto.bazio.chargercontrol.R;
 
 import java.lang.reflect.Field;
 
@@ -35,35 +39,32 @@ public class MainBottom extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
                     fragment = new SecondFragment();
-                    ((SecondFragment)fragment).setNavigationBar(navigation);
-                   Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.container5);
-                    if(currentFragment instanceof Connect)
-                    {
+                    ((SecondFragment) fragment).setNavigationBar(navigation);
+                    Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.container5);
+                    if (currentFragment instanceof Connect) {
                         ((Connect) currentFragment).disconnectBT();
                     }
                     break;
                 case R.id.navigation_dashboard:
                     fragment = new chargerOperationsList();
                     currentFragment = getSupportFragmentManager().findFragmentById(R.id.container5);
-                    if(currentFragment instanceof Connect)
-                    {
+                    if (currentFragment instanceof Connect) {
                         ((Connect) currentFragment).disconnectBT();
                     }
                     break;
                 case R.id.navigation_notifications:
-                    if(!BluetoothAdapter.getDefaultAdapter().isEnabled()) {
+                    if (!BluetoothAdapter.getDefaultAdapter().isEnabled()) {
                         Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                        startActivityForResult(enableBtIntent , 0);
+                        startActivityForResult(enableBtIntent, 0);
 
                     }
                     currentFragment = getSupportFragmentManager().findFragmentById(R.id.container5);
-                    if(currentFragment instanceof Connect)
-                    {
+                    if (currentFragment instanceof Connect) {
                         ((Connect) currentFragment).disconnectBT();
                     }
-                    if(BluetoothAdapter.getDefaultAdapter().isEnabled()) {
+                    if (BluetoothAdapter.getDefaultAdapter().isEnabled()) {
                         fragment = new Connect();
-                        Connect connect = ((Connect)(fragment));
+                        Connect connect = ((Connect) (fragment));
                         connect.setNavigationBar(navigation);
 
                     }
@@ -71,8 +72,7 @@ public class MainBottom extends AppCompatActivity {
                 case R.id.navigation_details:
                     fragment = new StatisticsFragment();
                     currentFragment = getSupportFragmentManager().findFragmentById(R.id.container5);
-                    if(currentFragment instanceof Connect)
-                    {
+                    if (currentFragment instanceof Connect) {
                         ((Connect) currentFragment).disconnectBT();
                     }
                     break;
@@ -97,15 +97,16 @@ public class MainBottom extends AppCompatActivity {
         SecondFragment secondFragment = new SecondFragment();
         secondFragment.setNavigationBar(navigation);
         loadFragment(secondFragment);
-      //  loadFragment(new SecondFragment());
+        //  loadFragment(new SecondFragment());
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-    //    getSupportActionBar().setLogo(R.drawable.my_logo);
-      //  getSupportActionBar().setDisplayUseLogoEnabled(true);
+        //    getSupportActionBar().setLogo(R.drawable.my_logo);
+        //  getSupportActionBar().setDisplayUseLogoEnabled(true);
 
         Intent notifyIntent = getIntent();
-        String extras = getIntent().getStringExtra("transaction_id");;
-        if (extras != null && extras.length()>0) {
+        String extras = getIntent().getStringExtra("transaction_id");
+        ;
+        if (extras != null && extras.length() > 0) {
             chargerOperationsList fragment2 = new chargerOperationsList();
             fragment2.setNavigationBar(navigation);
             fragment2.messageFromNotification(extras);
@@ -114,11 +115,8 @@ public class MainBottom extends AppCompatActivity {
         }
     }
 
-
-    private boolean loadFragment(Fragment fragment)
-    {
-        if(fragment!=null)
-        {
+    private boolean loadFragment(Fragment fragment) {
+        if (fragment != null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.container5, fragment).commit();
             return true;
         }
@@ -152,8 +150,8 @@ public class MainBottom extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             Intent i = new Intent(MainBottom.this, SettingsActivity.class);
-            i.putExtra( PreferenceActivity.EXTRA_SHOW_FRAGMENT, SettingsActivity.GeneralPreferenceFragment.class.getName() );
-            i.putExtra( PreferenceActivity.EXTRA_NO_HEADERS, true );
+            i.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, SettingsActivity.GeneralPreferenceFragment.class.getName());
+            i.putExtra(PreferenceActivity.EXTRA_NO_HEADERS, true);
             startActivity(i);
         }
 
@@ -187,9 +185,9 @@ public class MainBottom extends AppCompatActivity {
                     item.setChecked(item.getItemData().isChecked());
                 }
             } catch (NoSuchFieldException e) {
-              //  Log.e("BNVHelper", "Unable to get shift mode field", e);
+                //  Log.e("BNVHelper", "Unable to get shift mode field", e);
             } catch (IllegalAccessException e) {
-               // Log.e("BNVHelper", "Unable to change value of shift mode", e);
+                // Log.e("BNVHelper", "Unable to change value of shift mode", e);
             }
         }
     }

@@ -1,4 +1,4 @@
-package com.ktoto.bazio.chargercontrol;
+package com.ktoto.bazio.chargercontrol.Model;
 
 /**
  * Created by bazio on 02.05.2018.

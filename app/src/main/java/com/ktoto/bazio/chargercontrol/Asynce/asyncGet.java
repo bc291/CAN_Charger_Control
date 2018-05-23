@@ -1,4 +1,4 @@
-package com.ktoto.bazio.chargercontrol.asynce;
+package com.ktoto.bazio.chargercontrol.Asynce;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -7,14 +7,11 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.ktoto.bazio.chargercontrol.ChargingOperation;
-import com.ktoto.bazio.chargercontrol.ChargingOperationGet;
-import com.ktoto.bazio.chargercontrol.Model.Statistics;
-import com.ktoto.bazio.chargercontrol.chargerOperationsList;
+import com.ktoto.bazio.chargercontrol.Model.ChargingOperationGet;
+import com.ktoto.bazio.chargercontrol.Fragments.chargerOperationsList;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -26,7 +23,7 @@ import java.util.Scanner;
 public class asyncGet extends AsyncTask<asyncHelper, Void, List<ChargingOperationGet>> {
 
     private chargerOperationsList chargerOperations;
-    ChargingOperationGet[] chargingOperation = null;
+    private ChargingOperationGet[] chargingOperation = null;
 
     @Override
     protected List<ChargingOperationGet> doInBackground(asyncHelper... asyncHelpers) {

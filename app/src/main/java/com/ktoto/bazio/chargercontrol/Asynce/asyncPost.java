@@ -1,15 +1,13 @@
-package com.ktoto.bazio.chargercontrol.asynce;
+package com.ktoto.bazio.chargercontrol.Asynce;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.ktoto.bazio.chargercontrol.ChargingOperation;
-import com.ktoto.bazio.chargercontrol.MainActivity;
+import com.ktoto.bazio.chargercontrol.Model.ChargingOperation;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -27,10 +25,10 @@ import java.net.URISyntaxException;
  * Created by bazio on 07.05.2018.
  */
 
-public class asyncPost extends AsyncTask<asyncHelper, Void, Void>{
+public class asyncPost extends AsyncTask<asyncHelper, Void, String>{
 
     @Override
-    protected Void doInBackground(asyncHelper... asyncHelpers) {
+    protected String doInBackground(asyncHelper... asyncHelpers) {
 
         Context context;
         context = asyncHelpers[0].getContext();
@@ -60,16 +58,19 @@ public class asyncPost extends AsyncTask<asyncHelper, Void, Void>{
 
         DefaultHttpClient httpClient = new DefaultHttpClient();
         HttpResponse httpResponse = null;
+        String httpResponseString=null;
         try {
             httpResponse = httpClient.execute(post);
             if (httpResponse.getStatusLine().getStatusCode() == 200) {
+
                 HttpEntity entity = httpResponse.getEntity();
-                Log.d("httpReponse", EntityUtils.toString(entity));
+              //  Log.d("httpReponse", EntityUtils.toString(entity));
+                httpResponseString = String.valueOf(EntityUtils.toString(entity));
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return null;
+        return httpResponseString;
     }
 }

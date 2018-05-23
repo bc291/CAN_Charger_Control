@@ -1,8 +1,8 @@
-package com.ktoto.bazio.chargercontrol.asynce;
+package com.ktoto.bazio.chargercontrol.Asynce;
 
 import android.content.Context;
 
-import com.ktoto.bazio.chargercontrol.ChargingOperation;
+import com.ktoto.bazio.chargercontrol.Model.ChargingOperation;
 
 /**
  * Created by bazio on 09.05.2018.

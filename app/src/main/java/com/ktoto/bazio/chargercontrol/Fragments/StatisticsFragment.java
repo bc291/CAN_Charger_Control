@@ -1,79 +1,62 @@
 package com.ktoto.bazio.chargercontrol.Fragments;
 
-import android.Manifest;
 import android.app.Dialog;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
+import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
-import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
-import android.support.v4.app.ActivityCompat;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ktoto.bazio.chargercontrol.ChargingOperation;
-import com.ktoto.bazio.chargercontrol.ChargingOperationGet;
-import com.ktoto.bazio.chargercontrol.CustomListAdapter;
-import com.ktoto.bazio.chargercontrol.MainActivity;
+import com.ktoto.bazio.chargercontrol.Model.ChargingOperation;
+import com.ktoto.bazio.chargercontrol.Model.ChargingOperationGet;
 import com.ktoto.bazio.chargercontrol.Model.Statistics;
 import com.ktoto.bazio.chargercontrol.R;
-import com.ktoto.bazio.chargercontrol.StatisticsPopupListAdapter;
-import com.ktoto.bazio.chargercontrol.asynce.asyncGet;
-import com.ktoto.bazio.chargercontrol.asynce.asyncGetStatistics;
-import com.ktoto.bazio.chargercontrol.asynce.asyncHelper;
-import com.ktoto.bazio.chargercontrol.asynce.asyncPost;
+import com.ktoto.bazio.chargercontrol.Adapters.StatisticsPopupListAdapter;
+import com.ktoto.bazio.chargercontrol.Asynce.asyncGetStatistics;
+import com.ktoto.bazio.chargercontrol.Asynce.asyncHelper;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 public class StatisticsFragment extends Fragment {
 
-    ProgressBar progressBar;
-    List<Statistics> statisticsList;
-    TextView txtTotalCost, txtTotalChargingTime, txtTotalOperations, txtAveragePowerOfAll, txtAverageCost, txtAverageInitialCapacity;
-    Dialog dialog;
-    View myView;
-    LinearLayout linearLayout;
+    private ProgressBar progressBar;
+    private List<Statistics> statisticsList;
+    private TextView txtTotalCost, txtTotalChargingTime, txtTotalOperations, txtAveragePowerOfAll, txtAverageCost, txtAverageInitialCapacity;
+    private Dialog dialog;
+    private View myView;
+    private LinearLayout linearLayout;
 
-    List<ChargingOperationGet> testowaLista2;
-    ListView listview;
-    TextView carModeltxt;
-    List<String> parameterToView;
-    Animation animation;
+    private List<ChargingOperationGet> testowaLista2;
+    private ListView listview;
+    private TextView carModeltxt;
+    private List<String> parameterToView;
+    private Animation animation;
+    private StatisticsFragment statisticsFragment;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        myView = inflater.inflate(R.layout.statistics_fragment,  null);
-
+        myView = inflater.inflate(R.layout.statistics_fragment, null);
+        statisticsFragment = this;
         progressBar = (ProgressBar) myView.findViewById(R.id.progressBar);
         txtTotalCost = (TextView) myView.findViewById(R.id.txtTotalCost);
         txtTotalChargingTime = (TextView) myView.findViewById(R.id.txtTotalChargingTime);
@@ -103,15 +86,13 @@ public class StatisticsFragment extends Fragment {
         asyncget.execute(asyncHelp);
 
 
-
-       // progressBar.setVisibility(View.VISIBLE);
+        // progressBar.setVisibility(View.VISIBLE);
         Log.d("visibility", "recreated statistics fragment");
 
 
         linearLayout = (LinearLayout) myView.findViewById(R.id.scrollView);
         linearLayout.setVisibility(View.INVISIBLE);
         progressBar.setVisibility(View.VISIBLE);
-
 
 
         CardView card_view = (CardView) myView.findViewById(R.id.cardView11);
@@ -121,29 +102,47 @@ public class StatisticsFragment extends Fragment {
         CardView card_view5 = (CardView) myView.findViewById(R.id.cardView15);
         CardView card_view6 = (CardView) myView.findViewById(R.id.cardView16);
 
-CardView[] arrayOfCardViews = {card_view, card_view2, card_view3, card_view4, card_view5, card_view6};
-setOnClickListenerToCardViews(arrayOfCardViews);
+        CardView[] arrayOfCardViews = {card_view, card_view2, card_view3, card_view4, card_view5, card_view6};
+        setOnClickListenerToCardViews(arrayOfCardViews);
 
-        for (CardView item:arrayOfCardViews) {
+        for (CardView item : arrayOfCardViews) {
             item.setVisibility(View.INVISIBLE);
         }
 
 
-        for (CardView item:arrayOfCardViews) {
+        for (CardView item : arrayOfCardViews) {
             item.startAnimation(animation);
             item.setVisibility(View.VISIBLE);
         }
+
+        FloatingActionButton fab = myView.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               Log.d("fab", "działa");
+
+                asyncHelper asyncHelp = new asyncHelper(getContext(), new ChargingOperation());
+                asyncGetStatistics asyncget = new asyncGetStatistics(statisticsFragment);
+                asyncget.execute(asyncHelp);
+
+
+                Snackbar snack = Snackbar.make(myView.findViewById(R.id.constraintLayoutStatistics),
+                         "Odswieżono", Snackbar.LENGTH_SHORT);
+                CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams)
+                snack.getView().getLayoutParams();
+                params.setMargins(0, 0, 0, 100);
+                snack.getView().setLayoutParams(params);
+                snack.show();
+
+            }
+        });
+
 
         return myView;
     }
 
 
-
-
-
-
-    public void showPopup(String message)
-    {
+    public void showPopup(String message) {
         carModeltxt = (TextView) dialog.findViewById(R.id.txtCarModel);
         carModeltxt.setText(message);
         TextView txtOperationNumber = (TextView) dialog.findViewById(R.id.txtOperationNumber);
@@ -170,59 +169,59 @@ setOnClickListenerToCardViews(arrayOfCardViews);
                     StatisticsPopupListAdapter customListAdapter = null;
                     parameterToView = new ArrayList<String>();
 
-                  if(testowaLista2!=null) {
-                      switch (index) {
-                          case 0: //totalCost
+                    if (testowaLista2 != null) {
+                        switch (index) {
+                            case 0: //totalCost
 
-                              for (ChargingOperationGet temp : testowaLista2)
-                                  parameterToView.add(String.valueOf(temp.getCost() + " zł") + ";" + temp.getId());
+                                for (ChargingOperationGet temp : testowaLista2)
+                                    parameterToView.add(String.valueOf(temp.getCost() + " zł") + ";" + temp.getId());
 
-                              showPopup("Całkowity koszt");
-                              break;
+                                showPopup("Całkowity koszt");
+                                break;
 
-                          case 1: //totalTime
-                              for (ChargingOperationGet temp : testowaLista2)
-                                  parameterToView.add(String.valueOf(round(temp.getElapsedTime(), 2) + " min") + ";" + temp.getId());
+                            case 1: //totalTime
+                                for (ChargingOperationGet temp : testowaLista2)
+                                    parameterToView.add(String.valueOf(round(temp.getElapsedTime(), 2) + " min") + ";" + temp.getId());
 
-                              showPopup("Całkowity czas ład.");
-                              break;
+                                showPopup("Całkowity czas ład.");
+                                break;
 
-                          case 2: //operationsCount
-                              for (ChargingOperationGet temp : testowaLista2)
-                                  parameterToView.add(String.valueOf(round(temp.getElapsedTime(), 2) + " min") + ";" + temp.getId());
+                            case 2: //operationsCount
+                                for (ChargingOperationGet temp : testowaLista2)
+                                    parameterToView.add(String.valueOf(round(temp.getElapsedTime(), 2) + " min") + ";" + temp.getId());
 
-                              showPopup("Liczba operacji");
-                              break;
+                                showPopup("Liczba operacji");
+                                break;
 
-                          case 3: //averagePower
-                              for (ChargingOperationGet temp : testowaLista2)
-                                  parameterToView.add(String.valueOf(round(temp.getAveragePower(), 2) + " kWh") + ";" + temp.getId());
+                            case 3: //averagePower
+                                for (ChargingOperationGet temp : testowaLista2)
+                                    parameterToView.add(String.valueOf(round(temp.getAveragePower(), 2) + " kWh") + ";" + temp.getId());
 
-                              showPopup("Średnia moc ładowań");
-                              break;
+                                showPopup("Średnia moc ładowań");
+                                break;
 
-                          case 4: //averageCost
-                              for (ChargingOperationGet temp : testowaLista2)
-                                  parameterToView.add(String.valueOf(round(temp.getCost(), 2) + " zł") + ";" + temp.getId());
+                            case 4: //averageCost
+                                for (ChargingOperationGet temp : testowaLista2)
+                                    parameterToView.add(String.valueOf(round(temp.getCost(), 2) + " zł") + ";" + temp.getId());
 
-                              showPopup("Średni koszt ład.");
-                              break;
+                                showPopup("Średni koszt ład.");
+                                break;
 
-                          case 5: //averageInitialCapacity
-                              for (ChargingOperationGet temp : testowaLista2)
-                                  parameterToView.add(String.valueOf(round(temp.getInitialCapacity(), 2) + " kWh") + ";" + temp.getId());
+                            case 5: //averageInitialCapacity
+                                for (ChargingOperationGet temp : testowaLista2)
+                                    parameterToView.add(String.valueOf(round(temp.getInitialCapacity(), 2) + " kWh") + ";" + temp.getId());
 
-                              showPopup("Śr. nał. początkowe");
-                              break;
-                      }
-                  }
+                                showPopup("Śr. nał. początkowe");
+                                break;
+                        }
+                    }
 
-                  if(parameterToView!=null) {
+                    if (parameterToView != null) {
 
-                      customListAdapter = new StatisticsPopupListAdapter(getActivity(), R.layout.details_list_layout, parameterToView);
-                      listview.setAdapter(customListAdapter);
+                        customListAdapter = new StatisticsPopupListAdapter(getActivity(), R.layout.details_list_layout, parameterToView);
+                        listview.setAdapter(customListAdapter);
 
-                  }
+                    }
                 }
             });
         }
@@ -236,28 +235,23 @@ setOnClickListenerToCardViews(arrayOfCardViews);
     }
 
 
-    public void setMainList(List<ChargingOperationGet> testowaLista2)
-    {
+    public void setMainList(List<ChargingOperationGet> testowaLista2) {
         this.testowaLista2 = testowaLista2;
 
 
-
     }
 
 
-    public void setLayoutVisibility()
-    {
+    public void setLayoutVisibility() {
         linearLayout.setVisibility(View.VISIBLE);
     }
 
-    public void setProgressBarVisibility()
-    {
+    public void setProgressBarVisibility() {
         progressBar.setVisibility(View.GONE);
     }
 
-    public void setListOnMainClass(List<Statistics> statisticsList)
-    {
-        this.statisticsList=statisticsList;
+    public void setListOnMainClass(List<Statistics> statisticsList) {
+        this.statisticsList = statisticsList;
 
         txtTotalCost.setText(String.valueOf(statisticsList.get(0).getTotalCost()) + " zł");
         txtTotalChargingTime.setText(String.valueOf(statisticsList.get(0).getTotalChargingTime()) + " m");
@@ -265,12 +259,9 @@ setOnClickListenerToCardViews(arrayOfCardViews);
         txtAveragePowerOfAll.setText(String.valueOf(statisticsList.get(0).getAveragePowerOfAll()) + " kWh");
         txtAverageCost.setText(String.valueOf(statisticsList.get(0).getAverageCost()) + " zł");
         txtAverageInitialCapacity.setText(String.valueOf(statisticsList.get(0).getAverageInitialCapacity()) + " kWh");
-      //  Log.d("testListy", String.valueOf(statisticsList.get(0).getTotalCost()));
+        //  Log.d("testListy", String.valueOf(statisticsList.get(0).getTotalCost()));
 
     }
-
-
-
 
 
     @Override
@@ -280,11 +271,9 @@ setOnClickListenerToCardViews(arrayOfCardViews);
     }
 
 
-public void setToast(String message)
-{
-    Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
-}
-
+    public void setToast(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    }
 
 
 }

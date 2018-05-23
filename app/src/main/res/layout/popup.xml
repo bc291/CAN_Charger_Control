@@ -330,13 +330,38 @@
         </LinearLayout>
     </LinearLayout>
 
-    <Button
-        android:id="@+id/button55"
-        android:layout_width="wrap_content"
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/button_style"
-        android:text="@string/Close_Popup_Str"
-        android:textColor="@color/white" />
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        android:gravity="center">
+        <Button
+            android:id="@+id/button55"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/button_style"
+            android:text="@string/Close_Popup_Str"
+            android:textColor="@color/white"
+            android:layout_marginRight="15dp"/>
+
+        <Button
+            android:id="@+id/btnDeleteCharging"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/button_style"
+            android:text="USUŃ REKORD"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+
+
+
+
 </LinearLayout>

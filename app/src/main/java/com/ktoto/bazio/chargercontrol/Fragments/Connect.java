@@ -1,32 +1,28 @@
-package com.ktoto.bazio.chargercontrol;
+package com.ktoto.bazio.chargercontrol.Fragments;
 
-import android.animation.ObjectAnimator;
 import android.app.Dialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Rect;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.media.RingtoneManager;
-import android.os.Build;
-import android.preference.PreferenceManager;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.media.RingtoneManager;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.widget.CardView;
 import android.util.Log;
@@ -36,26 +32,26 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
-import com.github.paolorotolo.expandableheightlistview.ExpandableHeightListView;
-import com.google.gson.Gson;
+import com.ktoto.bazio.Tools.BitsByIndexRetriever;
 import com.ktoto.bazio.Tools.Tools;
+import com.ktoto.bazio.chargercontrol.Activities.MainBottom;
+import com.ktoto.bazio.chargercontrol.Asynce.asyncHelper;
+import com.ktoto.bazio.chargercontrol.Asynce.asyncPost;
 import com.ktoto.bazio.chargercontrol.ChangeListeners.ConnectionChangeListener;
 import com.ktoto.bazio.chargercontrol.ChangeListeners.ConnectionStatus;
-import com.ktoto.bazio.chargercontrol.Model.BitsByIndexRetriever;
+import com.ktoto.bazio.chargercontrol.Model.CarData;
 import com.ktoto.bazio.chargercontrol.Model.CarFaultsMessage;
 import com.ktoto.bazio.chargercontrol.Model.CarStatusMessage;
+import com.ktoto.bazio.chargercontrol.Model.ChargerData;
+import com.ktoto.bazio.chargercontrol.Model.ChargingOperation;
+import com.ktoto.bazio.chargercontrol.Model.ChargingOperationGet;
 import com.ktoto.bazio.chargercontrol.Model.evStateEnum;
-import com.ktoto.bazio.chargercontrol.asynce.asyncHelper;
-import com.ktoto.bazio.chargercontrol.asynce.asyncPost;
+import com.ktoto.bazio.chargercontrol.R;
 import com.ntt.customgaugeview.library.GaugeView;
-
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -65,10 +61,8 @@ import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
@@ -83,56 +77,56 @@ public class Connect extends Fragment {
     private static final int NOTIFICATION_ID_2 = 2;
     private static final String NOTIFICATION_CHANNEL_ID = "Charging completion";
     private static final String NOTIFICATION_CHANNEL_ID_2 = "Realtime charging parameters";
-    static boolean stanPolaczenia = false;
-    boolean isChargingActive, wasChargingActive;
-    double initialCapacity;
-    Thread workerThread;
-    byte[] readBuffer;
-    int readBufferPosition;
-    int counter;
-    volatile boolean stopWorker;
-    InputStream socketInputStream = null;
-    String address = null;
-    BluetoothAdapter urzadzenieBluetooth = null;
-    BluetoothSocket obslugaBluetooth = null;
-    Button button2, btnPostTest, btnBTOff;
-    TextView txtActualBatteryCapacity, txtRemainingTime, txtPower, txtCost, txtInitialBatteryCapacity, txtMaxChargingVoltage, txtTotalBatteryCapacity, txtKwhours, txtCarStatus, txtMaxChargingCurrent;
-    TextView txtIsChargingActive, carModelTop, txtEvState;
-    GaugeView gaugeView, gaugeView2;
-    List<String> testowaLista;
-    ChargerData chargerData = new ChargerData();
-    CarData carData = new CarData();
-    ChargingOperation chargingOperation = new ChargingOperation();
-    double energyCost;
-    List<Float> averagePowerList;
-    double averagePowerFromUART;
-    CardView cardView, cardView2;
-    Animation animFadein, animFadeinFromRight;
-    LinearLayout linearIsChargingActive, gaugesView, linearButtonsBottom, linearEvState;
-    evStateEnum evState;
-    CarStatusMessage carStatusMessage;
-    Dialog dialog, dialog2;
-    TextView popup_txtVehicleChargingEnabled, popup_txtVehicleShiftLeverPosition,
+    private boolean isChargingActive, wasChargingActive;
+    private double initialCapacity;
+    private Thread uartThread;
+    private byte[] buffer;
+    private int bufPos;
+    volatile boolean stopUartThread;
+    private InputStream socketInputStream;
+    private String address;
+    BluetoothAdapter bAdapter;
+    BluetoothSocket bSocket;
+    private Button button2, btnPostTest, btnBTOff;
+    private  TextView txtActualBatteryCapacity, txtRemainingTime, txtPower, txtCost, txtInitialBatteryCapacity, txtMaxChargingVoltage, txtTotalBatteryCapacity, txtKwhours, txtCarStatus, txtMaxChargingCurrent;
+    private TextView txtIsChargingActive, carModelTop, txtEvState;
+    private GaugeView gaugeView, gaugeView2;
+    private List<String> dataFromUart;
+    private ChargerData chargerData;
+    private CarData carData;
+    private ChargingOperation chargingOperation;
+    private double energyCost;
+    private List<Float> averagePowerList;
+    private double averagePowerFromUART;
+    private CardView cardView, cardView2;
+    private Animation animFadeIn, animFadeInFromRight;
+    private LinearLayout linearIsChargingActive, gaugesView, linearButtonsBottom, linearEvState;
+    private evStateEnum evState;
+    private CarStatusMessage carStatusMessage;
+    private Dialog dialog, dialog2;
+    private  TextView popup_txtVehicleChargingEnabled, popup_txtVehicleShiftLeverPosition,
             popup_txtChargingSystemFault, popup_txtVehicleConnectorStatus, popup_txtNormalStopRequestBefCharging;
-    Button popup_button;
-    LinearLayout linear_tile_1, linear_tile_2, linear_tile_3, linear_tile_4, linear_tile_5;
-    CarFaultsMessage carFaultsMessage;
-    TextView popup_txtBatteryOvervoltage, popup_txtBatteryUnderVoltage,
+    private Button popup_button;
+    private LinearLayout linear_tile_1, linear_tile_2, linear_tile_3, linear_tile_4, linear_tile_5;
+    private CarFaultsMessage carFaultsMessage;
+    private TextView popup_txtBatteryOvervoltage, popup_txtBatteryUnderVoltage,
             popup_txtBatteryCurrentDeviation, popup_txtHighBatteryTemperatury, popup_txtBatteryVoltageDeviation;
-    Button popup_button2;
-    LinearLayout linear_tile_2_1, linear_tile_2_2, linear_tile_2_3, linear_tile_2_4, linear_tile_2_5;
-    TextView txtCarFaults;
-    BottomNavigationView navigation;
+    private Button popup_button2;
+    private  LinearLayout linear_tile_2_1, linear_tile_2_2, linear_tile_2_3, linear_tile_2_4, linear_tile_2_5;
+    private TextView txtCarFaults;
+    private BottomNavigationView navigation;
     private ProgressDialog progress;
     private NotificationManager notificationManager, notificationManager2;
     private NotificationCompat.Builder builder2;
-    private Handler handler;
     private Bitmap battery20, battery30, battery50,battery60, battery80, battery90, batteryFull;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View myView = inflater.inflate(R.layout.activity_connect, null);
+        chargerData = new ChargerData();
+        carData = new CarData();
+        chargingOperation = new ChargingOperation();
         button2 = (Button) myView.findViewById(R.id.button2);
         txtEvState = (TextView) myView.findViewById(R.id.txtEvState);
         //  carStatusMessage = new CarStatusMessage(); @@@@@@@@@@@@@@@@@@@@@
@@ -154,11 +148,10 @@ public class Connect extends Fragment {
         linearEvState = (LinearLayout) myView.findViewById(R.id.linearEvState);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         energyCost = Double.parseDouble(sharedPreferences.getString("power_cost", "0.51"));
-        animFadein = AnimationUtils.loadAnimation(getContext(),
+        animFadeIn = AnimationUtils.loadAnimation(getContext(),
                 R.anim.animation_left_to_right);
-        animFadeinFromRight = AnimationUtils.loadAnimation(getContext(),
+        animFadeInFromRight = AnimationUtils.loadAnimation(getContext(),
                 R.anim.animation_right_to_left);
-        //TODO zeby stringow nie wspisywac zabezpieczenie w settings
 
         txtActualBatteryCapacity = (TextView) myView.findViewById(R.id.txtActualBatteryCapacity);
         txtRemainingTime = (TextView) myView.findViewById(R.id.txtRemainingTime);
@@ -310,7 +303,7 @@ public class Connect extends Fragment {
     }
 
 
-    public BigDecimal round(float d, int decimalPlace) {//TODO zabezpieczenie przed null
+    public BigDecimal round(float d, int decimalPlace) {
         BigDecimal bd = new BigDecimal(Float.toString(d));
         bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
         return bd;
@@ -323,9 +316,9 @@ public class Connect extends Fragment {
     }
 
     private void Logout() {
-        if (obslugaBluetooth != null) {
+        if (bSocket != null) {
             try {
-                obslugaBluetooth.close();
+                bSocket.close();
                 // msg("Wylogowano. W celu połączenia proszę wciśnąć RECONNECT -->");
                 ConnectionStatus.setBooleanValue(false);
 
@@ -359,8 +352,8 @@ public class Connect extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-        if (workerThread != null && workerThread.isAlive())
-            workerThread.interrupt(); // sprawdz czy thread dziala - problem z niewylaczeniem go miedzy fragmentami
+        if (uartThread != null && uartThread.isAlive())
+            uartThread.interrupt(); // sprawdz czy thread dziala - problem z niewylaczeniem go miedzy fragmentami
     }
 
     public void sendPostMessage() {
@@ -388,20 +381,27 @@ public class Connect extends Fragment {
 
         chargingOperation.setDateAndTime(dateFormat.format(now));
 
-        asyncPost asyncpostt = new asyncPost();
+        asyncPost asyncpostt = new asyncPost()
+        {
+            @Override
+            protected void onPostExecute(String httpResponseString) {
+                generateNotification(chargingOperation, httpResponseString);
+                Log.d("testhttpresponse", httpResponseString);
+            }
+        };
         asyncHelper asyncHelp = new asyncHelper(getActivity(), chargingOperation);
         asyncpostt.execute(asyncHelp);
 
 
-        generateNotification(chargingOperation);
+
     }
 
     public void sendUARTStopMessage() {
         OutputStream outputStream = null;
-        if (obslugaBluetooth != null && isChargingActive) //isChargingActive
+        if (bSocket != null && isChargingActive) //isChargingActive
         {
             try {
-                outputStream = obslugaBluetooth.getOutputStream();
+                outputStream = bSocket.getOutputStream();
                 msg("Wyslano Wiadomość UART");
                 outputStream.write("1".toString().getBytes());
             } catch (IOException e) {
@@ -432,17 +432,17 @@ public class Connect extends Fragment {
         final Handler handler = new Handler();
         final byte delimiter = 10; //This is the ASCII code for a newline character
 
-        stopWorker = false;
-        readBufferPosition = 0;
-        readBuffer = new byte[1024];
+        stopUartThread = false;
+        bufPos = 0;
+        buffer = new byte[1024];
         try {
-            socketInputStream = obslugaBluetooth.getInputStream();
+            socketInputStream = bSocket.getInputStream();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        workerThread = new Thread(new Runnable() {
+        uartThread = new Thread(new Runnable() {
             public void run() {
-                while (!Thread.currentThread().isInterrupted() && !stopWorker) {
+                while (!Thread.currentThread().isInterrupted() && !stopUartThread) {
                     try {
 
                         int bytesAvailable = socketInputStream.available();
@@ -452,11 +452,11 @@ public class Connect extends Fragment {
                             for (int i = 0; i < bytesAvailable; i++) {
                                 byte b = packetBytes[i];
                                 if (b == delimiter) {
-                                    byte[] encodedBytes = new byte[readBufferPosition];
-                                    System.arraycopy(readBuffer, 0, encodedBytes, 0, encodedBytes.length);
+                                    byte[] encodedBytes = new byte[bufPos];
+                                    System.arraycopy(buffer, 0, encodedBytes, 0, encodedBytes.length);
                                     final String data = new String(encodedBytes, "US-ASCII").replaceAll("\0", "").replaceAll("inf", "1000");
                                     final int testowo = 1;
-                                    readBufferPosition = 0;
+                                    bufPos = 0;
 
                                     handler.post(new Runnable() {
                                         public void run() {
@@ -466,23 +466,23 @@ public class Connect extends Fragment {
 
                                             if (data != null && data.length() != 0 && data.charAt(0) == '#') { //data.length()!=0
 
-                                                testowaLista = Tools.retrieveArrayFromRawUartMessage(data, ";");
-                                                setChargerData(testowaLista);
+                                                dataFromUart = Tools.retrieveArrayFromRawUartMessage(data, ";");
+                                                setChargerData(dataFromUart);
                                                 gaugeView.setTargetValue(chargerData.getAmps());
                                                 gaugeView2.setTargetValue(chargerData.getVoltage());
                                                 txtActualBatteryCapacity.setText(String.valueOf(chargerData.getActualBatteryCapacity()) + " kWh");
                                                 int temp = calculateRemainingTime(chargerData.getRemainingTime());
                                                 txtRemainingTime.setText(String.valueOf((int) (chargerData.getRemainingTime()) + " m ") + temp + " s");
                                                 txtPower.setText(String.valueOf(chargerData.getPower() / 1000) + " kW");
-                                                setCarData(testowaLista);
+                                                setCarData(dataFromUart);
                                                 double money = getMoneyFromKwh(chargerData.getKwh());
                                                 txtCost.setText(getCurrencyFromNumber(money));
 
 
                                                 txtMaxChargingVoltage.setText(String.valueOf(carData.getMaxChargingVoltage()) + " V");
                                                 txtTotalBatteryCapacity.setText(String.valueOf(carData.getTotalBatteryCapacity() + " kWh"));
-                                                isChargingActive = Integer.parseInt(testowaLista.get(15)) > 0 ? true : false;
-                                                averagePowerFromUART = Double.parseDouble(testowaLista.get(11));
+                                                isChargingActive = Integer.parseInt(dataFromUart.get(15)) > 0 ? true : false;
+                                                averagePowerFromUART = Double.parseDouble(dataFromUart.get(11));
 
                                                 if (isChargingActive) {
                                                     txtIsChargingActive.setText("Ładowanie w toku");
@@ -498,7 +498,7 @@ public class Connect extends Fragment {
                                                 if (!isChargingActive && wasChargingActive && money > 0.01) {
                                                     wasChargingActive = false;
                                                     sendPostMessage();
-                                                    updatenotificationOnChargingEnd();
+                                                    updateNotificationOnChargingEnd();
                                                 }
 
                                                 if (chargerData.getPower() > 0)
@@ -514,7 +514,7 @@ public class Connect extends Fragment {
                                                 txtKwhours.setText(String.valueOf(round(chargerData.getKwh(), 2) + " kWh"));
                                                 txtMaxChargingCurrent.setText(String.valueOf(chargerData.getAvailableCurrent() + " A")); //bez dodania do struktury
 
-                                                evState = Tools.retrieveEvState(testowaLista.get(12));
+                                                evState = Tools.retrieveEvState(dataFromUart.get(12));
                                                 txtEvState.setText(evState.toString());
                                             }
 
@@ -546,19 +546,19 @@ public class Connect extends Fragment {
                                         }
                                     });
                                 } else {
-                                    readBuffer[readBufferPosition++] = b;
+                                    buffer[bufPos++] = b;
                                 }
                             }
                         }
                     } catch (IOException ex) {
-                        stopWorker = true;
+                        stopUartThread = true;
 //                                msg("Exception");
                     }
                 }
             }
         });
 
-        workerThread.start();
+        uartThread.start();
     }
 
     private void setChargerData(List<String> values)
@@ -571,7 +571,7 @@ public class Connect extends Fragment {
         chargerData.setPower(chargerData.getAmps() * chargerData.getVoltage());
         chargerData.setAvailableCurrent(Integer.parseInt(values.get(6)));
         chargerData.setAvailableVoltage(Integer.parseInt(values.get(7)));
-        chargerData.setChargingTime(Integer.parseInt(testowaLista.get(10)) / 1000);
+        chargerData.setChargingTime(Integer.parseInt(dataFromUart.get(10)) / 1000);
     }
 
     private void setCarData(List<String> values)
@@ -614,11 +614,12 @@ public class Connect extends Fragment {
         }
     }
 
-    public void generateNotification(ChargingOperation chargingOperation) {
+    public void generateNotification(ChargingOperation chargingOperation, String httpResponseString) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(), NOTIFICATION_CHANNEL_ID)
                 .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setOnlyAlertOnce(true) //@@@@@@@@@@@@@@@@@@@@@@@@@
+                .setAutoCancel(true)
                 .setContentTitle("Zakończono ładowanie pojazdu: " + chargingOperation.getCarModel())
                 .setContentText(chargingOperation.getDateAndTime() + " | " + chargingOperation.getCost() + " zł")
                 //   .setLargeIcon(image)
@@ -627,29 +628,16 @@ public class Connect extends Fragment {
                                 "Średnia moc ład.: " + chargingOperation.getAveragePower() + " kWh \nDostarczona pojemność: " + chargingOperation.getCapacityCharged() + " kWh\n" +
                                 "Czas ładowania: " + chargingOperation.getElapsedTime() + " m \nPojemność początkowa: " + chargingOperation.getInitialCapacity() + " kWh"));
 
+
+        Intent intent = new Intent(getContext(), MainBottom.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("transaction_id", "test");
+
+
         notificationManager.notify(NOTIFICATION_ID, builder.build());
     }
 
     public void generateRealtimeNotifications(ChargerData chargerData, CarData cardata) {
-
-        Rect rect = new Rect(0, 0, 1, 1);
-
-// You then create a Bitmap and get a canvas to draw into it
-        Bitmap image = Bitmap.createBitmap(rect.width(), rect.height(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(image);
-
-//You can get an int value representing an argb color by doing so. Put 1 as alpha by default
-        int color = Color.argb(32, 2,2,125);
-
-//Paint holds information about how to draw shapes
-        Paint paint = new Paint();
-        paint.setColor(color);
-
-// Then draw your shape
-        canvas.drawRect(rect, paint);
-
-
-
         int temp = calculateRemainingTime(chargerData.getRemainingTime());
         builder2 = new NotificationCompat.Builder(getContext(), NOTIFICATION_CHANNEL_ID_2)
                 .setLargeIcon(getBitmap(R.drawable.ic_battery_charging_50_black_24dp))
@@ -675,7 +663,7 @@ public class Connect extends Fragment {
         notificationManager2.notify(NOTIFICATION_ID_2, builder2.build());
     }
 
-    public void updatenotificationOnChargingEnd() {
+    public void updateNotificationOnChargingEnd() {
 
         notificationManager2.cancel(NOTIFICATION_ID_2);
     }
@@ -692,12 +680,12 @@ public class Connect extends Fragment {
 
         protected Void doInBackground(Void... devices) {
             try {
-                if (obslugaBluetooth == null || !ConnectionStatus.getBooleanValue()) {
-                    urzadzenieBluetooth = BluetoothAdapter.getDefaultAdapter();
-                    BluetoothDevice dispositivo = urzadzenieBluetooth.getRemoteDevice(address);
-                    obslugaBluetooth = dispositivo.createInsecureRfcommSocketToServiceRecord(myUUID);
+                if (bSocket == null || !ConnectionStatus.getBooleanValue()) {
+                    bAdapter = BluetoothAdapter.getDefaultAdapter();
+                    BluetoothDevice dispositivo = bAdapter.getRemoteDevice(address);
+                    bSocket = dispositivo.createInsecureRfcommSocketToServiceRecord(myUUID);
                     BluetoothAdapter.getDefaultAdapter().cancelDiscovery();
-                    obslugaBluetooth.connect();
+                    bSocket.connect();
                 }
             } catch (IOException e) {
                 bladPolaczenia = true;
@@ -723,12 +711,12 @@ public class Connect extends Fragment {
                 msg("Połączono");
                 ConnectionStatus.setBooleanValue(true);
 
-                animateItem(linearIsChargingActive, animFadein);
-                animateItem(linearEvState, animFadeinFromRight);
-                animateItem(gaugesView, animFadein);
-                animateItem(linearButtonsBottom, animFadeinFromRight);
-                animateItem(cardView, animFadein);
-                animateItem(cardView2, animFadeinFromRight);
+                animateItem(linearIsChargingActive, animFadeIn);
+                animateItem(linearEvState, animFadeInFromRight);
+                animateItem(gaugesView, animFadeIn);
+                animateItem(linearButtonsBottom, animFadeInFromRight);
+                animateItem(cardView, animFadeIn);
+                animateItem(cardView2, animFadeInFromRight);
 
                 launchUARTConnection();
 

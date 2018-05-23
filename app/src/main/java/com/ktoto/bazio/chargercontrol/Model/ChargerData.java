@@ -1,4 +1,4 @@
-package com.ktoto.bazio.chargercontrol;
+package com.ktoto.bazio.chargercontrol.Model;
 
 
 public class ChargerData {

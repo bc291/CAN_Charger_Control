@@ -1,14 +1,10 @@
-package com.ktoto.bazio.chargercontrol;
+package com.ktoto.bazio.chargercontrol.Model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+public class ChargingOperation {
 
-public class ChargingOperationGet {
-
-    @SerializedName("id")
-    @Expose
-    private Integer id;
     @SerializedName("carModel")
     @Expose
     private String carModel;
@@ -39,14 +35,6 @@ public class ChargingOperationGet {
 
     public void setInitialCapacity(Double initialCapacity) {
         this.initialCapacity = initialCapacity;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getCarModel() {
@@ -89,20 +77,12 @@ public class ChargingOperationGet {
         this.elapsedTime = elapsedTime;
     }
 
+
     public String getDateAndTime() {
         return dateAndTime;
     }
 
     public void setDateAndTime(String dateAndTime) {
         this.dateAndTime = dateAndTime;
-    }
-
-    public ChargingOperationGet(Integer id, String carModel, Double capacityCharged, Double averagePower, Double cost, Double elapsedTime) {
-        this.id = id;
-        this.carModel = carModel;
-        this.capacityCharged = capacityCharged;
-        this.averagePower = averagePower;
-        this.cost = cost;
-        this.elapsedTime = elapsedTime;
     }
 }

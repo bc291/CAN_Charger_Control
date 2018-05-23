@@ -1,4 +1,4 @@
-package com.ktoto.bazio.chargercontrol.Model;
+package com.ktoto.bazio.Tools;
 
 
 public interface BitsByIndexRetriever {

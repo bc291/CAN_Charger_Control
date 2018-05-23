@@ -3,6 +3,7 @@ package com.ktoto.bazio.chargercontrol;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.Intent;
@@ -205,10 +206,21 @@ public void generateNotification()
             .setContentText(text)
             .setLargeIcon(image)
             .setOnlyAlertOnce(true)
+            .setAutoCancel(true)
             .setStyle(new NotificationCompat.BigTextStyle()
                     .bigText("21.05.2018 16:12:56"+" | "+"5.54"+" zł\n\n" +
                             "Średnia moc ład.: 34.32 kWh \nDostarczona pojemność: 22.23 kWh\n" +
                             "Czas ładowania: 34.23 m \nPojemność początkowa: 34.23 kWh"));
+
+    Intent intent = new Intent(getContext(), MainBottom.class);
+    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+    intent.putExtra("transaction_id", "1462");
+
+
+    PendingIntent contentIntent = PendingIntent.getActivity(getContext(), 0,
+            intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+    builder.setContentIntent(contentIntent);
 
     notificationManager.notify(NOTIFICATION_ID, builder.build());
 }

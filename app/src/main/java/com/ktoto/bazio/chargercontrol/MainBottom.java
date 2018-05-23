@@ -102,6 +102,16 @@ public class MainBottom extends AppCompatActivity {
 
     //    getSupportActionBar().setLogo(R.drawable.my_logo);
       //  getSupportActionBar().setDisplayUseLogoEnabled(true);
+
+        Intent notifyIntent = getIntent();
+        String extras = getIntent().getStringExtra("transaction_id");;
+        if (extras != null && extras.length()>0) {
+            chargerOperationsList fragment2 = new chargerOperationsList();
+            fragment2.setNavigationBar(navigation);
+            fragment2.messageFromNotification(extras);
+            loadFragment(fragment2);
+
+        }
     }
 
 

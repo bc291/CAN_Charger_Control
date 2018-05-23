@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -33,6 +34,8 @@ public class chargerOperationsList extends Fragment implements AdapterView.OnIte
     ProgressBar progressBar;
     Dialog dialog;
     asyncGet asyncget;
+    int idParse;
+    BottomNavigationView navigation;
 
     @Nullable
     @Override
@@ -48,8 +51,6 @@ public class chargerOperationsList extends Fragment implements AdapterView.OnIte
         asyncget = new asyncGet(this);
         asyncHelper asyncHelp = new asyncHelper(getContext(), new ChargingOperation());
         asyncget.execute(asyncHelp);
-
-
         return myView;
     }
 
@@ -59,6 +60,19 @@ public class chargerOperationsList extends Fragment implements AdapterView.OnIte
         CustomListAdapter customListAdapter = new CustomListAdapter(getActivity(), R.layout.customlistlayout, list2);
         listview.setAdapter(customListAdapter);
         listview.setOnItemClickListener(this);
+
+        if(idParse!=0)
+        {
+            navigation.getMenu().getItem(1).setChecked(true);
+            Log.d("notificationLink", "działam");
+            int positionNotification=0;
+            for(ChargingOperationGet tempItemt : list2)
+            {
+                if(tempItemt.getId()==idParse) break;
+                positionNotification++;
+            }
+            showPopup(list2.get(positionNotification));
+        }
     }
 
 
@@ -123,5 +137,16 @@ public class chargerOperationsList extends Fragment implements AdapterView.OnIte
     public void onStop() {
         super.onStop();
         asyncget.cancel(true);
+    }
+
+    public void messageFromNotification(String id)
+    {
+        idParse = Integer.parseInt(id);
+        Log.d("notificationLink", String.valueOf(idParse));
+    }
+
+    public void setNavigationBar(BottomNavigationView navigation)
+    {
+        this.navigation=navigation;
     }
 }
